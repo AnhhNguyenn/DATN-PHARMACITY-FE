@@ -1,9 +1,56 @@
-.img__product--admin{
-    width: 70px;
-    height: 70px;
-    border-radius:50%;
+.img__product--admin {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
 }
 
-.css-x4ghuj-MuiDataGrid-roo .MuiDataGrid-row{
-    min-height: 80px;
+.css-x4ghuj-MuiDataGrid-roo .MuiDataGrid-row {
+  min-height: 80px;
+}
+
+/* product.css */
+
+body {
+  font-family: "Arial", sans-serif; /* Chọn phông chữ tương tự */
+}
+
+.admin-h1 {
+  color: #2d2d2d; /* Màu tiêu đề */
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.img__product--admin {
+  width: 100px; /* Kích thước hình ảnh sản phẩm */
+  height: auto;
+  border-radius: 8px; /* Bo góc hình ảnh */
+}
+
+.ant-table {
+  border-radius: 8px;
+  overflow: hidden; /* Để hình ảnh không bị tràn ra ngoài */
+}
+
+.ant-table-header {
+  background-color: #f5f5f5; /* Màu nền tiêu đề bảng */
+}
+
+.ant-table-row:hover {
+  background-color: #e6f7ff; /* Màu nền khi hover */
+}
+
+.ant-btn {
+  border-radius: 4px; /* Bo góc nút */
+}
+
+.ant-btn-success {
+  background-color: #28a745; /* Màu nút thêm sản phẩm */
+}
+
+.ant-btn-warning {
+  background-color: #ffc107; /* Màu nút chỉnh sửa */
+}
+
+.ant-btn-error {
+  background-color: #dc3545; /* Màu nút xóa */
 }
