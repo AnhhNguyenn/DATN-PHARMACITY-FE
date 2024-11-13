@@ -1,12 +1,19 @@
 import requestApi from "../utils/requestApi";
 
-export const getAllProductService = async () => {
+export const getAllProductService = async ({
+    pageNumber,
+    pageSize,
+}) => {
     try {
-        const respone = await requestApi({
+        const response = await requestApi({
             method: "get",
             url: "product/all",
+            params: {
+                pageNumber,
+                pageSize,
+            }
         });
-        return respone.data;
+        return response.data;
     } catch (error) {
         return error;
     }

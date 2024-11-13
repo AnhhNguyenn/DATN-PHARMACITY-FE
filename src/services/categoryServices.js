@@ -1,16 +1,24 @@
 import requestApi from "../utils/requestApi";
 
-export const getAllCategoryServices = async () => {
+export const getAllCategoryServices = async ({
+    pageNumber,
+    pageSize,
+}) => {
     try {
         const respone = await requestApi({
             url: "category/all",
             method: "get",
+            params: {
+                pageNumber,
+                pageSize,
+            }
         });
         return respone.data;
     } catch (error) {
         return error;
     }
 };
+
 export const addCategoryService = (formData) => {
     return requestApi({
         url: "category/add",
@@ -42,7 +50,8 @@ export const editCategoryService = (formData) => {
         method: "put",
         data: JSON.stringify(formData),
         headers: {
-            "Content-Type": "application/json"        },
+            "Content-Type": "application/json"
+        },
     });
 };
 

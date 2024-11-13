@@ -21,14 +21,14 @@ const Home = () => {
     const [newProducts, setNewProducts] = useState([]);
     useEffect(() => {
         const currentDate = new Date();
-        if (products.lenght !== 0) {
+        if (products && products.length !== 0) {
             const filterNewProducts = products
                 .filter((item) => {
                     const productCreatedDate = new Date(item.createAt);
                     return (
                         parseFloat(
                             (currentDate - productCreatedDate) /
-                                (1000 * 60 * 60 * 24)
+                            (1000 * 60 * 60 * 24)
                         ) < 30
                     );
                 })
