@@ -42,6 +42,151 @@
     padding-top: 45px;
 }
 
+/* Banner Carousel Styles */
+.banner__section {
+    padding: 20px 20px 0;
+    margin-top: 20px;
+}
+
+.banner__carousel {
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.banner__container {
+    position: relative;
+    height: 350px;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.banner__slider {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+.banner__images {
+    position: absolute;
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+.banner__wrapper {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.banner__side {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.banner__side-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.banner__side-item {
+    height: 165px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.banner__image {
+    min-width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.banner__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+}
+
+.banner__nav--prev {
+    left: 16px;
+}
+
+.banner__nav--next {
+    right: 16px;
+}
+
+.banner__nav-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.banner__dots {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 4px;
+    z-index: 2;
+}
+
+.banner__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.banner__dot--active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: conic-gradient(white var(--progress),
+            transparent var(--progress));
+    transition: all 0.1s linear;
+}
+
+.banner__dot--active::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    background: white;
+    border-radius: 50%;
+    transform: scale(0.6);
+}
+
+.banner__dot--active {
+    background: white;
+    transform: scale(1);
+}
+
 .timer__count {
     background: var(--primary-color);
     height: 300px;
@@ -68,13 +213,30 @@
     font-size: 1.5rem !important;
 }
 
+/* Media Queries */
 @media only screen and (max-width: 992px) {
+    .banner__wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .banner__side {
+        flex-direction: row;
+    }
+
+    .banner__side-item {
+        flex: 1;
+    }
+
     .hero__content h2 {
         font-size: 2rem;
     }
 
     .section__title {
         font-size: 1.5rem;
+    }
+
+    .banner__container {
+        height: 300px;
     }
 
     .trending__products {
@@ -117,6 +279,10 @@
         padding-top: 0;
     }
 
+    .banner__container {
+        height: 250px;
+    }
+
     .counter__img {
         display: none;
     }
@@ -139,6 +305,23 @@
     .hero__content {
         padding-top: 0;
         margin-bottom: 40px;
+    }
+
+    .banner__side {
+        flex-direction: column;
+    }
+
+    .banner__container {
+        height: 200px;
+    }
+
+    .banner__nav {
+        padding: 6px;
+    }
+
+    .banner__nav-icon {
+        width: 20px;
+        height: 20px;
     }
 
     .counter__img {
