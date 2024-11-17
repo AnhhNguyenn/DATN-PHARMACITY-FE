@@ -1,17 +1,16 @@
-// Home.jsx
 import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
 
-import Clock from "../components/UI/Clock";
 import Services from "../components/UI/Services";
+import SanDeal from '../pages/SanDeal';
+
 import "../styles/home.css";
 
 import ProductsList from "../components/UI/ProductsList";
 
 import counterImg from "../../assets/images/counter-timer-img.png";
-import heroImg from "../../assets/images/hero-img.png";
 import Helmet from "../components/Helmet/Helmet";
 
 import banner1 from "../../assets/images/pharmacity/banners/Banner1.avif";
@@ -117,7 +116,6 @@ const BannerCarousel = ({ images, sideBanners }) => {
                             />
                         ))}
                     </div>
-
                 </div>
 
                 <div className="banner__side">
@@ -178,29 +176,8 @@ const Home = () => {
     return (
         <Helmet title={"Home"}>
             <BannerCarousel images={bannerImages} sideBanners={sideBanners} />
-            <section className="hero__section">
-                <Container>
-                    <Row>
-                        <Col lg="6" md="6" sm="6">
-                            <div className="hero__content">
-                                <h1>NHÀ THUỐC LAS</h1>
-                                <h2>Đem đến sự hài lòng cho khách hàng</h2>
-                                <motion.button
-                                    whileTap={{ scale: 1.1 }}
-                                    className="buy__btn"
-                                >
-                                    <Link to={currentUser ? "/shop" : "/login"}>
-                                        Mua Ngay
-                                    </Link>
-                                </motion.button>
-                            </div>
-                        </Col>
-                        <Col lg="6" md="6" sm="6">
-                            <img src={heroImg} alt="heroImg" />
-                        </Col>
-                    </Row>
-                </Container>
-            </section>
+
+            <SanDeal />
 
             <Services />
 
@@ -214,47 +191,6 @@ const Home = () => {
                         </Col>
                         {trendingProducts ? (
                             <ProductsList data={trendingProducts} />
-                        ) : (
-                            <></>
-                        )}
-                    </Row>
-                </Container>
-            </section>
-
-            <section className="timer__count">
-                <Container>
-                    <Row className="timer__count--row">
-                        <Col lg="6" md="6" className="count__down-col">
-                            <div className="clock__top-content">
-                                <h4 className="text-white fs-6 mb-2">
-                                    Ưu đãi số lượng có hạn
-                                </h4>
-                            </div>
-                            <Clock />
-                            <motion.button
-                                whileTap={{ scale: 1.2 }}
-                                className="buy__btn store__btn"
-                            >
-                                <Link to="shop">Ghé thăm cửa hàng</Link>
-                            </motion.button>
-                        </Col>
-                        <Col lg="6" md="6" className="text-end counter__img">
-                            <img src={counterImg} alt="#" />
-                        </Col>
-                    </Row>
-                </Container>
-            </section>
-
-            <section className="new__arrivals">
-                <Container>
-                    <Row>
-                        <Col lg="12" className="text-center">
-                            <h2 className="section__title">
-                                Những sản phẩm mới
-                            </h2>
-                        </Col>
-                        {newProducts ? (
-                            <ProductsList data={newProducts} />
                         ) : (
                             <></>
                         )}

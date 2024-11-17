@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
     Bell,
     ChevronDown,
@@ -14,13 +14,19 @@ import {
     Pill,
     Heart,
     Sparkles,
-    Leaf
+    Leaf,
+    LogOut
 } from "lucide-react";
 import logo from "../../../assets/images/pharmacity/pharmacity-logo.svg";
 import "./header.css";
 
 const Header = () => {
+    const navigate = useNavigate();
     const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
+    // Lấy thông tin user từ localStorage
+    const user = JSON.parse(localStorage.getItem("user"));
 
     const categories = [
         {
@@ -40,6 +46,16 @@ const Header = () => {
             name: "Thực phẩm chức năng"
         }
     ];
+
+    const handleLogin = () => {
+        navigate("/login");
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem("user");
+        navigate("/");
+        window.location.reload(false);
+    };
 
     return (
         <header className="header">
@@ -69,10 +85,37 @@ const Header = () => {
                             <ShoppingCart size={24} />
                         </Link>
                         <div className="vertical-divider"></div>
-                        <button className="login__button">
-                            <User size={20} />
-                            Đăng nhập / Đăng ký
-                        </button>
+
+                        {user ? (
+                            <div className="user__menu">
+                                <button
+                                    className="login__button"
+                                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                                >
+                                    <User size={20} />
+                                    {user.name}
+                                    <ChevronDown size={16} className={`chevron ${isUserMenuOpen ? 'rotate' : ''}`} />
+                                </button>
+
+                                {isUserMenuOpen && (
+                                    <div className="user__dropdown">
+                                        <Link to="/profile" className="dropdown__item">
+                                            <User size={16} />
+                                            <span>Tài khoản</span>
+                                        </Link>
+                                        <button className="dropdown__item" onClick={handleLogout}>
+                                            <LogOut size={16} />
+                                            <span>Đăng xuất</span>
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            <button className="login__button" onClick={handleLogin}>
+                                <User size={20} />
+                                Đăng nhập / Đăng ký
+                            </button>
+                        )}
                     </div>
                 </div>
 
