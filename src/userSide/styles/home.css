@@ -1,66 +1,146 @@
-.hero__section {
-    background: var(--hero-bg);
+/* Banner Carousel Styles */
+.banner__section {
+    padding: 20px 20px 0;
+    margin-top: 20px;
 }
 
-.hero__content h2 {
-    color: var(--primary-color);
-    font-size: 2.5rem;
-    font-weight: 600;
-    margin: 20px 0;
+.banner__carousel {
+    padding: 20px;
+    margin-top: 20px;
 }
 
-.hero__section p {
-    color: var(--primary-color);
-    line-height: 28px;
+.banner__container {
+    position: relative;
+    height: 350px;
+    overflow: hidden;
+    border-radius: 8px;
 }
 
-.hero__section p:nth-child(1) {
-    font-weight: 500;
+.banner__slider {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
 }
 
-.hero__section .container .row img {
-    width: 80%;
+.banner__images {
+    position: absolute;
+    display: flex;
+    height: 100%;
+    width: 100%;
 }
 
-.buy__btn {
+.banner__wrapper {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.banner__side {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.banner__side-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.banner__side-item {
+    height: 165px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.banner__image {
+    min-width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.banner__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
     border: none;
-    outline: none;
-    padding: 8px 20px;
-    border-radius: 5px;
-    background: var(--primary-color);
-    color: #fff;
     cursor: pointer;
-    font-size: 1rem;
-    margin-top: 40px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 2;
 }
 
-.buy__btn a:hover {
-    color: #fff;
+.banner__nav--prev {
+    left: 16px;
 }
 
-.hero__content {
-    padding-top: 45px;
+.banner__nav--next {
+    right: 16px;
 }
 
-.timer__count {
-    background: var(--primary-color);
-    height: 300px;
+.banner__nav-icon {
+    width: 20px;
+    height: 20px;
 }
 
-.timer__count img {
-    width: 70%;
-    height: 70%;
-    object-fit: contain;
+.banner__dots {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 4px;
+    z-index: 2;
 }
 
-.store__btn {
-    background: #fff;
-    color: var(--primary-color);
-    font-weight: 600;
+.banner__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
 }
 
-.store__btn a:hover {
-    color: var(--primary-color);
+.banner__dot--active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: conic-gradient(white var(--progress),
+            transparent var(--progress));
+    transition: all 0.1s linear;
+}
+
+.banner__dot--active::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    background: white;
+    border-radius: 50%;
+    transform: scale(0.6);
+}
+
+.banner__dot--active {
+    background: white;
+    transform: scale(1);
 }
 
 .section__title {
@@ -68,13 +148,26 @@
     font-size: 1.5rem !important;
 }
 
+/* Media Queries */
 @media only screen and (max-width: 992px) {
-    .hero__content h2 {
-        font-size: 2rem;
+    .banner__wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .banner__side {
+        flex-direction: row;
+    }
+
+    .banner__side-item {
+        flex: 1;
     }
 
     .section__title {
         font-size: 1.5rem;
+    }
+
+    .banner__container {
+        height: 300px;
     }
 
     .trending__products {
@@ -99,22 +192,8 @@
 }
 
 @media only screen and (max-width: 768px) and (min-width: 577px) {
-    .hero__content h2 {
-        font-size: 1.1rem;
-        margin: 10px 0;
-    }
-
-    .hero__content p {
-        font-size: 0.7rem;
-    }
-
-    .buy__btn {
-        font-size: 0.7rem;
-        margin-top: 20px;
-    }
-
-    .hero__content {
-        padding-top: 0;
+    .banner__container {
+        height: 250px;
     }
 
     .counter__img {
@@ -136,9 +215,21 @@
 }
 
 @media only screen and (max-width: 576px) {
-    .hero__content {
-        padding-top: 0;
-        margin-bottom: 40px;
+    .banner__side {
+        flex-direction: column;
+    }
+
+    .banner__container {
+        height: 200px;
+    }
+
+    .banner__nav {
+        padding: 6px;
+    }
+
+    .banner__nav-icon {
+        width: 20px;
+        height: 20px;
     }
 
     .counter__img {
