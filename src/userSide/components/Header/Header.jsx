@@ -191,7 +191,7 @@ const Header = () => {
                                     >
                                         <button className="login__button">
                                             <User size={20} />
-                                            Chào, Khách...
+                                            {user.name}
                                             <ChevronDown size={16} className={`chevron ${isUserMenuOpen ? 'rotate' : ''}`} />
                                         </button>
 
