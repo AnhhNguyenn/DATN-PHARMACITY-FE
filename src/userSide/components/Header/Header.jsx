@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
     Bell,
@@ -20,6 +20,7 @@ import {
 import logo from "../../../assets/images/pharmacity/pharmacity-logo.svg";
 import Login from "../../pages/Login";
 import Signup from "../../pages/Signup";
+import { useSelector } from "react-redux";
 import "./header.css";
 
 const Header = () => {
@@ -28,7 +29,9 @@ const Header = () => {
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
     const [showSignup, setShowSignup] = useState(false);
-
+    const [searchValue, setSearchValue] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
+    const [showSearchResults, setShowSearchResults] = useState(false);
 
     // Lấy thông tin user từ localStorage
     const user = JSON.parse(localStorage.getItem("user"));
@@ -51,6 +54,38 @@ const Header = () => {
             name: "Thực phẩm chức năng"
         }
     ];
+
+    // Lấy products từ Redux store
+    const products = useSelector((state) => state.product.products?.data || []);
+
+    const handleSearch = (value) => {
+        setSearchValue(value);
+        if (value.trim() === "") {
+            setSearchResults([]);
+            setShowSearchResults(false);
+            return;
+        }
+
+        const filtered = products.filter(item =>
+            item.name.toLowerCase().includes(value.toLowerCase())
+        ).slice(0, 5);
+
+        setSearchResults(filtered);
+        setShowSearchResults(true);
+    };
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (!event.target.closest('.search__wrapper')) {
+                setShowSearchResults(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     const handleLogin = () => {
         setShowLogin(true);
@@ -95,7 +130,48 @@ const Header = () => {
                                 type="text"
                                 className="search__input"
                                 placeholder="Tên thuốc, triệu chứng, vitamin và thực phẩm chức năng"
+                                value={searchValue}
+                                onChange={(e) => handleSearch(e.target.value)}
+                                onFocus={() => setShowSearchResults(true)}
                             />
+                            {showSearchResults && searchResults.length > 0 && (
+                                <div className="search__results">
+                                    {searchResults.map((product) => (
+                                        <Link
+                                            key={product._id}
+                                            to={`/product/${product._id}`}
+                                            className="search__result-item"
+                                            onClick={() => {
+                                                setShowSearchResults(false);
+                                                setSearchValue("");
+                                            }}
+                                        >
+                                            <div className="search__result-image">
+                                                {product.image ? (
+                                                    <img
+                                                        src={product.image}
+                                                        alt={product.name}
+                                                        onError={(e) => {
+                                                            e.target.onerror = null;
+                                                            e.target.src = 'https://via.placeholder.com/50'; // Thêm ảnh placeholder
+                                                        }}
+                                                    />
+                                                ) : (
+                                                    <div className="placeholder-image">
+                                                        <Package size={24} />
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <div className="search__result-info">
+                                                <span className="product-name">{product.name}</span>
+                                                <span className="product-price">
+                                                    {product.price?.toLocaleString()}đ
+                                                </span>
+                                            </div>
+                                        </Link>
+                                    ))}
+                                </div>
+                            )}
                         </div>
 
                         <div className="header__actions">
@@ -109,27 +185,41 @@ const Header = () => {
 
                             {user ? (
                                 <div className="user__menu">
-                                    <button
-                                        className="login__button"
-                                        onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                                    <div className="menu__wrapper"
+                                        onMouseEnter={() => setIsUserMenuOpen(true)}
+                                        onMouseLeave={() => setIsUserMenuOpen(false)}
                                     >
-                                        <User size={20} />
-                                        {user.name}
-                                        <ChevronDown size={16} className={`chevron ${isUserMenuOpen ? 'rotate' : ''}`} />
-                                    </button>
+                                        <button className="login__button">
+                                            <User size={20} />
+                                            Chào, Khách...
+                                            <ChevronDown size={16} className={`chevron ${isUserMenuOpen ? 'rotate' : ''}`} />
+                                        </button>
 
-                                    {isUserMenuOpen && (
-                                        <div className="user__dropdown">
-                                            <Link to="/profile" className="dropdown__item">
-                                                <User size={16} />
-                                                <span>Tài khoản</span>
-                                            </Link>
-                                            <button className="dropdown__item" onClick={handleLogout}>
-                                                <LogOut size={16} />
-                                                <span>Đăng xuất</span>
-                                            </button>
-                                        </div>
-                                    )}
+                                        {isUserMenuOpen && (
+                                            <div className="user__dropdown">
+                                                <Link to="/profile" className="dropdown__item">
+                                                    <User size={16} />
+                                                    <span>Thông tin cá nhân</span>
+                                                </Link>
+                                                <Link to="/order" className="dropdown__item">
+                                                    <Clock size={16} />
+                                                    <span>Lịch sử đơn hàng</span>
+                                                </Link>
+                                                <Link to="/vouchers" className="dropdown__item">
+                                                    <Package size={16} />
+                                                    <span>Mã giảm giá</span>
+                                                </Link>
+                                                <Link to="/addresses" className="dropdown__item">
+                                                    <MapPin size={16} />
+                                                    <span>Số địa chỉ nhận hàng</span>
+                                                </Link>
+                                                <button className="dropdown__item logout" onClick={handleLogout}>
+                                                    <LogOut size={16} />
+                                                    <span>Đăng xuất</span>
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             ) : (
                                 <button className="login__button" onClick={handleLogin}>

@@ -6,14 +6,13 @@ import Helmet from "../components/Helmet/Helmet";
 import CommonSection from "../components/UI/CommonSection";
 import { motion } from "framer-motion";
 import "../styles/cart.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
     deleteCartItemApi,
     getAllCartItemApi,
 } from "../../redux/slices/cartSlice";
 import { toast } from "react-toastify";
 import { VND } from "../../utils/convertVND";
-import { useNavigate } from "react-router-dom";
 import { Button, Table } from "antd";
 import {
     decreaseItemService,
@@ -126,6 +125,23 @@ const Cart = () => {
             dispatch(getAllCartItemApi());
         }
     };
+
+    const EmptyCart = () => {
+        return (
+            <div className="empty-cart text-center">
+                <img
+                    src="https://prod-cdn.pharmacity.io/e-com/images/static-website/20240706155710-0-empty-cart.png"
+                    alt="Empty Cart"
+                    style={{ width: "200px", marginBottom: "20px" }}
+                />
+                <h3>Chưa có sản phẩm nào</h3>
+                <p>Hãy khám phá để mua sắm thêm</p>
+                <Link to="/" className="discover-btn">
+                    Khám phá ngay
+                </Link>
+            </div>
+        );
+    };
     return (
         <Helmet title="Cart">
             {loadingDelete ? (
@@ -133,68 +149,47 @@ const Cart = () => {
             ) : (
                 ""
             )}
-            {/* <CommonSection title="Giỏ hàng" /> */}
             <section>
                 <Container>
                     <Row>
-                        <Col lg="9">
-                            {cartItems.length === 0 ? (
-                                <h2 className="fs-4 text-center">
-                                    Không có mặt hàng nào được thêm vào giỏ hàng
-                                </h2>
-                            ) : (
-                                // <table className="table bordered">
-                                //     <thead>
-                                //         <tr>
-                                //             <th>Hình ảnh</th>
-                                //             <th>Tên sản phẩm</th>
-                                //             <th>Giá</th>
-                                //             <th>Số lượng</th>
-                                //             <th>Xóa</th>
-                                //         </tr>
-                                //     </thead>
-                                //     <tbody>
-                                //         {cartItems.map((item, index) => (
-                                //             <Tr
-                                //                 item={item}
-                                //                 key={index}
-                                //                 onRemoveProductFromCart={
-                                //                     removeProductFromCart
-                                //                 }
-                                //             />
-                                //         ))}
-                                //     </tbody>
-                                // </table>
-                                <Table
-                                    dataSource={cartItems}
-                                    columns={columns}
-                                />
-                            )}
-                        </Col>
-                        <Col lg="3">
-                            <div style={{ display: "flex" }}>
-                                <h4>Tổng cộng: &nbsp;</h4>
-                                <h6 className="d-flex align-items-center justify-content-between">
-                                    <span className="fs-4 fw-bold">
-                                        {VND.format(summary)}
-                                    </span>
-                                </h6>
-                            </div>
-                            <p className="fs-6 mt-2">
-                                <i>
-                                    *Thuế và phí vận chuyển sẽ được tính khi
-                                    thanh toán
-                                </i>
-                            </p>
-                            <div>
-                                <button className="buy__btn w-100 ">
-                                    <Link to="/checkout">Thanh toán</Link>
-                                </button>
-                                <button className="buy__btn w-100 mt-3">
-                                    <Link to="/shop">Tiếp tục mua sắm</Link>
-                                </button>
-                            </div>
-                        </Col>
+                        {cartItems.length === 0 ? (
+                            <Col lg="12">
+                                <EmptyCart />
+                            </Col>
+                        ) : (
+                            <>
+                                <Col lg="9">
+                                    <Table
+                                        dataSource={cartItems}
+                                        columns={columns}
+                                    />
+                                </Col>
+                                <Col lg="3">
+                                    <div style={{ display: "flex" }}>
+                                        <h4>Tổng cộng: &nbsp;</h4>
+                                        <h6 className="d-flex align-items-center justify-content-between">
+                                            <span className="fs-4 fw-bold">
+                                                {VND.format(summary)}
+                                            </span>
+                                        </h6>
+                                    </div>
+                                    <p className="fs-6 mt-2">
+                                        <i>
+                                            *Thuế và phí vận chuyển sẽ được tính khi
+                                            thanh toán
+                                        </i>
+                                    </p>
+                                    <div>
+                                        <button className="buy__btn w-100 ">
+                                            <Link to="/checkout">Thanh toán</Link>
+                                        </button>
+                                        <button className="buy__btn w-100 mt-3">
+                                            <Link to="/shop">Tiếp tục mua sắm</Link>
+                                        </button>
+                                    </div>
+                                </Col>
+                            </>
+                        )}
                     </Row>
                 </Container>
             </section>
@@ -202,26 +197,4 @@ const Cart = () => {
     );
 };
 
-const Tr = (props) => {
-    const { item, onRemoveProductFromCart } = props;
-
-    return (
-        <tr>
-            <td>
-                <img src={item.pathImg} alt="#" />
-            </td>
-            <td>{item.name}</td>
-            <td>{VND.format(item.price)}</td>
-            <td>{item.quantity}</td>
-            <td>
-                <motion.span
-                    whileTap={{ scale: 1.2 }}
-                    onClick={() => onRemoveProductFromCart(item.id)}
-                >
-                    <i className="ri-delete-bin-line"></i>
-                </motion.span>
-            </td>
-        </tr>
-    );
-};
 export default Cart;
