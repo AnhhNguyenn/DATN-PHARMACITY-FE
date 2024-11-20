@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Col, Container, Row } from "reactstrap";
-import CommonSection from "../components/UI/CommonSection";
 import Helmet from "../components/Helmet/Helmet";
 import ProductsList from "../components/UI/ProductsList";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,131 +8,273 @@ import "../styles/shop.css";
 import { UserContext } from "../contexts/UserContext";
 import { Pagination } from "antd";
 
-const filterProducts = (products, filterValue, sortValue, searchValue) => {
-  const filteredProducts =
-    filterValue === "all"
-      ? products
-      : products.filter((item) => item.slug === filterValue);
-
-  const sortedProducts =
-    sortValue === "all"
-      ? filteredProducts
-      : sortValue === "ascending"
-      ? [...filteredProducts].sort((a, b) => a.price - b.price)
-      : [...filteredProducts].sort((a, b) => b.price - a.price);
-
-  return searchValue
-    ? sortedProducts.filter((item) =>
-        item.name.toLowerCase().includes(searchValue.toLowerCase())
-      )
-    : sortedProducts;
-};
-
 const Shop = () => {
-  const dispatch = useDispatch();
-  const { data } = useContext(UserContext);
-  const products = useSelector((state) => state.product.products || []);
-  const categories = useSelector((state) => state.category.categories || []);
-  const [productsData, setProductsData] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [filterValue, setFilterValue] = useState("all");
-  const [sortValue, setSortValue] = useState("all");
-  const [searchValue, setSearchValue] = useState("");
-  const itemsPerPage = 12;
+    const dispatch = useDispatch();
+    const products = useSelector((state) => state.product.products || []);
+    const categories = useSelector((state) => state.category.categories || []);
+    const [productsData, setProductsData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [searchValue, setSearchValue] = useState("");
+    const [minPrice, setMinPrice] = useState("");
+    const [maxPrice, setMaxPrice] = useState("");
+    const [tempMinPrice, setTempMinPrice] = useState("");
+    const [tempMaxPrice, setTempMaxPrice] = useState("");
+    const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState("all");
+    const [sortOrder, setSortOrder] = useState("none");
+    const [showScrollButton, setShowScrollButton] = useState(false);
+    const itemsPerPage = 20;
 
-  useEffect(() => {
-    dispatch(
-      getAllProductsApi({ pageNumber: currentPage, pageSize: itemsPerPage })
+    const priceRanges = [
+        { label: "Dưới 100.000 đ", min: 0, max: 100000 },
+        { label: "100.000 đ - 300.000 đ", min: 100000, max: 300000 },
+        { label: "300.000 đ - 500.000 đ", min: 300000, max: 500000 },
+        { label: "Trên 500.000 đ", min: 500000, max: Infinity }
+    ];
+
+    useEffect(() => {
+        dispatch(getAllProductsApi({ pageNumber: currentPage, pageSize: itemsPerPage }));
+    }, [currentPage, dispatch]);
+
+    useEffect(() => {
+        console.log(products); // Kiểm tra dữ liệu sản phẩm
+    }, [products]);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setShowScrollButton(window.scrollY > 300);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    useEffect(() => {
+        let filtered = products.data || [];
+
+        // Filter by search
+        if (searchValue) {
+            filtered = filtered.filter(item =>
+                item.name.toLowerCase().includes(searchValue.toLowerCase())
+            );
+        }
+
+        // Filter by custom price range
+        if (minPrice && maxPrice) {
+            filtered = filtered.filter(item =>
+                item.price >= Number(minPrice) && item.price <= Number(maxPrice)
+            );
+        }
+
+        // Filter by checkbox price ranges
+        if (selectedPriceRanges.length > 0) {
+            filtered = filtered.filter(item =>
+                selectedPriceRanges.some(range =>
+                    item.price >= range.min && item.price <= range.max
+                )
+            );
+        }
+
+        // Filter by category
+        if (selectedCategory && selectedCategory !== "all") {
+            filtered = filtered.filter(item => item.categorySlug === selectedCategory);
+        }
+
+        // Sort
+        if (sortOrder === "ascending") {
+            filtered = [...filtered].sort((a, b) => a.price - b.price);
+        } else if (sortOrder === "descending") {
+            filtered = [...filtered].sort((a, b) => b.price - a.price);
+        }
+
+        setProductsData(filtered);
+    }, [products, searchValue, minPrice, maxPrice, selectedPriceRanges, selectedCategory, sortOrder]);
+
+    const handlePriceRangeCheck = (range) => {
+        setSelectedPriceRanges([range]); // Chỉ cho phép chọn một khoảng giá
+        setTempMinPrice(range.min.toString());
+        setTempMaxPrice(range.max === Infinity ? '' : range.max.toString());
+        setMinPrice(range.min.toString());
+        setMaxPrice(range.max === Infinity ? '' : range.max.toString());
+    };
+
+    const resetFilters = () => {
+        setSearchValue("");
+        setMinPrice("");
+        setMaxPrice("");
+        setTempMinPrice("");
+        setTempMaxPrice("");
+        setSelectedPriceRanges([]);
+        setSelectedCategory("all");
+        setSortOrder("none");
+    };
+
+    const handleCategoryChange = (categorySlug) => {
+        setSelectedCategory(categorySlug);
+    };
+
+    const applyCustomPriceRange = () => {
+        if (tempMinPrice && tempMaxPrice) {
+            setMinPrice(tempMinPrice);
+            setMaxPrice(tempMaxPrice);
+            setSelectedPriceRanges([]);
+        }
+    };
+
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    };
+
+    return (
+        <Helmet title="Shop">
+            <section>
+                <Container>
+                    <Row>
+                        <Col lg="3">
+                            <div className="shop__sidebar">
+                                <div className="filter__header">
+                                    <h3>Bộ lọc</h3>
+                                    <button className="reset__button" onClick={resetFilters}>
+                                        Thiết lập lại
+                                    </button>
+                                </div>
+                                <div className="filter__widget">
+                                    <h4>Tìm kiếm</h4>
+                                    <div className="search__box">
+                                        <input
+                                            type="text"
+                                            placeholder="Tìm kiếm..."
+                                            value={searchValue}
+                                            onChange={(e) => setSearchValue(e.target.value)}
+                                        />
+                                        <span><i className="ri-search-line"></i></span>
+                                    </div>
+                                </div>
+
+                                <div className="filter__widget">
+                                    <h4>Khoảng giá</h4>
+                                    <div className="price__range">
+                                        <input
+                                            type="number"
+                                            placeholder="Tối thiểu"
+                                            value={tempMinPrice}
+                                            onChange={(e) => setTempMinPrice(e.target.value)}
+                                        />
+                                        <input
+                                            type="number"
+                                            placeholder="Tối đa"
+                                            value={tempMaxPrice}
+                                            onChange={(e) => setTempMaxPrice(e.target.value)}
+                                        />
+                                        <button
+                                            onClick={applyCustomPriceRange}
+                                            disabled={!tempMinPrice || !tempMaxPrice}
+                                        >
+                                            Áp dụng
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="filter__widget">
+                                    <div className="filter__checkbox">
+                                        {priceRanges.map((range) => (
+                                            <label key={range.label}>
+                                                <input
+                                                    type="radio"
+                                                    name="priceRange"
+                                                    checked={selectedPriceRanges.some(r =>
+                                                        r.min === range.min && r.max === range.max
+                                                    )}
+                                                    onChange={() => handlePriceRangeCheck(range)}
+                                                />
+                                                {range.label}
+                                            </label>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="filter__widget">
+                                    <h4>Danh mục</h4>
+                                    <div className="filter__radio">
+                                        <label>
+                                            <input
+                                                type="radio"
+                                                name="category"
+                                                value="all"
+                                                checked={selectedCategory === "all"}
+                                                onChange={() => handleCategoryChange("all")}
+                                            />
+                                            Tất cả
+                                        </label>
+                                        {categories.map((category) => (
+                                            <label key={category.id}>
+                                                <input
+                                                    type="radio"
+                                                    name="category"
+                                                    value={category.slug}
+                                                    checked={selectedCategory === category.slug}
+                                                    onChange={() => handleCategoryChange(category.slug)}
+                                                />
+                                                {category.name}
+                                            </label>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </Col>
+                        <Col lg="9">
+                            <div className="sticky-controls">
+                                <div className="sort__controls">
+                                    <button
+                                        className={`sort__button ${sortOrder === "ascending" ? "active" : ""}`}
+                                        onClick={() => setSortOrder("ascending")}
+                                    >
+                                        Giá tăng dần
+                                    </button>
+                                    <button
+                                        className={`sort__button ${sortOrder === "descending" ? "active" : ""}`}
+                                        onClick={() => setSortOrder("descending")}
+                                    >
+                                        Giá giảm dần
+                                    </button>
+                                </div>
+                            </div>
+
+                            {productsData.length === 0 ? (
+                                <h1 className="text-center fs-4">
+                                    Hiện tại không có sản phẩm nào!
+                                </h1>
+                            ) : (
+                                <ProductsList data={productsData} />
+                            )}
+
+                            <div style={{ textAlign: "center", marginTop: "20px" }}>
+                                <Pagination
+                                    current={currentPage}
+                                    pageSize={itemsPerPage}
+                                    total={products.pagination?.totalRecords || 0}
+                                    onChange={(page) => setCurrentPage(page)}
+                                    showSizeChanger={false}
+                                    hideOnSinglePage={true}
+                                    responsive={true}
+                                />
+                            </div>
+                        </Col>
+                    </Row>
+                </Container>
+            </section>
+
+            <button
+                className={`scroll-to-top ${showScrollButton ? 'visible' : ''}`}
+                onClick={scrollToTop}
+            >
+                <i className="ri-arrow-up-line"></i>
+            </button>
+        </Helmet>
     );
-  }, [currentPage, dispatch]);
-
-  useEffect(() => {
-    setProductsData(
-      filterProducts(products.data || [], filterValue, sortValue, searchValue)
-    );
-  }, [products, filterValue, sortValue, searchValue]);
-
-  const handleFilter = (e) => {
-    setFilterValue(e.target.value);
-  };
-
-  const handleSort = (e) => {
-    setSortValue(e.target.value);
-  };
-
-  const handleSearch = (e) => {
-    setSearchValue(e.target.value);
-  };
-
-  const onPageChange = (page) => {
-    setCurrentPage(page);
-  };
-
-  return (
-    <Helmet title="Shop">
-      <CommonSection title="Sản Phẩm" />
-      <section>
-        <Container>
-          <Row>
-            <Col lg="3" md="6">
-              <div className="filter__widget">
-                <select onChange={handleFilter}>
-                  <option value="all">Lọc theo danh mục</option>
-                  {categories.map((item) => (
-                    <option key={item.id} value={item.slug}>
-                      {item.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </Col>
-            <Col lg="3" md="6" className="text-end">
-              <div className="filter__widget">
-                <select onChange={handleSort}>
-                  <option value="all">Sắp xếp theo</option>
-                  <option value="ascending">Tăng dần</option>
-                  <option value="descending">Giảm dần</option>
-                </select>
-              </div>
-            </Col>
-            <Col lg="6" md="12">
-              <div className="search__box">
-                <input
-                  type="text"
-                  placeholder="Tìm kiếm sản phẩm..."
-                  onChange={handleSearch}
-                />
-                <span>
-                  <i className="ri-search-line"></i>
-                </span>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </section>
-      <section>
-        <Container>
-          <Row>
-            {productsData.length === 0 ? (
-              <h1 className="text-center fs-4">
-                Hiện tại không có sản phẩm nào!
-              </h1>
-            ) : (
-              <ProductsList data={productsData} />
-            )}
-          </Row>
-        </Container>
-      </section>
-      <div style={{ textAlign: "center", marginTop: "20px" }}>
-        <Pagination
-          current={currentPage}
-          pageSize={itemsPerPage}
-          total={products.pagination?.totalRecords || 0}
-          onChange={onPageChange}
-        />
-      </div>
-    </Helmet>
-  );
 };
 
 export default Shop;

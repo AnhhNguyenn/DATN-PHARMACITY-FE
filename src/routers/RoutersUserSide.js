@@ -12,21 +12,21 @@ import { OrderDetail } from "../userSide/components/UI/OrderDetail";
 import Profile from "../userSide/pages/Profile/Profile";
 
 const Routers = () => {
-  return (
-    <Routes>
-      <Route path="/" element={<Navigate to="/home" />} />
-      <Route path="home" element={<Home />} />
-      <Route path="shop" element={<Shop />} />
-      <Route path="shop/:id" element={<ProductDetails />} />
-      <Route path="cart" element={<Cart />} />
-      <Route path="checkout" element={<Checkout />} />
-      <Route path="login" element={<Login />} />
-      <Route path="signup" element={<Signup />} />
-      <Route path="order" element={<Order />} />
-      <Route path="order/:id" element={<OrderDetail />} />
-      <Route path="profile" element={<Profile />} />
-    </Routes>
-  );
+    return (
+        <Routes>
+            <Route path="/" element={<Navigate to="/home" />} />
+            <Route path="home" element={<Home />} />
+            <Route path="shop" element={<Shop />} />
+            <Route path="shop/:id" element={<ProductDetails />} />
+            <Route path="cart" element={<Cart />} />
+            <Route path="checkout" element={<Checkout />} />
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<Signup />} />
+            <Route path="order" element={<Order />} />
+            <Route path="order/:id" element={<OrderDetail />} />
+            <Route path="profile" element={<Profile />} />
+        </Routes>
+    );
 };
 
 export default Routers;

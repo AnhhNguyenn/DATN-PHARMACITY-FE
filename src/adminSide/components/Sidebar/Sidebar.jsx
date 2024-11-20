@@ -23,6 +23,7 @@ import {
   Groups2Outlined,
   ReceiptLongOutlined,
 } from "@mui/icons-material"; // Import các icon từ Material-UI để hiển thị biểu tượng trong Sidebar.
+import DiscountIcon from "@mui/icons-material/Discount";
 import PendingOutlinedIcon from "@mui/icons-material/PendingOutlined"; // Import icon dành cho trạng thái "Chờ phê duyệt".
 import DeliveryDiningOutlinedIcon from "@mui/icons-material/DeliveryDiningOutlined"; // Import icon dành cho trạng thái "Đã giao hàng".
 import { NavLink } from "react-router-dom"; // Import NavLink từ React Router để tạo các đường dẫn điều hướng.
@@ -35,6 +36,7 @@ const navItems = [
   { text: "Trang chủ", icon: <HomeOutlined />, url: "dashboard" },
   { text: "Sản phẩm", icon: <ShoppingCartOutlined />, url: "products" },
   { text: "Loại sản phẩm", icon: <CategoryOutlined />, url: "categories" },
+  { text: "Khuyến mãi", icon: <DiscountIcon />, url: "Promotions" },
   { text: "Tài khoản", icon: <Groups2Outlined />, url: "users" },
 ]; // Danh sách các mục chính trong Sidebar, mỗi mục có tiêu đề, biểu tượng và đường dẫn.
 

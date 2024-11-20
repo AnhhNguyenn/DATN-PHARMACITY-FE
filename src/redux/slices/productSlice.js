@@ -17,14 +17,20 @@ export const productSlice = createSlice({
     });
   },
 });
-// lấy danh sách sản phẩm
+// Lấy danh sách sản phẩm
 export const getAllProductsApi = createAsyncThunk(
   "product/getAllProducts",
-  async () => {
-    const respone = await getAllProductService();
-    return respone.data;
+  async ({ pageNumber, pageSize }) => {
+    try {
+      const response = await getAllProductService(pageNumber, pageSize);
+      return response.data; // Đảm bảo trả về data đúng từ API
+    } catch (error) {
+      console.error("Error in getAllProductsApi:", error);
+      throw error;
+    }
   }
 );
+
 //Thêm mới một sản phẩm
 export const addProductApi = async (formData) => {
   try {

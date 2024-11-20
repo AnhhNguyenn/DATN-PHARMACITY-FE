@@ -7,16 +7,18 @@ import { categorySlice } from "./slices/categorySlice";
 import orderSlice from "./slices/orderSlice";
 import { promotionSlice } from "./slices/promotionSlice";
 
+
+
 const store = configureStore({
-  reducer: {
-    user: userSlice.reducer,
-    cart: cartSlice,
-    product: productSlice.reducer,
-    globalSlice,
-    category: categorySlice.reducer,
-    orderSlice,
-    promotion: promotionSlice.reducer,
-  },
-});
+    reducer: {
+        user: userSlice.reducer,
+        cart: cartSlice,
+        product: productSlice.reducer,
+        globalSlice,
+        category: categorySlice.reducer,
+        orderSlice,
+        promotion: promotionSlice.reducer
+    }
+})
 
 export default store;
