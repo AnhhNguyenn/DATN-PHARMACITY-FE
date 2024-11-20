@@ -31,34 +31,34 @@ const ProductCard = (props) => {
         }
     };
     return (
-        <Col lg="3" md="4" className="mb-2">
-            <div className="product__item" style={{ minHeight: "450px" }}>
+        <Col lg="3" md="4" sm="6" xs="12" className="mb-4">
+            <div className="product__item">
                 <div className="product__img">
                     <motion.img
                         whileHover={{ scale: 0.9 }}
                         src={item.pathImg}
                         alt="productImg"
-                        style={{ width: "300px", height: "300px" }}
                     />
-                    <div className="p-2 product__info">
-                        <h3
-                            className="product__name"
-                            style={{ textOverflow: "ellipsis" }}
-                        >
+                </div>
+                <div className="product__info">
+                    <div>
+                        <h3 className="product__name">
                             <Link reloadDocument to={`/shop/${item.id}`}>
                                 {item.name}
                             </Link>
                         </h3>
                         <span>{item.categoryName}</span>
+                        <div className="product__card-bottom d-flex align-items-center justify-content-between">
+                            <span className="price">{VND.format(item.price)}</span>
+                        </div>
                     </div>
-                    <div className="product__card-bottom d-flex align-items-center justify-content-between p-2">
-                        <span className="price">{VND.format(item.price)}</span>
+                    <div className="product__button-container">
+                        <Button type="primary" block onClick={addToCart}>
+                            Thêm vào giỏ hàng
+                        </Button>
                     </div>
                 </div>
             </div>
-            <Button type="primary" block onClick={addToCart}>
-                Thêm vào giỏ hàng
-            </Button>
         </Col>
     );
 };

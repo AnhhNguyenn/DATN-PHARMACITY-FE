@@ -133,7 +133,7 @@ const Cart = () => {
             ) : (
                 ""
             )}
-            <CommonSection title="Giỏ hàng" />
+            {/* <CommonSection title="Giỏ hàng" /> */}
             <section>
                 <Container>
                     <Row>
