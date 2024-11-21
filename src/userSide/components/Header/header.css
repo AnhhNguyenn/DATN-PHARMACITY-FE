@@ -148,6 +148,7 @@
     align-items: center;
     gap: 16px;
     flex-shrink: 0;
+    height: 70px;
 }
 
 .action__button {
@@ -157,13 +158,15 @@
     cursor: pointer;
     padding: 2px;
     display: flex;
+    align-items: center;
+    height: 36px;
 }
 
 .login__button {
     background: white;
     border: none;
     border-radius: 20px;
-    padding: 8px 16px;
+    padding: 6px 16px;
     color: #000000;
     font-size: 14px;
     display: flex;
@@ -173,6 +176,7 @@
     font-weight: 500;
     white-space: nowrap;
     transition: all 0.2s ease;
+    height: 36px;
 }
 
 .login__button img {
@@ -182,8 +186,8 @@
 }
 
 .login__button img.user-avatar {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
     object-fit: cover;
 }
@@ -324,7 +328,7 @@
 }
 
 .chevron {
-    transition: transform 0.3s ease;
+    transition: transform 0.2s ease;
 }
 
 .chevron.rotate {
@@ -386,6 +390,14 @@
     position: relative;
 }
 
+.user__menu {
+    padding-bottom: 10px;
+}
+
+.user__menu:hover .chevron {
+    transform: rotate(180deg);
+}
+
 .menu__wrapper {
     position: relative;
     padding-bottom: 8px;
@@ -400,6 +412,16 @@
     width: 220px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    margin-top: -10px;
+}
+
+.user__menu:hover .user__dropdown {
+    opacity: 1;
+    visibility: visible;
+    margin-top: 0;
 }
 
 .dropdown__item {
@@ -416,6 +438,10 @@
     text-align: left;
     cursor: pointer;
     font-size: 14px;
+}
+
+.user__menu:hover .dropdown__item {
+    transform: translateY(0);
 }
 
 .dropdown__item:first-child {
