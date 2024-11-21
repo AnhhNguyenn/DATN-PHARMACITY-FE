@@ -114,69 +114,66 @@ const ProductDetails = () => {
     return (
         <Helmet title={productDetail.name}>
             {loadingCart && <Progress animated value="100" className="progress" />}
-            {/* <CommonSection title={productDetail.name} /> */}
             <section>
                 <Container>
-                    <Row>
-                        <Col lg="6">
-                            {productDetail.image && (
-                                <img
-                                    src={productDetail.image}
-                                    alt={productDetail.name}
-                                    onError={(e) => {
-                                        e.target.onerror = null;
-                                        e.target.src = 'placeholder-image-url';
-                                    }}
-                                />
-                            )}
-                        </Col>
-                        <Col lg="6">
-                            <div className="product__details">
-                                <h2>{productDetail.name}</h2>
-                                <div className="product__info">
-                                    <span className="product__price">
-                                        Giá: {VND.format(productDetail.price)}
-                                    </span>
-                                    <span className="product__category">
-                                        Loại sản phẩm: {productDetail.category?.toUpperCase()}
-                                    </span>
-                                    <span className="product__quantity">
-                                        Số lượng còn lại: {productDetail.quantity}
-                                    </span>
-                                    <p className="product__description mt-3">
-                                        {productDetail.description}
-                                    </p>
+                    <div className="product__container">
+                        <Row>
+                            <Col lg="5">
+                                <div className="product__image-container">
+                                    {productDetail.image && (
+                                        <img
+                                            className="product__image"
+                                            src={productDetail.image}
+                                            alt={productDetail.name}
+                                            onError={(e) => {
+                                                e.target.onerror = null;
+                                                e.target.src = 'placeholder-image-url';
+                                            }}
+                                        />
+                                    )}
                                 </div>
+                            </Col>
+                            <Col lg="7">
+                                <div className="product__details">
+                                    <h1 className="product__title">{productDetail.name}</h1>
+                                    <span className="product__category">Danh mục: {productDetail.category}</span>
 
-                                <div className="btn--group__addCart">
-                                    <button
-                                        className="btn--sub__addCart"
-                                        onClick={handleDecrementCount}
-                                    >
-                                        <i className="ri-subtract-fill"></i>
-                                    </button>
-                                    <div className="btn--sub__count">
-                                        <p>{countAddCart}</p>
+                                    <div className="product__price-container">
+                                        <span className="discount-tag">-20%</span>
+                                        <span className="original-price">{VND.format(productDetail.price * 1.2 * countAddCart)}</span>
+                                        <span className="final-price">{VND.format(productDetail.price * countAddCart)}</span>
                                     </div>
-                                    <button
-                                        className="btn--sub__addCart"
-                                        onClick={handleIncrementCount}
-                                    >
-                                        <i className="ri-add-fill"></i>
-                                    </button>
-                                </div>
 
-                                <motion.button
-                                    whileTap={{ scale: 1.2 }}
-                                    className="buy__btn btn__addCart"
-                                    onClick={addToCart}
-                                    disabled={loadingCart}
-                                >
-                                    {loadingCart ? 'Đang thêm...' : 'Thêm vào giỏ'}
-                                </motion.button>
-                            </div>
-                        </Col>
-                    </Row>
+                                    <div className="quantity__wrapper">
+                                        <span className="quantity__label">Số lượng</span>
+                                        <div className="quantity__control">
+                                            <button className="quantity__btn" onClick={handleDecrementCount}>-</button>
+                                            <input
+                                                className="quantity__input"
+                                                type="text"
+                                                value={countAddCart}
+                                                readOnly
+                                            />
+                                            <button className="quantity__btn" onClick={handleIncrementCount}>+</button>
+                                        </div>
+                                    </div>
+
+                                    <div className="action__buttons">
+                                        <button className="buy__now">
+                                            Mua ngay
+                                        </button>
+                                        <button
+                                            className="add__cart"
+                                            onClick={addToCart}
+                                            disabled={loadingCart}
+                                        >
+                                            Thêm vào giỏ
+                                        </button>
+                                    </div>
+                                </div>
+                            </Col>
+                        </Row>
+                    </div>
                 </Container>
             </section>
 
