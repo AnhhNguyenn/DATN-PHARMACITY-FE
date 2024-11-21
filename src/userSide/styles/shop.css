@@ -57,7 +57,6 @@
     margin-bottom: 20px;
     position: sticky;
     top: 0;
-    background: white;
     z-index: 100;
     padding: 10px 0;
     border-bottom: 1px solid #eee;
@@ -98,7 +97,6 @@
 
 .filter__checkbox input[type="radio"]:checked {
     border: 2px solid var(--primary-color);
-    background: white;
     position: relative;
 }
 
@@ -175,7 +173,6 @@
     padding: 8px 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background: white;
     cursor: pointer;
     color: #999;
     transition: all 0.3s ease;
@@ -281,7 +278,6 @@
 .sticky-controls {
     position: sticky;
     top: 0;
-    background: white;
     z-index: 100;
     padding: 10px 0;
     border-bottom: 1px solid #eee;

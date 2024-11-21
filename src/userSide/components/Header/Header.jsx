@@ -138,8 +138,8 @@ const Header = () => {
                                 <div className="search__results">
                                     {searchResults.map((product) => (
                                         <Link
-                                            key={product._id}
-                                            to={`/product/${product._id}`}
+                                            key={product.id}
+                                            to={`/shop/${product.id}`}
                                             className="search__result-item"
                                             onClick={() => {
                                                 setShowSearchResults(false);
@@ -147,13 +147,13 @@ const Header = () => {
                                             }}
                                         >
                                             <div className="search__result-image">
-                                                {product.image ? (
+                                                {product.pathImg ? (
                                                     <img
-                                                        src={product.image}
+                                                        src={product.pathImg}
                                                         alt={product.name}
                                                         onError={(e) => {
                                                             e.target.onerror = null;
-                                                            e.target.src = 'https://via.placeholder.com/50'; // Thêm ảnh placeholder
+                                                            e.target.src = 'https://via.placeholder.com/50';
                                                         }}
                                                     />
                                                 ) : (
