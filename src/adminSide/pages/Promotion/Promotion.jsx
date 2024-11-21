@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Table } from "antd";
-import { useSelector, useDispatch } from "react-redux";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useSelector, useDispatch } from "react-redux";
 import { getAllPromotionApi } from "../../../redux/slices/promotionSlice";
+
 export default function Promotion() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const listProduct = useSelector((state) => state.promotion.promotions);
+
+  // Lấy dữ liệu từ Redux store
+  const promotions = useSelector((state) => state.promotion.promotions);
+
+  // Gọi API khi component được render
+  useEffect(() => {
+    dispatch(getAllPromotionApi());
+  }, [dispatch]);
+
+  // Cấu hình cột cho bảng
   const columns = [
     {
       title: "ID",
@@ -17,13 +26,25 @@ export default function Promotion() {
     },
     {
       title: "Tên khuyến mãi",
-      key: "name",
       dataIndex: "name",
+      key: "name",
     },
     {
-      title: "Hastag",
-      dataIndex: "slug",
-      key: "slug",
+      title: "Số lượng",
+      dataIndex: "quantity",
+      key: "quantity",
+    },
+    {
+      title: "Ngày bắt đầu",
+      dataIndex: "startDate",
+      key: "startDate",
+      render: (text) => new Date(text).toLocaleDateString("vi-VN"),
+    },
+    {
+      title: "Ngày kết thúc",
+      dataIndex: "endDate",
+      key: "endDate",
+      render: (text) => new Date(text).toLocaleDateString("vi-VN"),
     },
     {
       title: "Hành động",
@@ -42,19 +63,10 @@ export default function Promotion() {
           >
             Chỉnh sửa
           </Button>
-          <Button
-            variant="contained"
-            color="error"
-            sx={{ marginLeft: "4px" }}
-            onClick={() => onDelete(record.id)}
-          >
-            Xóa
-          </Button>
         </>
       ),
     },
   ];
-  const rows = listProduct.length > 0 ? listProduct : [];
 
   return (
     <>
@@ -65,7 +77,7 @@ export default function Promotion() {
           margin: "50px",
         }}
       >
-        <h1 className="admin-h1">Danh sách loại sản phẩm</h1>
+        <h1 className="admin-h1">Danh sách khuyến mãi</h1>
         <Button
           style={{
             marginRight: "100px",
@@ -80,8 +92,12 @@ export default function Promotion() {
           Thêm khuyến mãi
         </Button>
       </div>
-      <div style={{ height: "78vh", width: "100%", padding: "0px 20px" }}>
-        <Table columns={columns} dataSource={rows} />
+      <div style={{ height: "auto", width: "100%", padding: "20px" }}>
+        <Table
+          columns={columns}
+          dataSource={promotions.map((item) => ({ ...item, key: item.id }))}
+          loading={!promotions.length}
+        />
       </div>
     </>
   );

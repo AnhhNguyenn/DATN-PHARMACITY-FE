@@ -1,13 +1,33 @@
-.table tr td img {
-    width: 80px !important;
-    height: 80px !important;
-    object-fit: cover;
+.empty-cart {
+    padding: 40px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-td i {
-    cursor: pointer;
+.empty-cart h3 {
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 20px;
 }
 
-td {
-    color: var(--primary-color);
+.empty-cart p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.empty-cart .discover-btn {
+    background-color: #0d6efd;
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.empty-cart .discover-btn:hover {
+    background-color: #0b5ed7;
+    color: white;
 }

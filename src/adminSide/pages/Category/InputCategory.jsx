@@ -18,8 +18,18 @@ export default function InputCategory() {
     await dispatch(addCategoryApi(formData, navigate));
   };
   return (
-    <div className="container" style={{ padding: "0px 60px" }}>
-      <h3 className=""> Thêm loại sản phẩm</h3>
+    <div className="container" style={{ padding: "30px 0px" }}>
+      <h1
+        style={{
+          textAlign: "center", // Căn giữa chữ
+          fontSize: "66px", // Kích thước chữ to
+          fontWeight: "600", // Độ đậm của chữ
+          marginBottom: "30px", // Khoảng cách phía dưới
+          color: "#0072bc", // Màu xanh giống Pharmacity
+        }}
+      >
+        Thêm loại sản phẩm
+      </h1>
       <FormCategory initialData={initialValues} submitForm={addCategory} />
     </div>
   );

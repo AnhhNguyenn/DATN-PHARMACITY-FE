@@ -36,7 +36,7 @@ const navItems = [
   { text: "Trang chủ", icon: <HomeOutlined />, url: "dashboard" },
   { text: "Sản phẩm", icon: <ShoppingCartOutlined />, url: "products" },
   { text: "Loại sản phẩm", icon: <CategoryOutlined />, url: "categories" },
-  { text: "Khuyến mãi", icon: <DiscountIcon />, url: "Promotions" },
+  { text: "Khuyến mãi", icon: <DiscountIcon />, url: "promotions" },
   { text: "Tài khoản", icon: <Groups2Outlined />, url: "users" },
 ]; // Danh sách các mục chính trong Sidebar, mỗi mục có tiêu đề, biểu tượng và đường dẫn.
 
