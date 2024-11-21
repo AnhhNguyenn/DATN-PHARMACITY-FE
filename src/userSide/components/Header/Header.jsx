@@ -204,13 +204,9 @@ const Header = () => {
                                             <Clock size={16} />
                                             <span>Lịch sử đơn hàng</span>
                                         </Link>
-                                        <Link to="/vouchers" className="dropdown__item">
+                                        <Link to="/promotion" className="dropdown__item">
                                             <Package size={16} />
                                             <span>Mã giảm giá</span>
-                                        </Link>
-                                        <Link to="/addresses" className="dropdown__item">
-                                            <MapPin size={16} />
-                                            <span>Số địa chỉ nhận hàng</span>
                                         </Link>
                                         <button className="dropdown__item logout" onClick={handleLogout}>
                                             <LogOut size={16} />
