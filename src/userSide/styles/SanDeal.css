@@ -1,7 +1,7 @@
 .san-deal__section {
-    padding: 20px;
-    background: linear-gradient(to right, #ffb347, #ff6b6b);
-    border-radius: 8px;
+    padding: 20px 0;
+    background: linear-gradient(135deg, #ffd6a3, #ffb199);
+    position: relative;
     margin: 20px 0;
 }
 
@@ -10,18 +10,23 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    padding: 0 15px;
 }
 
 .san-deal__title {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
 }
 
 .san-deal__title h2 {
+    color: #333;
     font-size: 24px;
     font-weight: bold;
     margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .san-deal__timer {
@@ -31,122 +36,127 @@
 }
 
 .san-deal__timer-box {
-    background: white;
-    padding: 4px 8px;
+    background: #fff;
+    padding: 2px 8px;
     border-radius: 4px;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
+    color: #ff4d4d;
+    min-width: 32px;
+    text-align: center;
 }
 
 .san-deal__timer-separator {
-    font-size: 20px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
 }
 
 .san-deal__view-more {
-    color: white;
+    color: #fff;
     text-decoration: none;
-}
-
-.san-deal__view-more:hover {
-    text-decoration: underline;
+    font-weight: 500;
+    font-size: 14px;
 }
 
 .san-deal__container {
     position: relative;
+    padding: 0 30px;
 }
 
 .san-deal__products {
     display: flex;
-    gap: 16px;
-    overflow-x: auto;
-    padding-bottom: 16px;
+    gap: 12px;
+    overflow-x: hidden;
     scroll-behavior: smooth;
-}
-
-.san-deal__products::-webkit-scrollbar {
-    height: 6px;
-}
-
-.san-deal__products::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 3px;
-}
-
-.san-deal__products::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 3px;
+    padding: 10px 0;
 }
 
 .san-deal__product-card {
-    flex: 0 0 260px;
-    background: white;
+    flex: 0 0 220px;
+    background: #fff;
     border-radius: 8px;
-    padding: 16px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 8px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .san-deal__product-image {
     position: relative;
+    margin-bottom: 12px;
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+}
+
+.san-deal__product-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }
 
 .san-deal__discount-badge {
     position: absolute;
     top: 8px;
     left: 8px;
-    background: #ff4d4d;
+    background: #ee4d2d;
     color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 14px;
-}
-
-.san-deal__product-image img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 4px;
+    padding: 2px 6px;
+    border-radius: 2px;
+    font-size: 13px;
+    font-weight: 500;
 }
 
 .san-deal__product-info {
-    margin-top: 16px;
+    padding: 0 4px;
 }
 
 .san-deal__product-name {
     font-size: 14px;
-    font-weight: 500;
+    color: #333;
     margin-bottom: 8px;
     display: -webkit-box;
     line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    line-height: 1.4;
     height: 40px;
 }
 
 .san-deal__price-container {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 }
 
 .san-deal__current-price {
+    color: #ee4d2d;
     font-size: 18px;
-    font-weight: bold;
-    color: #ff4d4d;
+    font-weight: 600;
 }
 
 .san-deal__original-price {
+    color: #999;
     font-size: 14px;
     text-decoration: line-through;
-    color: #999;
+    margin-left: 8px;
 }
 
 .san-deal__stats {
     display: flex;
-    justify-content: space-between;
-    font-size: 14px;
-    color: #666;
+    align-items: center;
+    gap: 12px;
+    color: #757575;
+    font-size: 13px;
     margin-bottom: 12px;
+}
+
+.san-deal__stats span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
 .san-deal__buy-button {
@@ -155,29 +165,47 @@
     color: white;
     border: none;
     padding: 8px;
-    border-radius: 4px;
-    cursor: pointer;
+    border-radius: 6px;
+    font-size: 15px;
     font-weight: 500;
+    margin-top: auto;
+    cursor: pointer;
 }
 
 .san-deal__buy-button:hover {
     background: #1557b0;
 }
 
+.san-deal__status-badge {
+    position: absolute;
+    bottom: 50px;
+    left: 12px;
+    background: #ee4d2d;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+}
+
 .san-deal__nav-button {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.9);
-    border: none;
     width: 40px;
     height: 40px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 24px;
+    color: #666;
+    z-index: 1;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.15);
+    opacity: 0.8;
+    transition: opacity 0.2s;
 }
 
 .san-deal__nav-button--prev {
@@ -189,31 +217,52 @@
 }
 
 .san-deal__nav-button:hover {
-    background: white;
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.95);
 }
 
-.san-deal__nav-icon {
-    width: 24px;
-    height: 24px;
+.san-deal__nav-button--prev::before {
+    content: '‹';
+    font-weight: bold;
+}
+
+.san-deal__nav-button--next::before {
+    content: '›';
+    font-weight: bold;
+}
+
+/* Custom scrollbar */
+.san-deal__products::-webkit-scrollbar {
+    display: none;
+}
+
+/* Promotion tag styles */
+.san-deal__promotion-tag {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #fff;
+    border: 1px solid #ff4d4d;
+    color: #ff4d4d;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
 }
 
 /* Responsive styles */
-@media only screen and (max-width: 768px) {
-    .san-deal__product-card {
-        flex: 0 0 200px;
-    }
-
-    .san-deal__product-image img {
-        height: 150px;
-    }
-
+@media (max-width: 768px) {
     .san-deal__nav-button {
         width: 32px;
         height: 32px;
+        font-size: 20px;
     }
 
-    .san-deal__nav-icon {
-        width: 20px;
-        height: 20px;
+    .san-deal__nav-button--prev {
+        left: -16px;
+    }
+
+    .san-deal__nav-button--next {
+        right: -16px;
     }
 }
