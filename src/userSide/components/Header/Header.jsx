@@ -185,46 +185,48 @@ const Header = () => {
 
                             {user ? (
                                 <div className="user__menu">
-                                    <div className="menu__wrapper"
-                                        onMouseEnter={() => setIsUserMenuOpen(true)}
-                                        onMouseLeave={() => setIsUserMenuOpen(false)}
+                                    <button
+                                        className="login__button"
+                                        onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                                     >
-                                        <button className="login__button">
-                                            <User size={20} />
-                                            {user.name}
-                                            <ChevronDown size={16} className={`chevron ${isUserMenuOpen ? 'rotate' : ''}`} />
-                                        </button>
+                                        <img
+                                            src={user.pathImg || "path/to/default/avatar.png"}
+                                            alt="Avatar"
+                                            className="user-avatar"
+                                        />
+                                        <span>Chào, {user.name?.split(' ').pop()}</span>
+                                        <ChevronDown size={16} className={`chevron ${isUserMenuOpen ? 'rotate' : ''}`} />
+                                    </button>
 
-                                        {isUserMenuOpen && (
-                                            <div className="user__dropdown">
-                                                <Link to="/profile" className="dropdown__item">
-                                                    <User size={16} />
-                                                    <span>Thông tin cá nhân</span>
-                                                </Link>
-                                                <Link to="/order" className="dropdown__item">
-                                                    <Clock size={16} />
-                                                    <span>Lịch sử đơn hàng</span>
-                                                </Link>
-                                                <Link to="/vouchers" className="dropdown__item">
-                                                    <Package size={16} />
-                                                    <span>Mã giảm giá</span>
-                                                </Link>
-                                                <Link to="/addresses" className="dropdown__item">
-                                                    <MapPin size={16} />
-                                                    <span>Số địa chỉ nhận hàng</span>
-                                                </Link>
-                                                <button className="dropdown__item logout" onClick={handleLogout}>
-                                                    <LogOut size={16} />
-                                                    <span>Đăng xuất</span>
-                                                </button>
-                                            </div>
-                                        )}
-                                    </div>
+                                    {isUserMenuOpen && (
+                                        <div className="user__dropdown">
+                                            <Link to="/profile" className="dropdown__item">
+                                                <User size={16} />
+                                                <span>Thông tin cá nhân</span>
+                                            </Link>
+                                            <Link to="/order" className="dropdown__item">
+                                                <Clock size={16} />
+                                                <span>Lịch sử đơn hàng</span>
+                                            </Link>
+                                            <Link to="/vouchers" className="dropdown__item">
+                                                <Package size={16} />
+                                                <span>Mã giảm giá</span>
+                                            </Link>
+                                            <Link to="/addresses" className="dropdown__item">
+                                                <MapPin size={16} />
+                                                <span>Số địa chỉ nhận hàng</span>
+                                            </Link>
+                                            <button className="dropdown__item logout" onClick={handleLogout}>
+                                                <LogOut size={16} />
+                                                <span>Đăng xuất</span>
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
                             ) : (
                                 <button className="login__button" onClick={handleLogin}>
                                     <User size={20} />
-                                    Đăng nhập / Đăng ký
+                                    <span>Đăng nhập</span>
                                 </button>
                             )}
                         </div>
@@ -295,7 +297,7 @@ const Header = () => {
                         </div>
                     </div>
                 </div>
-            </header>
+            </header >
         </>
     );
 };
