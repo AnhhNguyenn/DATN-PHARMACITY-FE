@@ -37,21 +37,29 @@ const Header = () => {
     const categories = [
         {
             icon: <Pill className="category__item-icon" />,
-            name: "Dược phẩm"
+            name: "Dược phẩm",
+            slug: "duoc-pham"
         },
         {
             icon: <Heart className="category__item-icon" />,
-            name: "Chăm sóc sức khoẻ"
+            name: "Chăm sóc sức khoẻ",
+            slug: "cham-soc-suc-khoe"
         },
         {
             icon: <Sparkles className="category__item-icon" />,
-            name: "Chăm sóc sắc đẹp"
+            name: "Chăm sóc sắc đẹp",
+            slug: "cham-soc-sac-dep"
         },
         {
             icon: <Leaf className="category__item-icon" />,
-            name: "Thực phẩm chức năng"
+            name: "Thực phẩm chức năng",
+            slug: "thuc-pham-chuc-nang"
         }
     ];
+
+    const handleCategoryClick = (slug) => {
+        navigate(`/shop?slug=${slug}`);
+    };
 
     // Lấy products từ Redux store
     const products = useSelector((state) => state.product.products?.data || []);
@@ -231,10 +239,14 @@ const Header = () => {
                             </button>
                             <div className="category__dropdown">
                                 {categories.map((category, index) => (
-                                    <Link to="#" key={index} className="category__item">
+                                    <button
+                                        key={index}
+                                        className="category__item"
+                                        onClick={() => handleCategoryClick(category.slug)}
+                                    >
                                         {category.icon}
                                         <span>{category.name}</span>
-                                    </Link>
+                                    </button>
                                 ))}
                             </div>
                         </div>
@@ -281,7 +293,7 @@ const Header = () => {
                         </div>
                     </div>
                 </div>
-            </header >
+            </header>
         </>
     );
 };
