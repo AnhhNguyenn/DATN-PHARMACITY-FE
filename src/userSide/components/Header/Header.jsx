@@ -25,8 +25,6 @@ import "./header.css";
 
 const Header = () => {
     const navigate = useNavigate();
-    const [isCategoryOpen, setIsCategoryOpen] = useState(false);
-    // const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
     const [showSignup, setShowSignup] = useState(false);
     const [searchValue, setSearchValue] = useState("");
@@ -226,24 +224,19 @@ const Header = () => {
                     {/* Second Row */}
                     <div className="header__bottom">
                         <div className="category__wrapper">
-                            <button
-                                className={`category__button ${isCategoryOpen ? 'active' : ''}`}
-                                onClick={() => setIsCategoryOpen(!isCategoryOpen)}
-                            >
+                            <button className="category__button">
                                 <Menu size={20} />
                                 Danh mục
-                                <ChevronDown size={16} className={`chevron ${isCategoryOpen ? 'rotate' : ''}`} />
+                                <ChevronDown size={16} className="chevron" />
                             </button>
-                            {isCategoryOpen && (
-                                <div className="category__dropdown">
-                                    {categories.map((category, index) => (
-                                        <Link to="#" key={index} className="category__item">
-                                            {category.icon}
-                                            <span>{category.name}</span>
-                                        </Link>
-                                    ))}
-                                </div>
-                            )}
+                            <div className="category__dropdown">
+                                {categories.map((category, index) => (
+                                    <Link to="#" key={index} className="category__item">
+                                        {category.icon}
+                                        <span>{category.name}</span>
+                                    </Link>
+                                ))}
+                            </div>
                         </div>
 
                         <nav className="main__nav">
