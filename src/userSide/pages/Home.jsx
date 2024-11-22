@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
 
 import Services from "../components/UI/Services";
@@ -8,9 +7,12 @@ import SanDeal from '../pages/SanDeal';
 
 import "../styles/home.css";
 
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllProductsApi } from "../../redux/slices/productSlice";
+
+
 import ProductsList from "../components/UI/ProductsList";
 
-import counterImg from "../../assets/images/counter-timer-img.png";
 import Helmet from "../components/Helmet/Helmet";
 
 import banner1 from "../../assets/images/pharmacity/banners/Banner1.avif";
@@ -18,8 +20,6 @@ import banner2 from "../../assets/images/pharmacity/banners/banner2.avif";
 import banner3 from "../../assets/images/pharmacity/banners/banner3.avif";
 import banner4 from "../../assets/images/pharmacity/banners/banner4.avif";
 import banner5 from "../../assets/images/pharmacity/banners/banner5.avif";
-
-import { useSelector } from "react-redux";
 
 const BannerCarousel = ({ images, sideBanners }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -131,8 +131,8 @@ const BannerCarousel = ({ images, sideBanners }) => {
 };
 
 const Home = () => {
-    const currentUser = JSON.parse(localStorage.getItem("user"));
-    const products = useSelector((state) => state.product.products);
+    const dispatch = useDispatch();
+    const products = useSelector((state) => state.product.products?.data || []);
     const [trendingProducts, setTrendingProducts] = useState([]);
     const [newProducts, setNewProducts] = useState([]);
 
@@ -150,8 +150,12 @@ const Home = () => {
     ];
 
     useEffect(() => {
+        dispatch(getAllProductsApi({ pageNumber: 1, pageSize: 100 }));
+    }, [dispatch]);
+
+    useEffect(() => {
         const currentDate = new Date();
-        if (products.lenght !== 0) {
+        if (products && products.length > 0) {
             const filterNewProducts = products
                 .filter((item) => {
                     const productCreatedDate = new Date(item.createAt);

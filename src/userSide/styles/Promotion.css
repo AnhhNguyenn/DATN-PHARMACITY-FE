@@ -1,0 +1,112 @@
+.promotion-container {
+    padding: 12px;
+    background-color: #f5f5f5;
+    min-height: 100%;
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
+.promotion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.promotion-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.promotion-history {
+    color: #0066cc;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.promotion-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+    padding-bottom: 12px;
+}
+
+.promotion-card {
+    display: flex;
+    background-color: white;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+}
+
+.promotion-card-left {
+    background-color: #0066cc;
+    width: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+}
+
+.pharmacy-logo {
+    color: white;
+    text-align: center;
+    font-size: 12px;
+}
+
+.promotion-card-right {
+    flex: 1;
+    padding: 10px;
+}
+
+.promotion-code {
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.promotion-description {
+    margin: 6px 0;
+    font-size: 12px;
+    color: #666;
+    line-height: 1.3;
+}
+
+.promotion-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 6px;
+}
+
+.promotion-expiry {
+    margin: 0;
+    font-size: 11px;
+    color: #888;
+}
+
+.promotion-details {
+    background: none;
+    border: none;
+    color: #0066cc;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 2px 6px;
+}
+
+@media (max-width: 768px) {
+    .promotion-container {
+        padding: 8px;
+    }
+
+    .promotion-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .promotion-card {
+        width: 100%;
+    }
+}

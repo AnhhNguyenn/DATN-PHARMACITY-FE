@@ -1,7 +1,5 @@
 .shop__sidebar {
     padding: 0 20px 20px;
-    position: sticky;
-    top: 0;
     max-height: 100vh;
     overflow-y: auto;
 }
@@ -55,10 +53,6 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-    position: sticky;
-    top: 0;
-    background: white;
-    z-index: 100;
     padding: 10px 0;
     border-bottom: 1px solid #eee;
 }
@@ -98,7 +92,6 @@
 
 .filter__checkbox input[type="radio"]:checked {
     border: 2px solid var(--primary-color);
-    background: white;
     position: relative;
 }
 
@@ -175,7 +168,6 @@
     padding: 8px 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background: white;
     cursor: pointer;
     color: #999;
     transition: all 0.3s ease;
@@ -281,10 +273,10 @@
 .sticky-controls {
     position: sticky;
     top: 0;
-    background: white;
     z-index: 100;
     padding: 10px 0;
     border-bottom: 1px solid #eee;
+    background-color: #f5f5f5;
 }
 
 .price__range input {
@@ -294,4 +286,24 @@
 .price__range button:disabled {
     background: #ccc;
     cursor: not-allowed;
+}
+
+.load-more-button {
+    display: inline-block;
+    padding: 8px 20px;
+    background-color: white;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.load-more-button:hover {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
 }

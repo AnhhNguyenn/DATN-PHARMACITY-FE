@@ -25,8 +25,6 @@ import "./header.css";
 
 const Header = () => {
     const navigate = useNavigate();
-    const [isCategoryOpen, setIsCategoryOpen] = useState(false);
-    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
     const [showSignup, setShowSignup] = useState(false);
     const [searchValue, setSearchValue] = useState("");
@@ -39,21 +37,29 @@ const Header = () => {
     const categories = [
         {
             icon: <Pill className="category__item-icon" />,
-            name: "Dược phẩm"
+            name: "Dược phẩm",
+            slug: "duoc-pham"
         },
         {
             icon: <Heart className="category__item-icon" />,
-            name: "Chăm sóc sức khoẻ"
+            name: "Chăm sóc sức khoẻ",
+            slug: "cham-soc-suc-khoe"
         },
         {
             icon: <Sparkles className="category__item-icon" />,
-            name: "Chăm sóc sắc đẹp"
+            name: "Chăm sóc sắc đẹp",
+            slug: "cham-soc-sac-dep"
         },
         {
             icon: <Leaf className="category__item-icon" />,
-            name: "Thực phẩm chức năng"
+            name: "Thực phẩm chức năng",
+            slug: "thuc-pham-chuc-nang"
         }
     ];
+
+    const handleCategoryClick = (slug) => {
+        navigate(`/shop?slug=${slug}`);
+    };
 
     // Lấy products từ Redux store
     const products = useSelector((state) => state.product.products?.data || []);
@@ -138,8 +144,8 @@ const Header = () => {
                                 <div className="search__results">
                                     {searchResults.map((product) => (
                                         <Link
-                                            key={product._id}
-                                            to={`/product/${product._id}`}
+                                            key={product.id}
+                                            to={`/shop/${product.id}`}
                                             className="search__result-item"
                                             onClick={() => {
                                                 setShowSearchResults(false);
@@ -147,13 +153,13 @@ const Header = () => {
                                             }}
                                         >
                                             <div className="search__result-image">
-                                                {product.image ? (
+                                                {product.pathImg ? (
                                                     <img
-                                                        src={product.image}
+                                                        src={product.pathImg}
                                                         alt={product.name}
                                                         onError={(e) => {
                                                             e.target.onerror = null;
-                                                            e.target.src = 'https://via.placeholder.com/50'; // Thêm ảnh placeholder
+                                                            e.target.src = 'https://via.placeholder.com/50';
                                                         }}
                                                     />
                                                 ) : (
@@ -185,46 +191,39 @@ const Header = () => {
 
                             {user ? (
                                 <div className="user__menu">
-                                    <div className="menu__wrapper"
-                                        onMouseEnter={() => setIsUserMenuOpen(true)}
-                                        onMouseLeave={() => setIsUserMenuOpen(false)}
-                                    >
-                                        <button className="login__button">
-                                            <User size={20} />
-                                            {user.name}
-                                            <ChevronDown size={16} className={`chevron ${isUserMenuOpen ? 'rotate' : ''}`} />
-                                        </button>
+                                    <button className="login__button">
+                                        <img
+                                            src={user.pathImg || "path/to/default/avatar.png"}
+                                            alt="Avatar"
+                                            className="user-avatar"
+                                        />
+                                        <span>Chào, {user.name?.split(' ').pop()}</span>
+                                        <ChevronDown size={16} className="chevron" />
+                                    </button>
 
-                                        {isUserMenuOpen && (
-                                            <div className="user__dropdown">
-                                                <Link to="/profile" className="dropdown__item">
-                                                    <User size={16} />
-                                                    <span>Thông tin cá nhân</span>
-                                                </Link>
-                                                <Link to="/order" className="dropdown__item">
-                                                    <Clock size={16} />
-                                                    <span>Lịch sử đơn hàng</span>
-                                                </Link>
-                                                <Link to="/vouchers" className="dropdown__item">
-                                                    <Package size={16} />
-                                                    <span>Mã giảm giá</span>
-                                                </Link>
-                                                <Link to="/addresses" className="dropdown__item">
-                                                    <MapPin size={16} />
-                                                    <span>Số địa chỉ nhận hàng</span>
-                                                </Link>
-                                                <button className="dropdown__item logout" onClick={handleLogout}>
-                                                    <LogOut size={16} />
-                                                    <span>Đăng xuất</span>
-                                                </button>
-                                            </div>
-                                        )}
+                                    <div className="user__dropdown">
+                                        <Link to="/profile" className="dropdown__item">
+                                            <User size={16} />
+                                            <span>Thông tin cá nhân</span>
+                                        </Link>
+                                        <Link to="/order" className="dropdown__item">
+                                            <Clock size={16} />
+                                            <span>Lịch sử đơn hàng</span>
+                                        </Link>
+                                        <Link to="/promotion" className="dropdown__item">
+                                            <Package size={16} />
+                                            <span>Mã giảm giá</span>
+                                        </Link>
+                                        <button className="dropdown__item logout" onClick={handleLogout}>
+                                            <LogOut size={16} />
+                                            <span>Đăng xuất</span>
+                                        </button>
                                     </div>
                                 </div>
                             ) : (
                                 <button className="login__button" onClick={handleLogin}>
                                     <User size={20} />
-                                    Đăng nhập / Đăng ký
+                                    <span>Đăng nhập</span>
                                 </button>
                             )}
                         </div>
@@ -233,24 +232,23 @@ const Header = () => {
                     {/* Second Row */}
                     <div className="header__bottom">
                         <div className="category__wrapper">
-                            <button
-                                className={`category__button ${isCategoryOpen ? 'active' : ''}`}
-                                onClick={() => setIsCategoryOpen(!isCategoryOpen)}
-                            >
+                            <button className="category__button">
                                 <Menu size={20} />
                                 Danh mục
-                                <ChevronDown size={16} className={`chevron ${isCategoryOpen ? 'rotate' : ''}`} />
+                                <ChevronDown size={16} className="chevron" />
                             </button>
-                            {isCategoryOpen && (
-                                <div className="category__dropdown">
-                                    {categories.map((category, index) => (
-                                        <Link to="#" key={index} className="category__item">
-                                            {category.icon}
-                                            <span>{category.name}</span>
-                                        </Link>
-                                    ))}
-                                </div>
-                            )}
+                            <div className="category__dropdown">
+                                {categories.map((category, index) => (
+                                    <button
+                                        key={index}
+                                        className="category__item"
+                                        onClick={() => handleCategoryClick(category.slug)}
+                                    >
+                                        {category.icon}
+                                        <span>{category.name}</span>
+                                    </button>
+                                ))}
+                            </div>
                         </div>
 
                         <nav className="main__nav">
