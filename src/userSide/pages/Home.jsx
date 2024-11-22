@@ -150,7 +150,7 @@ const Home = () => {
     ];
 
     useEffect(() => {
-        dispatch(getAllProductsApi({ pageNumber: 1, pageSize: 100 }));
+        dispatch(getAllProductsApi());
     }, [dispatch]);
 
     useEffect(() => {

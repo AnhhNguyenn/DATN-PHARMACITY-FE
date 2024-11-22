@@ -1,13 +1,13 @@
 import requestApi from "../utils/requestApi";
 
-export const getAllProductService = async (
+export const getAllProductsToShopService = async (
     pageNumber,
     pageSize,
 ) => {
     try {
         const response = await requestApi({
             method: "get",
-            url: 'product/all',
+            url: 'product/alltoshop',
             params: {
                 pageNumber,
                 pageSize,
@@ -15,8 +15,19 @@ export const getAllProductService = async (
         });
         return response.data;
     } catch (error) {
-        console.error("Error fetching products:", error);
-        throw error;
+        return error;
+    }
+};
+
+export const getAllProductService = async () => {
+    try {
+        const response = await requestApi({
+            method: "get",
+            url: 'product/all',
+        });
+        return response.data;
+    } catch (error) {
+        return error;
     }
 };
 

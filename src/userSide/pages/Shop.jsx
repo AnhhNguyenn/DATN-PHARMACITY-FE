@@ -3,14 +3,14 @@ import { Col, Container, Row } from "reactstrap";
 import Helmet from "../components/Helmet/Helmet";
 import ProductsList from "../components/UI/ProductsList";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProductsApi } from "../../redux/slices/productSlice";
+import { getAllProductsToShopApi } from "../../redux/slices/productSlice";
 import "../styles/shop.css";
 import { UserContext } from "../contexts/UserContext";
 import { Pagination } from "antd";
 
 const Shop = () => {
     const dispatch = useDispatch();
-    const products = useSelector((state) => state.product.products || []);
+    const { products} = useSelector((state) => state.product);
     const categories = useSelector((state) => state.category.categories || []);
     const [productsData, setProductsData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -33,12 +33,9 @@ const Shop = () => {
     ];
 
     useEffect(() => {
-        dispatch(getAllProductsApi({ pageNumber: currentPage, pageSize: itemsPerPage }));
+        dispatch(getAllProductsToShopApi({ pageNumber: currentPage, pageSize: itemsPerPage }));
     }, [currentPage, dispatch]);
 
-    useEffect(() => {
-        console.log(products); // Kiểm tra dữ liệu sản phẩm
-    }, [products]);
 
     useEffect(() => {
         const handleScroll = () => {
