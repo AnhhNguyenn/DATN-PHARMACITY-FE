@@ -3,14 +3,14 @@ import { Col, Container, Row } from "reactstrap";
 import Helmet from "../components/Helmet/Helmet";
 import ProductsList from "../components/UI/ProductsList";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProductsApi } from "../../redux/slices/productSlice";
+import { getAllProductsToShopApi } from "../../redux/slices/productSlice";
 import "../styles/shop.css";
 
 const Shop = () => {
     const dispatch = useDispatch();
     const products = useSelector((state) => state.product.products || []);
     const [productsData, setProductsData] = useState([]);
-    const [visibleProducts, setVisibleProducts] = useState([]); // Danh sách sản phẩm hiển thị
+    const [visibleProducts, setVisibleProducts] = useState([]); 
     const [currentPage, setCurrentPage] = useState(1);
     const [searchValue, setSearchValue] = useState("");
     const [minPrice, setMinPrice] = useState("");
@@ -18,12 +18,11 @@ const Shop = () => {
     const [tempMinPrice, setTempMinPrice] = useState("");
     const [tempMaxPrice, setTempMaxPrice] = useState("");
     const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
-    const [selectedSlug, setSelectedSlug] = useState(""); // Thêm state để chọn slug
+    const [selectedSlug, setSelectedSlug] = useState(""); 
     const [sortOrder, setSortOrder] = useState("none");
     const [showScrollButton, setShowScrollButton] = useState(false);
-    const itemsPerPage = 20; // Số lượng sản phẩm hiển thị mỗi lần (20 sản phẩm)
+    const itemsPerPage = 20;
 
-    // Object mapping slug -> tên tiếng Việt
     const slugToVietnamese = {
         "thuc-pham-chuc-nang": "Thực phẩm chức năng",
         "cham-soc-sac-dep": "Chăm sóc sắc đẹp",
@@ -39,7 +38,7 @@ const Shop = () => {
     ];
 
     useEffect(() => {
-        dispatch(getAllProductsApi({ pageNumber: currentPage, pageSize: 100 })); // Lấy toàn bộ sản phẩm
+        dispatch(getAllProductsToShopApi({ pageNumber: currentPage, pageSize: 100 })); // Lấy toàn bộ sản phẩm
     }, [currentPage, dispatch]);
 
     useEffect(() => {
@@ -98,7 +97,7 @@ const Shop = () => {
         }
 
         setProductsData(filtered);
-        setVisibleProducts(filtered.slice(0, itemsPerPage)); // Hiển thị 20 sản phẩm đầu tiên
+        setVisibleProducts(filtered.slice(0, itemsPerPage)); 
     }, [
         products,
         searchValue,
@@ -110,7 +109,7 @@ const Shop = () => {
     ]);
 
     const handlePriceRangeCheck = (range) => {
-        setSelectedPriceRanges([range]); // Chỉ cho phép chọn một khoảng giá
+        setSelectedPriceRanges([range]); 
         setTempMinPrice(range.min.toString());
         setTempMaxPrice(range.max === Infinity ? "" : range.max.toString());
         setMinPrice(range.min.toString());
@@ -137,7 +136,7 @@ const Shop = () => {
     };
 
     const handleSlugChange = (slug) => {
-        setSelectedSlug(slug); // Cập nhật slug được chọn
+        setSelectedSlug(slug);
     };
 
     const scrollToTop = () => {
