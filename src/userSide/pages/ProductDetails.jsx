@@ -144,6 +144,21 @@ const ProductDetails = () => {
                                         <span className="final-price">{VND.format(productDetail.price * countAddCart)}</span>
                                     </div>
 
+                                    {/* Action Buttons - Di chuyển lên trên */}
+                                    <div className="action__buttons">
+                                        <button className="buy__now">
+                                            Mua ngay
+                                        </button>
+                                        <button
+                                            className="add__cart"
+                                            onClick={addToCart}
+                                            disabled={loadingCart}
+                                        >
+                                            Thêm vào giỏ
+                                        </button>
+                                    </div>
+
+                                    {/* Quantity Control */}
                                     <div className="quantity__wrapper">
                                         <span className="quantity__label">Số lượng</span>
                                         <div className="quantity__control">
@@ -158,17 +173,10 @@ const ProductDetails = () => {
                                         </div>
                                     </div>
 
-                                    <div className="action__buttons">
-                                        <button className="buy__now">
-                                            Mua ngay
-                                        </button>
-                                        <button
-                                            className="add__cart"
-                                            onClick={addToCart}
-                                            disabled={loadingCart}
-                                        >
-                                            Thêm vào giỏ
-                                        </button>
+                                    {/* Detail Section */}
+                                    <div className="product__description">
+                                        <h3 className="description__title">Giới thiệu sản phẩm</h3>
+                                        <p className="description__text">{productDetail.description}</p>
                                     </div>
                                 </div>
                             </Col>

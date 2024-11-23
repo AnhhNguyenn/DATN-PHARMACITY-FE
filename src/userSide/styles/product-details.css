@@ -174,3 +174,22 @@
     background: #1435C3;
     color: white;
 }
+
+.product__description {
+    margin-top: 20px;
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+}
+
+.description__title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.description__text {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+}
