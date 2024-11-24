@@ -36,56 +36,47 @@ const OrderCard = (props) => {
     };
 
     return (
-        <>
-            <Container>
-                <Card className="card__container">
-                    <CardTitle className="card__title">
-                        Đơn hàng được tạo lúc:{" "}
-                        <span>{date.toLocaleString()}</span>
-                    </CardTitle>
-                    <CardBody>
-                        <Row>
-                            <Col md={6}>
-                                <CardText>
-                                    Số điện thoại: <span>{user?.phone}</span>
-                                </CardText>
-                                <CardText>
-                                    Địa chỉ: <span>{user?.address}</span>
-                                </CardText>
-                            </Col>
-                            <Col>
-                                <div>
-                                    Trạng thái:
-                                    {item.status === 1
-                                        ? " Chưa thanh toán"
-                                        : item.status === 2
-                                        ? " Đang chờ phê duyệt"
-                                        : item.status === 3
-                                        ? " Đã phê duyệt và chưa thanh toán"
-                                        : item.status === 4
-                                        ? " Đã phê duyệt và đã thanh toán"
-                                        : item.status === 5
-                                        ? " Đã giao"
-                                        : " Khởi tạo"}
-                                </div>
-                            </Col>
-                            <Col md={3} className="drop__detail">
-                                <CardText>
-                                    Tổng tiền:{" "}
-                                    <span>{VND.format(item?.total)}</span>
-                                </CardText>
-                                <button
-                                    className="buy__btn detail__btn"
-                                    onClick={handleClick}
-                                >
-                                    Chi tiết
-                                </button>
-                            </Col>
-                        </Row>
-                    </CardBody>
-                </Card>
-            </Container>
-        </>
+        <Card className="order-card">
+            <div className="order-card__header">
+                <div className="order-card__date">
+                    <div className="order-card__label">Đơn hàng được tạo lúc:</div>
+                    <div className="order-card__value">{date.toLocaleString()}</div>
+                </div>
+                <Badge
+                    color={getStatusColor(item.status)}
+                    className="order-card__status"
+                >
+                    {getStatusText(item.status)}
+                </Badge>
+            </div>
+            <CardBody className="order-card__body">
+                <div className="order-card__info">
+                    <div className="order-card__info-item">
+                        <div className="order-card__label">Khách hàng:</div>
+                        <div className="order-card__value">{user?.name}</div>
+                    </div>
+                    <div className="order-card__info-item">
+                        <div className="order-card__label">Số điện thoại:</div>
+                        <div className="order-card__value">{user?.phone}</div>
+                    </div>
+                    <div className="order-card__info-item">
+                        <div className="order-card__label">Địa chỉ:</div>
+                        <div className="order-card__value">{user?.address}</div>
+                    </div>
+                    <div className="order-card__total">
+                        <div className="order-card__label">Tổng tiền:</div>
+                        <div className="order-card__price">{VND.format(item.total)}</div>
+                    </div>
+                </div>
+                <button
+                    className="order-card__button"
+                    onClick={() => navigate(`/order/${item.id}`)}
+                >
+                    Chi tiết
+                    <i className="fas fa-arrow-right"></i>
+                </button>
+            </CardBody>
+        </Card>
     );
 };
 
