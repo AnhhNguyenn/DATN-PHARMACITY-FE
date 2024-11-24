@@ -39,7 +39,6 @@ const Checkout = () => {
     return (
         <>
             <Helmet title="Checkout">
-                <CommonSection title="Thanh toán" />
                 <section>
                     <Container>
                         <Row>

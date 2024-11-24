@@ -12,20 +12,19 @@ const Shop = () => {
     const dispatch = useDispatch();
     const products = useSelector((state) => state.product.products || []);
     const [productsData, setProductsData] = useState([]);
-    const [visibleProducts, setVisibleProducts] = useState([]); // Danh sách sản phẩm hiển thị
-    const [currentPage, setCurrentPage] = useState(1);
+    const [visibleProducts, setVisibleProducts] = useState([]); 
+    const [currentPage] = useState(1);
     const [searchValue, setSearchValue] = useState("");
     const [minPrice, setMinPrice] = useState("");
     const [maxPrice, setMaxPrice] = useState("");
     const [tempMinPrice, setTempMinPrice] = useState("");
     const [tempMaxPrice, setTempMaxPrice] = useState("");
     const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
-    const [selectedSlug, setSelectedSlug] = useState(""); // Thêm state để chọn slug
+    const [selectedSlug, setSelectedSlug] = useState(""); 
     const [sortOrder, setSortOrder] = useState("none");
     const [showScrollButton, setShowScrollButton] = useState(false);
-    const itemsPerPage = 20; // Số lượng sản phẩm hiển thị mỗi lần (20 sản phẩm)
+    const itemsPerPage = 20;
 
-    // Object mapping slug -> tên tiếng Việt
     const slugToVietnamese = {
         "thuc-pham-chuc-nang": "Thực phẩm chức năng",
         "cham-soc-sac-dep": "Chăm sóc sắc đẹp",
@@ -41,7 +40,7 @@ const Shop = () => {
     ];
 
     useEffect(() => {
-        dispatch(getAllProductsToShopApi({ pageNumber: currentPage, pageSize: 100 })); // Lấy toàn bộ sản phẩm
+        dispatch(getAllProductsToShopApi({ pageNumber: currentPage, pageSize: 100 }));
     }, [currentPage, dispatch]);
 
     useEffect(() => {

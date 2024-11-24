@@ -6,24 +6,31 @@ import FormCategory from "./FormCategory";
 import { toast } from "react-toastify";
 
 export default function InputCategory() {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const initialValues = {
-        name: "",
-        slug: "",
-    };
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const initialValues = {
+    name: "",
+    slug: "",
+  };
 
-    const addCategory = async (formData) => {
-        await toast.success("Thêm loại sản phẩm thành công!");
-        await dispatch(addCategoryApi(formData, navigate));
-    };
-    return (
-        <div className="container" style={{ padding: "0px 60px" }}>
-            <h3 className=""> Thêm sản phẩm</h3>
-            <FormCategory
-                initialData={initialValues}
-                submitForm={addCategory}
-            />
-        </div>
-    );
+  const addCategory = async (formData) => {
+    await toast.success("Thêm loại sản phẩm thành công!");
+    await dispatch(addCategoryApi(formData, navigate));
+  };
+  return (
+    <div className="container" style={{ padding: "30px 0px" }}>
+      <h1
+        style={{
+          textAlign: "center", // Căn giữa chữ
+          fontSize: "66px", // Kích thước chữ to
+          fontWeight: "600", // Độ đậm của chữ
+          marginBottom: "30px", // Khoảng cách phía dưới
+          color: "#0072bc", // Màu xanh giống Pharmacity
+        }}
+      >
+        Thêm loại sản phẩm
+      </h1>
+      <FormCategory initialData={initialValues} submitForm={addCategory} />
+    </div>
+  );
 }
