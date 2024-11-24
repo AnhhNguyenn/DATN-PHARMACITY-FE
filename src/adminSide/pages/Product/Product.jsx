@@ -121,7 +121,7 @@ export default function Product() {
             value={searchValue}
             enterButton
             onChange={(e) => onFilter(e.target.value)}
-            style={{ width: "100%" }} 
+            style={{ width: "100%", marginTop: "10px" }}
           />
         </Col>
         <Col span={8} style={{ display: "flex", justifyContent: "flex-end" }}>

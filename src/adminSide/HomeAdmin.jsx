@@ -5,6 +5,8 @@ import Product from "./pages/Product/Product";
 import Category from "./pages/Category/Category";
 import User from "./pages/User/User";
 import Promotion from "./pages/Promotion/Promotion";
+import Supplier from "./pages/Supplier/Supplier";
+import Warehouse from "./pages/Warehouse/Warehouse";
 
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
@@ -23,6 +25,12 @@ import Dashboard from "./pages/Home/Home";
 
 import InputPromotion from "./pages/Promotion/InputPromotion";
 import EditPromotion from "./pages/Promotion/EditPromotion";
+
+import InputWarehouse from "./pages/Warehouse/InputWarehouse";
+import EditWarehouse from "./pages/Warehouse/EditWarehouse";
+
+import InputSupplier from "./pages/Supplier/InputSupplier";
+import EditSupplier from "./pages/Supplier/EditSupplier";
 
 const HomeAdmin = () => {
   const mode = useSelector((state) => state.globalSlice.mode);
@@ -50,6 +58,20 @@ const HomeAdmin = () => {
             <Route
               path="promotion/edit/:idPromotion"
               element={<EditPromotion />}
+            />
+
+            <Route path="suppliers" element={<Supplier />} />
+            <Route path="supplier/add" element={<InputSupplier />} />
+            <Route
+              path="supplier/edit/:idSupplier"
+              element={<EditSupplier />}
+            />
+
+            <Route path="warehouses" element={<Warehouse />} />
+            <Route path="warehouse/add" element={<InputWarehouse />} />
+            <Route
+              path="warehouse/edit/:idWarehouse"
+              element={<EditWarehouse />}
             />
 
             <Route path="product/add" element={<InputProduct />} />
