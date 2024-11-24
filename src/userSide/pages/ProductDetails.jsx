@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Spinner, Progress } from "reactstrap";
 import { useParams } from "react-router-dom";
-import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { addProductToCartApi, getAllCartItemApi } from "../../redux/slices/cartSlice";
 import { getAllProductsApi } from "../../redux/slices/productSlice";
