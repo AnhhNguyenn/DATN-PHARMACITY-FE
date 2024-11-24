@@ -1,21 +1,24 @@
 {
   "files": {
-    "main.css": "/static/css/main.62ef76ac.css",
-    "main.js": "/static/js/main.6c933ad8.js",
+    "main.css": "/static/css/main.055b3f0e.css",
+    "main.js": "/static/js/main.1cd8ba44.js",
     "static/media/remixicon.svg?t=1590207869815": "/static/media/remixicon.9cedd2150922ead84869.svg",
-    "static/media/eco-logo.png": "/static/media/eco-logo.8534594267c2e8d97cbd.png",
     "static/media/remixicon.eot?t=1590207869815": "/static/media/remixicon.5cb99e6cba5a4619063f.eot",
     "static/media/remixicon.ttf?t=1590207869815": "/static/media/remixicon.f2616f597cf98f38d234.ttf",
     "static/media/remixicon.woff?t=1590207869815": "/static/media/remixicon.8d09fa11700ed63cf96e.woff",
     "static/media/remixicon.woff2?t=1590207869815": "/static/media/remixicon.90668f6f9b3c2c18a090.woff2",
-    "static/media/counter-timer-img.png": "/static/media/counter-timer-img.11ac8dfe1f6734c62d2f.png",
-    "static/media/hero-img.png": "/static/media/hero-img.d0bd96726352a9ac527c.png",
+    "static/media/banner5.avif": "/static/media/banner5.ada121d03c7a22ac89f7.avif",
+    "static/media/banner2.avif": "/static/media/banner2.409c8e19259ed4e51604.avif",
+    "static/media/banner4.avif": "/static/media/banner4.c1df42a9023004b42b9a.avif",
+    "static/media/Banner1.avif": "/static/media/Banner1.ec31bfbffad9ec73b0c1.avif",
+    "static/media/banner3.avif": "/static/media/banner3.cda5c065c58eb770fbf3.avif",
+    "static/media/pharmacity-logo.svg": "/static/media/pharmacity-logo.c8816ed0dd09001e914e94c26f77d7e8.svg",
     "index.html": "/index.html",
-    "main.62ef76ac.css.map": "/static/css/main.62ef76ac.css.map",
-    "main.6c933ad8.js.map": "/static/js/main.6c933ad8.js.map"
+    "main.055b3f0e.css.map": "/static/css/main.055b3f0e.css.map",
+    "main.1cd8ba44.js.map": "/static/js/main.1cd8ba44.js.map"
   },
   "entrypoints": [
-    "static/css/main.62ef76ac.css",
-    "static/js/main.6c933ad8.js"
+    "static/css/main.055b3f0e.css",
+    "static/js/main.1cd8ba44.js"
   ]
-} 
+}

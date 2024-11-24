@@ -35,7 +35,7 @@ export const getAllProductsApi = createAsyncThunk(
     }
   }
 );
-
+ 
 export const getAllProductsToShopApi = createAsyncThunk(
   "product/getAllProductsToShop",
   async ({ pageNumber, pageSize }) => {

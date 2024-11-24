@@ -48,7 +48,6 @@ const Payment = ({ open, onSetOpen }) => {
         handleGetData();
     }, []);
     return (
-        <>
             <Modal
                 cancelButtonProps={{ style: { display: "none" } }}
                 okButtonProps={{ style: { display: "none" } }}
@@ -57,7 +56,7 @@ const Payment = ({ open, onSetOpen }) => {
             >
                 <Card title="HÌNH THỨC VẬN CHUYỂN">
                     <Radio.Group onChange={onChange} value={isTransport}>
-                        <Radio value={true}>Chuyển phát nhanh +30.000đ</Radio>
+                        <Radio value={true}>Chuyển phát nhanh +30.000đ</Radio>  
                         <p style={{ marginBottom: "10px" }}>
                             Chúng tôi sẽ liên hệ bạn sớm nhất trong thời gian có
                             thể. Đơn hàng của bạn sẽ được vận chuyển trong thời
@@ -130,7 +129,6 @@ const Payment = ({ open, onSetOpen }) => {
                     </Col>
                 </Row>
             </Modal>
-        </>
     );
 };
 export default Payment;

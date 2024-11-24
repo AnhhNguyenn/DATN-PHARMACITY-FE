@@ -20,7 +20,6 @@ const OrderCard = (props) => {
         navigate(`/order/${item.id}`);
     };
     return (
-        <>
             <Container>
                 <Card className="card__container">
                     <CardTitle className="card__title">
@@ -69,7 +68,6 @@ const OrderCard = (props) => {
                     </CardBody>
                 </Card>
             </Container>
-        </>
     );
 };
 

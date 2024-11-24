@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { addProductToCartApi, getAllCartItemApi } from "../../redux/slices/cartSlice";
 import { getAllProductsApi } from "../../redux/slices/productSlice";
 import Helmet from "../components/Helmet/Helmet";
-// import CommonSection from "../components/UI/CommonSection";
 import ProductsList from "../components/UI/ProductsList";
 import "../styles/product-details.css";
 import { toast } from "react-toastify";
@@ -23,7 +22,7 @@ const ProductDetails = () => {
     const { id } = useParams();
 
     useEffect(() => {
-        dispatch(getAllProductsApi({ pageNumber: 1, pageSize: 99999 }));
+        dispatch(getAllProductsApi());
     }, [dispatch]);
 
     // Fetch product details
@@ -55,7 +54,7 @@ const ProductDetails = () => {
         }
     }, [id]);
 
-    const products = useSelector((state) => state.product.products) || [];
+    const products = useSelector((state) => state.product.products);
     const relatedProducts = products && products.length > 0
         ? products.filter(item => item.idCategory === productDetail.idCategory)
         : [];
@@ -76,9 +75,12 @@ const ProductDetails = () => {
             quantity: countAddCart,
             price: productDetail.price,
         };
+        console.log('Dữ liệu gửi đi:', data); 
 
         try {
             setLoadingCart(true);
+            const response = await dispatch(addProductToCartApi(data)).unwrap();
+            console.log('Kết quả trả về:', response);
             await dispatch(addProductToCartApi(data)).unwrap();
             await dispatch(getAllCartItemApi()).unwrap();
             toast.success(`Thêm ${productDetail.name} vào giỏ hàng thành công!`);

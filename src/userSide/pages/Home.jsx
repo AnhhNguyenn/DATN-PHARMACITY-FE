@@ -8,7 +8,7 @@ import SanDeal from '../pages/SanDeal';
 import "../styles/home.css";
 
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllProductsApi } from "../../redux/slices/productSlice";
+import { getAllProductsToShopApi } from "../../redux/slices/productSlice";
 
 
 import ProductsList from "../components/UI/ProductsList";
@@ -150,7 +150,7 @@ const Home = () => {
     ];
 
     useEffect(() => {
-        dispatch(getAllProductsApi());
+        dispatch(getAllProductsToShopApi({ pageNumber: 1, pageSize: 100 }));
     }, [dispatch]);
 
     useEffect(() => {

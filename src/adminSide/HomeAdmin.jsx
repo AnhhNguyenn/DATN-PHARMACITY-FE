@@ -23,7 +23,6 @@ const HomeAdmin = () => {
     const mode = useSelector((state) => state.globalSlice.mode);
     const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
     return (
-        <>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <Routes>
@@ -65,7 +64,6 @@ const HomeAdmin = () => {
                     </Route>
                 </Routes>
             </ThemeProvider>
-        </>
     );
 };
 

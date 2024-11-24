@@ -19,7 +19,6 @@ export const OrderDetail = () => {
         fetchGetDetailOrderApi();
     }, []);
     return (
-        <>
             <Container className="table__order">
                 <h3 className="title__order--item"> Chi tiết đơn hàng</h3>
                 <Row>
@@ -43,7 +42,6 @@ export const OrderDetail = () => {
                     </Col>
                 </Row>
             </Container>
-        </>
     );
 };
 
