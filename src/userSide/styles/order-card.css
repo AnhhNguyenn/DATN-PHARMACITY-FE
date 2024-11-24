@@ -1,24 +1,141 @@
-.card__container {
+/* order-card.css */
+.order-history__h2 {
+    margin: 20px 0;
+    text-align: left;
+    font-size: 1.5rem !important;
+    font-weight: bold;
+    padding: 0 20px;
+}
+
+/* Style cho thanh tìm kiếm */
+.order-history__search.mb-4.form-control {
+    border-radius: 25px;
+    padding: 10px 20px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+}
+
+/* Style cho navigation tabs */
+.order-history__nav-tabs {
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 20px;
+}
+
+.order-history__nav-item {
+    margin-bottom: -1px;
+}
+
+.order-history__nav-link {
+    border: none;
+    color: #666;
+    padding: 12px 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.order-history__nav-link:hover {
+    color: #0d6efd;
+    background: transparent;
+}
+
+.order-history__nav-link.active {
+    color: #0d6efd;
+    background: transparent;
+    border: none;
+}
+
+.order-history__nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #0d6efd;
+}
+
+/* Style cho empty state */
+.order-history__empty-state {
+    padding: 40px 0;
+    background-color: #fff;
+    border-radius: 8px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.order-history__empty-image {
+    width: 160px;
+    margin-bottom: 24px;
+    opacity: 0.8;
+}
+
+.order-history__empty-title {
+    color: #333;
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.order-history__empty-text {
+    color: #666;
+    margin-bottom: 24px;
+    font-size: 14px;
+}
+
+.order-history__buy-btn {
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.order-history__buy-btn:hover {
+    background-color: #0b5ed7;
+    transform: translateY(-1px);
+}
+
+/* Container styles */
+.order-history__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Card styles */
+.order-history__card {
     margin: 30px 0;
 }
 
-.card__title {
+.order-history__card-title {
     margin-left: 10px;
     margin-top: 10px;
     font-weight: 600;
 }
 
-.drop__detail {
+.order-history__drop-detail {
     display: flex;
     justify-content: space-around;
 }
-.order_h2 {
-    margin: 20px 0;
-    text-align: center;
-    font-size: 1.5rem !important;
-}
-.detail__btn {
+
+.order-history__detail-btn {
     margin-top: 0;
     padding: 0 10px;
     height: 34px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .order-history__nav-link {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    .order-history__h2 {
+        font-size: 1.2rem !important;
+        padding: 0 15px;
+    }
 }
