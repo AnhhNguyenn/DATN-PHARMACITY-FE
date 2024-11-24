@@ -1,0 +1,113 @@
+.payment-modal .ant-modal-content {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.payment-modal .ant-modal-header {
+    border-bottom: 1px solid #f0f0f0;
+    padding: 20px 24px;
+    border-radius: 8px 8px 0 0;
+    background: #fafafa;
+}
+
+.payment-modal .ant-modal-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.payment-modal .ant-modal-body {
+    padding: 24px;
+}
+
+.payment-card {
+    border-radius: 8px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.payment-card .ant-card-head {
+    background: #fafafa;
+    border-bottom: 1px solid #f0f0f0;
+    padding: 16px 24px;
+}
+
+.payment-card .ant-card-head-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #1a1a1a;
+}
+
+.radio-option {
+    margin-bottom: 16px;
+}
+
+.radio-option .ant-radio-wrapper {
+    font-size: 14px;
+    color: #262626;
+}
+
+.description-text {
+    color: #666;
+    margin-left: 24px;
+    margin-top: 8px;
+    margin-bottom: 16px;
+    font-size: 13px;
+}
+
+.payment-actions {
+    margin-top: 24px;
+}
+
+.payment-button {
+    height: 40px;
+    font-weight: 500;
+    border-radius: 6px;
+    background: #1890ff;
+    border: none;
+}
+
+.payment-button:hover {
+    background: #40a9ff;
+}
+
+/* PayPal button container styles */
+.paypal-button-container {
+    width: 100% !important;
+}
+
+/* Responsive styles */
+@media (max-width: 576px) {
+    .payment-modal .ant-modal-body {
+        padding: 16px;
+    }
+
+    .payment-card .ant-card-head {
+        padding: 12px 16px;
+    }
+
+    .payment-card .ant-card-body {
+        padding: 16px;
+    }
+}
+
+.vietqr-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.vietqr-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.vietqr-note {
+    color: #666;
+    font-size: 14px;
+    text-align: center;
+    margin: 8px 0;
+}
