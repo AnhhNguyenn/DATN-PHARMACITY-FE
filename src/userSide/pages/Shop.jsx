@@ -3,10 +3,11 @@ import { Col, Container, Row } from "reactstrap";
 import Helmet from "../components/Helmet/Helmet";
 import ProductsList from "../components/UI/ProductsList";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProductsToShopApi } from "../../redux/slices/productSlice";
+import { getAllProductsApi } from "../../redux/slices/productSlice";
 import "../styles/shop.css";
 
 const Shop = () => {
+    const location = useLocation();
     const dispatch = useDispatch();
     const products = useSelector((state) => state.product.products || []);
     const [productsData, setProductsData] = useState([]);
@@ -40,6 +41,14 @@ const Shop = () => {
     useEffect(() => {
         dispatch(getAllProductsToShopApi({ pageNumber: currentPage, pageSize: 100 })); // Lấy toàn bộ sản phẩm
     }, [currentPage, dispatch]);
+
+    useEffect(() => {
+        const queryParams = new URLSearchParams(location.search);
+        const slugFromUrl = queryParams.get("slug");
+        if (slugFromUrl) {
+            setSelectedSlug(slugFromUrl);
+        }
+    }, [location.search]);
 
     useEffect(() => {
         if (products.data) {
