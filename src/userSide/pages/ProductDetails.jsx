@@ -139,8 +139,6 @@ const ProductDetails = () => {
                                     <span className="product__category">Danh mục: {productDetail.category}</span>
 
                                     <div className="product__price-container">
-                                        <span className="discount-tag">-20%</span>
-                                        <span className="original-price">{VND.format(productDetail.price * 1.2 * countAddCart)}</span>
                                         <span className="final-price">{VND.format(productDetail.price * countAddCart)}</span>
                                     </div>
 

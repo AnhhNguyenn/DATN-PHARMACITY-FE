@@ -30,6 +30,8 @@ const Header = () => {
     const [searchValue, setSearchValue] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [showSearchResults, setShowSearchResults] = useState(false);
+    const cartItems = useSelector((state) => state.cart.cartItems);
+    const cartItemCount = cartItems?.reduce((total, item) => total + item.quantity, 0) || 0;
 
     // Lấy thông tin user từ localStorage
     const user = JSON.parse(localStorage.getItem("user"));
@@ -184,8 +186,11 @@ const Header = () => {
                             <button className="action__button">
                                 <Bell size={24} />
                             </button>
-                            <Link to="/cart" className="action__button">
+                            <Link to="/cart" className="action__button cart-button">
                                 <ShoppingCart size={24} />
+                                {cartItemCount > 0 && (
+                                    <span className="cart-badge">{cartItemCount}</span>
+                                )}
                             </Link>
                             <div className="vertical-divider"></div>
 
