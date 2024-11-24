@@ -1,12 +1,13 @@
 import requestApi from "../utils/requestApi";
 
 const user = JSON.parse(localStorage.getItem("user"));
+const promotion = JSON.parse(localStorage.getItem("promotion"));
 
 export const createOrderService = async (id, type) => {
     try {
         const respone = await requestApi({
             method: "get",
-            url: `order/confirm?idUser=${user.id}&status=${id}&type=${type}`
+            url: `order/confirm?idUser=${user.id}&status=${id}&type=${type}&idPromotion=${promotion.id}`
         });
         return respone.data;
     } catch (error) {

@@ -41,7 +41,7 @@ const Payment = ({ open, onSetOpen }) => {
     const handleGetData = async () => {
         const result = await getOrderNotPayment();
         result.status === 200
-            ? setPrice((result.total / 23507).toFixed())
+            ? setPrice((result.total / 25115).toFixed())
             : setPrice();
     };
     useEffect(() => {
