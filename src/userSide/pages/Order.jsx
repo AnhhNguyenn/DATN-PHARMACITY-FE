@@ -2,52 +2,51 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllOrderAnUserService } from "../../services/orderServices";
 import OrderCard from "../components/UI/OrderCard";
-import { Nav, NavItem, NavLink, Input, Container } from "reactstrap";
+import { Input, Container } from "reactstrap";
+import { Search } from 'lucide-react';
 
 const Order = () => {
     const navigate = useNavigate();
-    const [order, setOrder] = useState([]);
+    const [orders, setOrders] = useState([]);
     const [activeTab, setActiveTab] = useState('hoanthanh');
     const [searchTerm, setSearchTerm] = useState('');
     const user = JSON.parse(localStorage.getItem("user"));
+
+    const ORDER_TABS = [
+        { id: 'hoanthanh', label: 'Hoàn thành', status: 5 },
+        { id: 'dangxuly', label: 'Đang xử lý', status: 2 },
+        { id: 'dadonggoi', label: 'Đã đóng gói', status: 3 },
+        { id: 'danggiao', label: 'Đang giao', status: 4 },
+        { id: 'dahuy', label: 'Đã hủy', status: 6 },
+        { id: 'chothanhtoan', label: 'Chờ thanh toán', status: 1 },
+    ];
 
     useEffect(() => {
         if (!user) {
             navigate("/login");
             return;
         }
-        const fetchOrders = async () => {
-            const id = user?.id;
-            const data = await getAllOrderAnUserService(id);
-            if (data.data?.status === 200) {
-                setOrder(data.data.data);
-            }
-        };
         fetchOrders();
     }, []);
 
-    const filterOrders = () => {
-        let filtered = [...order];
+    const fetchOrders = async () => {
+        const response = await getAllOrderAnUserService(user?.id);
+        if (response.data?.status === 200) {
+            setOrders(response.data.data);
+        }
+    };
 
-        // Lọc theo tab
+    const getFilteredOrders = () => {
+        let filtered = [...orders];
+
         if (activeTab !== 'all') {
-            filtered = order.filter(item => {
-                switch (activeTab) {
-                    case 'hoanthanh': return item.status === 5;
-                    case 'dangxuly': return item.status === 2;
-                    case 'dadonggoi': return item.status === 3;
-                    case 'danggiao': return item.status === 4;
-                    case 'dahuy': return item.status === 6;
-                    case 'chothanhtoan': return item.status === 1;
-                    default: return true;
-                }
-            });
+            const selectedTab = ORDER_TABS.find(tab => tab.id === activeTab);
+            filtered = orders.filter(order => order.status === selectedTab?.status);
         }
 
-        // Lọc theo từ khóa tìm kiếm
         if (searchTerm) {
-            filtered = filtered.filter(item =>
-                item.id.toString().includes(searchTerm.toLowerCase())
+            filtered = filtered.filter(order =>
+                order.id.toString().includes(searchTerm.toLowerCase())
             );
         }
 
@@ -55,84 +54,53 @@ const Order = () => {
     };
 
     return (
-        <div className="order-history">
-            <h2 className="order-history__h2">Lịch sử đơn hàng</h2>
+        <div className="oh">
+            <div className="oh__header">
+                <h2 className="oh__title">Lịch sử đơn hàng</h2>
+                <div className="oh__search-wrapper">
+                    <Search className="oh__search-icon" size={16} strokeWidth={2} />
+                    <Input
+                        type="search"
+                        placeholder="Tìm kiếm theo mã đơn hàng hoặc tên sản phẩm"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="oh__search"
+                    />
+                </div>
+            </div>
 
-            <Container className="order-history__container">
-                <Input
-                    type="search"
-                    placeholder="Tìm kiếm theo mã đơn hàng hoặc tên sản phẩm"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="order-history__search mb-4"
-                />
+            <Container>
+                <div className="oh__tabs">
+                    {ORDER_TABS.map(tab => (
+                        <button
+                            key={tab.id}
+                            className={`oh__tab-btn ${activeTab === tab.id ? 'active' : ''}`}
+                            onClick={() => setActiveTab(tab.id)}
+                        >
+                            {tab.label}
+                        </button>
+                    ))}
+                </div>
 
-                <Nav tabs className="order-history__nav-tabs">
-                    <NavItem className="order-history__nav-item">
-                        <NavLink
-                            className={`order-history__nav-link ${activeTab === 'hoanthanh' ? 'active' : ''}`}
-                            onClick={() => setActiveTab('hoanthanh')}
-                        >
-                            Hoàn thành
-                        </NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink
-                            className={activeTab === 'dangxuly' ? 'active' : ''}
-                            onClick={() => setActiveTab('dangxuly')}
-                        >
-                            Đang xử lý
-                        </NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink
-                            className={activeTab === 'dadonggoi' ? 'active' : ''}
-                            onClick={() => setActiveTab('dadonggoi')}
-                        >
-                            Đã đóng gói
-                        </NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink
-                            className={activeTab === 'danggiao' ? 'active' : ''}
-                            onClick={() => setActiveTab('danggiao')}
-                        >
-                            Đang giao
-                        </NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink
-                            className={activeTab === 'dahuy' ? 'active' : ''}
-                            onClick={() => setActiveTab('dahuy')}
-                        >
-                            Đã hủy
-                        </NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink
-                            className={activeTab === 'chothanhtoan' ? 'active' : ''}
-                            onClick={() => setActiveTab('chothanhtoan')}
-                        >
-                            Chờ thanh toán
-                        </NavLink>
-                    </NavItem>
-                </Nav>
-
-                {filterOrders().length > 0 ? (
-                    filterOrders().map((item, index) => (
-                        <OrderCard item={item} key={index} />
-                    ))
+                {getFilteredOrders().length > 0 ? (
+                    <div className="oh__list">
+                        {getFilteredOrders().map((item, index) => (
+                            <OrderCard item={item} key={index} />
+                        ))}
+                    </div>
                 ) : (
-                    <div className="order-history__empty-state">
+                    <div className="oh__empty">
                         <img
                             src="https://prod-cdn.pharmacity.io/e-com/images/static-website/20240706155228-0-empty-order-history.svg"
                             alt="Không có đơn hàng"
-                            className="order-history__empty-image"
+                            className="oh__empty-img"
                         />
-                        <h4 className="order-history__empty-title">Không có đơn hàng nào</h4>
-                        <p className="order-history__empty-text">Hãy thêm sản phẩm vào giỏ hàng và tạo đơn hàng của bạn ngay hôm nay!</p>
+                        <h4 className="oh__empty-title">Không có đơn hàng nào</h4>
+                        <p className="oh__empty-text">
+                            Hãy thêm sản phẩm vào giỏ hàng và tạo đơn hàng của bạn ngay hôm nay!
+                        </p>
                         <button
-                            className="order-history__buy-btn"
+                            className="oh__shop-btn"
                             onClick={() => navigate('/')}
                         >
                             Mua ngay
