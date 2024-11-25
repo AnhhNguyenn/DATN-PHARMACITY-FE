@@ -130,6 +130,58 @@ const BannerCarousel = ({ images, sideBanners }) => {
     );
 };
 
+const ChatButton = () => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleChat = () => {
+        setIsOpen(!isOpen);
+    };
+
+    return (
+        <>
+            {!isOpen && (
+                <motion.div
+                    className="chat-button"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={toggleChat}
+                >
+                    <img
+                        src="https://prod-cdn.pharmacity.io/e-com/images/static-website/20240716084109-0-zalo-chat.png"
+                        alt="Chat"
+                        className="chat-icon"
+                    />
+                </motion.div>
+            )}
+
+            {isOpen && (
+                <motion.div
+                    className="chat-popup"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                >
+                    <div className="chat-popup__header">
+                        <h3>Chat với chúng tôi</h3>
+                        <button className="chat-popup__close" onClick={toggleChat}>×</button>
+                    </div>
+                    <div className="chat-popup__body">
+                        <div className="chat-popup__messages">
+                            <div className="chat-popup__message chat-popup__message--bot">
+                                Xin chào! Tôi có thể giúp gì cho bạn?
+                            </div>
+                        </div>
+                        <div className="chat-popup__input">
+                            <input type="text" placeholder="Nhập tin nhắn..." />
+                            <button>Gửi</button>
+                        </div>
+                    </div>
+                </motion.div>
+            )}
+        </>
+    );
+};
+
 const Home = () => {
     const dispatch = useDispatch();
     const products = useSelector((state) => state.product.products?.data || []);
@@ -180,11 +232,8 @@ const Home = () => {
     return (
         <Helmet title={"Home"}>
             <BannerCarousel images={bannerImages} sideBanners={sideBanners} />
-
             <SanDeal />
-
             <Services />
-
             <section className="best__sales">
                 <Container>
                     <Row>
@@ -201,6 +250,7 @@ const Home = () => {
                     </Row>
                 </Container>
             </section>
+            <ChatButton />
         </Helmet>
     );
 };

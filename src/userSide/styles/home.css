@@ -62,6 +62,12 @@
     object-fit: cover;
 }
 
+.main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
 .banner__nav {
     position: absolute;
     top: 50%;
@@ -242,5 +248,234 @@
 
     .count__down-col {
         text-align: center;
+    }
+}
+
+.chat-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    animation: pulse 1s infinite;
+    background: transparent;
+}
+
+.chat-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+        filter: brightness(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.chat-button::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #0066CC;
+    border-radius: 50%;
+    z-index: -1;
+    animation: ripple 1.5s infinite ease-out;
+    opacity: 0;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(1);
+        opacity: 0.4;
+    }
+
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+.menu-icons {
+    padding: 20px;
+    background: #fff;
+    margin-top: 20px;
+}
+
+.menu-icons__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 20px;
+}
+
+.menu-icons__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    text-align: center;
+    padding: 10px;
+    transition: transform 0.2s;
+}
+
+.menu-icons__item:hover {
+    transform: translateY(-2px);
+}
+
+.menu-icons__icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.menu-icons__title {
+    font-size: 14px;
+    line-height: 1.2;
+}
+
+/* Responsive styles */
+@media only screen and (max-width: 992px) {
+    .menu-icons__container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .menu-icons__container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.chat-popup {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    height: 400px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+}
+
+.chat-popup__header {
+    border-radius: 12px 12px 0 0;
+    padding: 15px;
+    background: #0066CC;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-popup__header h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.chat-popup__close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0 5px;
+}
+
+.chat-popup__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-popup__messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.chat-popup__message {
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    border-radius: 15px;
+    max-width: 80%;
+}
+
+.chat-popup__message--bot {
+    background: #f0f0f0;
+    align-self: flex-start;
+}
+
+.chat-popup__message--user {
+    background: #0066CC;
+    color: white;
+    align-self: flex-end;
+}
+
+.chat-popup__input {
+    padding: 15px;
+    border-top: 1px solid #eee;
+    display: flex;
+    gap: 10px;
+}
+
+.chat-popup__input input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    outline: none;
+}
+
+.chat-popup__input button {
+    padding: 8px 15px;
+    background: #0066CC;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.chat-popup__input button:hover {
+    background: #0052a3;
+}
+
+@media only screen and (max-width: 576px) {
+    .chat-popup {
+        width: 100%;
+        right: 0;
+        border-radius: 12px;
+    }
+
+    .chat-button {
+        bottom: 20px;
+        right: 20px;
     }
 }
