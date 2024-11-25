@@ -172,6 +172,8 @@ const ChatButton = () => {
             // Get response from ChatGPT
             const response = await getChatResponse(inputMessage);
 
+            console.log('Raw bot response:', response);
+
             // Add bot response
             const botMessage = {
                 type: 'bot',
@@ -232,7 +234,13 @@ const ChatButton = () => {
                                     key={index}
                                     className={`chat-popup__message chat-popup__message--${msg.type}`}
                                 >
-                                    {msg.content}
+                                    {msg.type === 'bot' ? (
+                                        <div
+                                            dangerouslySetInnerHTML={{ __html: msg.content }}
+                                        />
+                                    ) : (
+                                        msg.content
+                                    )}
                                 </div>
                             ))}
                             {isLoading && (
