@@ -1,10 +1,10 @@
 import Button from "@mui/material/Button";
-import { Table, Input, Row, Col, Pagination } from "antd";
+import { Table, Input, Row, Col } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { getAllProductsToShopApi } from "../../../redux/slices/productSlice";
+import { getAllProductsApi } from "../../../redux/slices/productSlice";
 import { deleteProduct } from "../../../services/productService";
 import { VND } from "../../../utils/convertVND";
 import "./product.css";
@@ -14,19 +14,16 @@ const { Search } = Input;
 export default function Product() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const listProduct = useSelector((state) => state.product.products || []);
-  const [visibleProducts, setVisibleProducts] = useState([]); 
+  const listProduct = useSelector((state) => state.product.products);
   const [data, setData] = useState(listProduct);
-  const [currentPage] = useState(1);
   const [searchValue, setSearchValue] = useState("");
-  const itemsPerPage = 20;
 
   const onDelete = async (id) => {
     const result = await deleteProduct(id);
     if (result.status === 200) {
       toast.success("Xóa thành công!");
       dispatch(
-        getAllProductsToShopApi({ pageNumber: currentPage, pageSize: 100 })
+        getAllProductsApi()
       );
       navigate("/admin/products");
     } else {
@@ -36,9 +33,9 @@ export default function Product() {
 
   useEffect(() => {
     dispatch(
-      getAllProductsToShopApi({ pageNumber: currentPage, pageSize: 100 })
+      getAllProductsApi()
     );
-  }, [currentPage, dispatch]);
+  }, [dispatch]);
 
   useEffect(() => {
     setData(listProduct);
@@ -110,15 +107,6 @@ export default function Product() {
     setData(filteredData);
   };
 
-  const loadMoreProducts = () => {
-    const currentLength = visibleProducts.length;
-    const nextProducts = listProduct.slice(
-      currentLength,
-      currentLength + itemsPerPage
-    );
-    setVisibleProducts((prev) => [...prev, ...nextProducts]);
-  };
-
   return (
     <>
       <Row gutter={24} style={{ margin: "20px" }}>
@@ -131,7 +119,7 @@ export default function Product() {
             value={searchValue}
             enterButton
             onChange={(e) => onFilter(e.target.value)}
-            style={{ width: "100%" }}
+            style={{ width: "100%", marginTop: "10px" }}
           />
         </Col>
         <Col span={8} style={{ display: "flex", justifyContent: "flex-end" }}>
@@ -149,20 +137,6 @@ export default function Product() {
       <div style={{ height: "78vh", width: "100%", padding: "0px 20px" }}>
         <Table columns={columns} dataSource={data} rowKey="id" />
       </div>
-
-      {visibleProducts.length === 0 ? (
-        <h1 className="text-center fs-4">Hiện tại không có sản phẩm nào!</h1>
-      ) : (
-        <listProduct data={visibleProducts} />
-      )}
-
-      {visibleProducts.length < listProduct.length && (
-        <div style={{ textAlign: "center", marginTop: "20px" }}>
-          <button className="load-more-button" onClick={loadMoreProducts}>
-            Xem thêm
-          </button>
-        </div>
-      )}
     </>
   );
 }

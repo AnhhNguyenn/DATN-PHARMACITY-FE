@@ -223,10 +223,10 @@ export default function FormProduct(props) {
           block
           htmlType="submit"
           style={{
-            fontSize: "24px", // Kích thước chữ lớn
-            fontWeight: "bold", // In đậm
-            backgroundColor: "#28a745", // Màu nền xanh (tuỳ chỉnh)
-            borderColor: "#28a745", // Màu viền (tuỳ chỉnh)
+            fontSize: "24px",
+            fontWeight: "bold",
+            backgroundColor: "#28a745",
+            borderColor: "#28a745",
           }}
         >
           Lưu

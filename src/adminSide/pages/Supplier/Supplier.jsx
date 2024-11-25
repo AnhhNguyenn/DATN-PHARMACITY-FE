@@ -3,18 +3,18 @@ import { Table } from "antd";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllPromotionApi } from "../../../redux/slices/promotionSlice";
+import { getAllSupplierApi } from "../../../redux/slices/supplierSlice";
 
-export default function Promotion() {
+export default function Supplier() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // Lấy dữ liệu từ Redux store
-  const promotions = useSelector((state) => state.promotion.promotions);
+  const suppliers = useSelector((state) => state.supplier.suppliers);
 
   // Gọi API khi component được render
   useEffect(() => {
-    dispatch(getAllPromotionApi());
+    dispatch(getAllSupplierApi());
   }, [dispatch]);
 
   // Cấu hình cột cho bảng
@@ -25,25 +25,29 @@ export default function Promotion() {
       key: "id",
     },
     {
-      title: "Tên khuyến mãi",
+      title: "Tên nhà cung cấp",
       dataIndex: "name",
       key: "name",
     },
     {
-      title: "Số lượng",
-      dataIndex: "quantity",
-      key: "quantity",
+      title: "Địa chỉ",
+      dataIndex: "address",
+      key: "address",
     },
     {
-      title: "Ngày bắt đầu",
-      dataIndex: "startDate",
-      key: "startDate",
-      render: (text) => new Date(text).toLocaleDateString("vi-VN"),
+      title: "Số điện thoại",
+      dataIndex: "phone",
+      key: "phone",
     },
     {
-      title: "Ngày kết thúc",
-      dataIndex: "endDate",
-      key: "endDate",
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: "Ngày tạo",
+      dataIndex: "createAt",
+      key: "createAt",
       render: (text) => new Date(text).toLocaleDateString("vi-VN"),
     },
     {
@@ -56,7 +60,7 @@ export default function Promotion() {
             color="warning"
             sx={{ marginLeft: "4px" }}
             onClick={() => {
-              navigate(`/admin/Promotion/edit/${record.id}`, {
+              navigate(`/admin/Supplier/edit/${record.id}`, {
                 state: record,
               });
             }}
@@ -77,7 +81,7 @@ export default function Promotion() {
           margin: "50px",
         }}
       >
-        <h1 className="admin-h1">Danh sách khuyến mãi</h1>
+        <h1 className="admin-h1">Danh sách nhà cung cấp</h1>
         <Button
           style={{
             marginRight: "100px",
@@ -86,7 +90,7 @@ export default function Promotion() {
           color="success"
           variant="contained"
           onClick={() => {
-            navigate("/admin/Promotion/add");
+            navigate("/admin/Supplier/add");
           }}
         >
           Thêm khuyến mãi
@@ -95,8 +99,8 @@ export default function Promotion() {
       <div style={{ height: "auto", width: "100%", padding: "20px" }}>
         <Table
           columns={columns}
-          dataSource={promotions.map((item) => ({ ...item, key: item.id }))}
-          loading={!promotions.length}
+          dataSource={suppliers.map((item) => ({ ...item, key: item.id }))}
+          loading={!suppliers.length}
         />
       </div>
     </>

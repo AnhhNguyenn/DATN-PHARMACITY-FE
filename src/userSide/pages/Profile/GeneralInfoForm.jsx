@@ -41,7 +41,7 @@ export const GeneralInfoForm = () => {
 
         try {
             const res = await fetch(
-                "https://api.cloudinary.com/v1_1/df6mryfkp/image/upload",
+                "https://console.cloudinary.com/pm/c-46971db3d6d74eaa2160713a06155b/media-explorer/upload",
                 {
                     method: "POST",
                     body: formData,

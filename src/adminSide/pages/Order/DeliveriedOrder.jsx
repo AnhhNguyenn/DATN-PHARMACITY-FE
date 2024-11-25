@@ -92,10 +92,8 @@ export default function DeliveriedOrder() {
     const rows = listOrderDeliveried.length > 0 ? listOrderDeliveried : [];
 
     return (
-        <>
             <div style={{ height: "78vh", width: "100%", padding: "20px" }}>
                 <Table columns={columns} dataSource={rows} />
             </div>
-        </>
     );
 }

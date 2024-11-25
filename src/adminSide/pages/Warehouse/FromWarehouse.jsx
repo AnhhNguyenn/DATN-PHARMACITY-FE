@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Button, Input, Switch } from "antd";
 
-export default function FormPromotion(props) {
+export default function FormWarehouse(props) {
   const { initialData, submitForm } = props;
 
   const formik = useFormik({

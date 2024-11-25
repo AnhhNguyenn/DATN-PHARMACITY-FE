@@ -1,11 +1,11 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import FormPromotion from "./FormPromotion";
+import FormSupplier from "./FromSupplier";
 import { toast } from "react-toastify";
-import { addPromotionApi } from "../../../redux/slices/promotionSlice";
+import { addSupplierApi } from "../../../redux/slices/supplierSlice";
 
-export default function InputPromotion() {
+export default function InputSupplier() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -21,13 +21,13 @@ export default function InputPromotion() {
   };
 
   // Hàm xử lý khi thêm khuyến mãi
-  const addPromotion = async (formData) => {
+  const addSupplier = async (formData) => {
     try {
-      await dispatch(addPromotionApi(formData, navigate));
-      toast.success("Thêm khuyến mãi thành công!");
+      await dispatch(addSupplierApi(formData, navigate));
+      toast.success("Thêm nhà cung cấp thành công!");
     } catch (error) {
-      console.error("Lỗi khi thêm khuyến mãi:", error);
-      toast.error("Thêm khuyến mãi thất bại!");
+      console.error("Lỗi khi thêm nhà cung cấp:", error);
+      toast.error("Thêm nhà cung cấp thất bại!");
     }
   };
 
@@ -43,9 +43,9 @@ export default function InputPromotion() {
           color: "#0072bc", // Màu xanh giống Pharmacity
         }}
       >
-        Thêm khuyến mãi
+        Thêm nhà cung cấp
       </h1>
-      <FormPromotion initialData={initialValues} submitForm={addPromotion} />
+      <FormSupplier initialData={initialValues} submitForm={addSupplier} />
     </div>
   );
 }

@@ -80,7 +80,7 @@ const Payment = ({ open, onSetOpen }) => {
                         <p className="description-text">
                             Chúng tôi sẽ liên hệ bạn sớm nhất trong thời gian có
                             thể. Đơn hàng của bạn sẽ được vận chuyển trong thời
-                            gian 2-3 ngày làm việc.
+                            gian 1h làm việc.
                         </p>
                     </div>
                     <Radio value={false}>Giao hàng miễn phí</Radio>

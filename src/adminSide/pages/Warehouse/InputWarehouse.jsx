@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import FormPromotion from "./FormPromotion";
+import FromWarehouse from "./FromWarehouse";
 import { toast } from "react-toastify";
 import { addPromotionApi } from "../../../redux/slices/promotionSlice";
 
@@ -45,7 +45,7 @@ export default function InputPromotion() {
       >
         Thêm khuyến mãi
       </h1>
-      <FormPromotion initialData={initialValues} submitForm={addPromotion} />
+      <FromWarehouse initialData={initialValues} submitForm={addPromotion} />
     </div>
   );
 }

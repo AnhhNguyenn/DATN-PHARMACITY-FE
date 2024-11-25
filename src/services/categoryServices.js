@@ -45,4 +45,3 @@ export const editCategoryService = (formData) => {
             "Content-Type": "application/json"        },
     });
 };
-

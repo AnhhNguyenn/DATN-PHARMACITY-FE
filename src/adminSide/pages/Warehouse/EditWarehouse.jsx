@@ -1,17 +1,17 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import FormPromotion from "./FormPromotion";
+import FromWarehouse from "./FromWarehouse";
 import { toast } from "react-toastify";
-import { editPromotionApi } from "../../../redux/slices/promotionSlice";
+import { editWarehouseApi } from "../../../redux/slices/warehouseSlice";
 
 export default function EditProduct() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { state } = useLocation();
   const editProduct = async (data) => {
-    await toast.success("Chỉnh sửa khuyến mãi thành công!");
-    await dispatch(editPromotionApi(data, navigate));
+    await toast.success("Chỉnh sửa kho thành công!");
+    await dispatch(editWarehouseApi(data, navigate));
   };
   return (
     <div className="container" style={{ padding: "30px 0px" }}>
@@ -24,9 +24,9 @@ export default function EditProduct() {
           color: "#0072bc", // Màu xanh giống Pharmacity
         }}
       >
-        Chỉnh sửa khuyến mãi
+        Chỉnh sửa kho
       </h1>
-      <FormPromotion initialData={state} submitForm={editProduct} />
+      <FromWarehouse initialData={state} submitForm={editProduct} />
     </div>
   );
 }

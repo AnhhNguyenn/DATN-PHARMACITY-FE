@@ -51,31 +51,53 @@ export const OrderDetail = () => {
     if (!orderInfo) return null;
 
     return (
-        <>
-            <Container className="table__order">
-                <h3 className="title__order--item"> Chi tiết đơn hàng</h3>
-                <Row>
-                    <Col lg="12">
-                        <table className="table bordered">
-                            <thead>
-                                <tr>
-                                    <th>Ảnh sản phẩm</th>
-                                    <th>Tên sản phẩm</th>
-                                    <th>Giá</th>
-                                    <th>Số lượng</th>
-                                    <th>Thành tiền</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {cartItems.map((item, index) => {
-                                    return <Tr item={item} key={index} />;
-                                })}
-                            </tbody>
-                        </table>
-                    </Col>
-                </Row>
-            </Container>
-        </>
+        <Container className="order-detail">
+            <div className="order-detail__header">
+                <h2>Chi tiết đơn hàng</h2>
+                <div className="order-info">
+                    <div className="order-info__item">
+                        <span>Mã đơn hàng:</span>
+                        <strong>{id}</strong>
+                    </div>
+                    <div className="order-info__item">
+                        <span>Ngày đặt hàng:</span>
+                        <strong>{new Date(orderInfo.createAt).toLocaleString()}</strong>
+                    </div>
+                    <div className="order-info__item">
+                        <span>Trạng thái:</span>
+                        <strong className={`status status--${getStatusColor(orderInfo.status)}`}>
+                            {getStatusText(orderInfo.status)}
+                        </strong>
+                    </div>
+                </div>
+            </div>
+
+            <div className="order-detail__content">
+                <div className="order-items">
+                    <table className="order-table">
+                        <thead>
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th>Đơn giá</th>
+                                <th>Số lượng</th>
+                                <th>Thành tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {cartItems.map((item, index) => (
+                                <Tr item={item} key={index} />
+                            ))}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colSpan="3">Tổng tiền:</td>
+                                <td>{VND.format(calculateTotal())}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </Container>
     );
 };
 
