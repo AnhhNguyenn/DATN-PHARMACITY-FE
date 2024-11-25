@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Col, Container, Row } from "reactstrap";
 
 import Services from "../components/UI/Services";
@@ -20,6 +20,8 @@ import banner2 from "../../assets/images/pharmacity/banners/banner2.avif";
 import banner3 from "../../assets/images/pharmacity/banners/banner3.avif";
 import banner4 from "../../assets/images/pharmacity/banners/banner4.avif";
 import banner5 from "../../assets/images/pharmacity/banners/banner5.avif";
+
+import { getChatResponse } from "./../../utils/chatService";
 
 const BannerCarousel = ({ images, sideBanners }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -132,9 +134,67 @@ const BannerCarousel = ({ images, sideBanners }) => {
 
 const ChatButton = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [messages, setMessages] = useState([
+        {
+            type: 'bot',
+            content: 'Xin chào! Tôi có thể giúp gì cho bạn?'
+        }
+    ]);
+    const [inputMessage, setInputMessage] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const messagesEndRef = useRef(null);
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
 
     const toggleChat = () => {
         setIsOpen(!isOpen);
+    };
+
+    const handleSendMessage = async () => {
+        if (!inputMessage.trim()) return;
+
+        // Add user message
+        const userMessage = {
+            type: 'user',
+            content: inputMessage
+        };
+        setMessages(prev => [...prev, userMessage]);
+        setInputMessage('');
+        setIsLoading(true);
+
+        try {
+            // Get response from ChatGPT
+            const response = await getChatResponse(inputMessage);
+
+            // Add bot response
+            const botMessage = {
+                type: 'bot',
+                content: response
+            };
+            setMessages(prev => [...prev, botMessage]);
+        } catch (error) {
+            console.error('Error:', error);
+            const errorMessage = {
+                type: 'bot',
+                content: 'Xin lỗi, đã có lỗi xảy ra. Vui lòng thử lại sau.'
+            };
+            setMessages(prev => [...prev, errorMessage]);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleSendMessage();
+        }
     };
 
     return (
@@ -162,18 +222,44 @@ const ChatButton = () => {
                     exit={{ opacity: 0, y: 20 }}
                 >
                     <div className="chat-popup__header">
-                        <h3>Chat với chúng tôi</h3>
+                        <h3>Chat với AI</h3>
                         <button className="chat-popup__close" onClick={toggleChat}>×</button>
                     </div>
                     <div className="chat-popup__body">
                         <div className="chat-popup__messages">
-                            <div className="chat-popup__message chat-popup__message--bot">
-                                Xin chào! Tôi có thể giúp gì cho bạn?
-                            </div>
+                            {messages.map((msg, index) => (
+                                <div
+                                    key={index}
+                                    className={`chat-popup__message chat-popup__message--${msg.type}`}
+                                >
+                                    {msg.content}
+                                </div>
+                            ))}
+                            {isLoading && (
+                                <div className="chat-popup__message chat-popup__message--bot">
+                                    <div className="typing-indicator">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                </div>
+                            )}
+                            <div ref={messagesEndRef} />
                         </div>
                         <div className="chat-popup__input">
-                            <input type="text" placeholder="Nhập tin nhắn..." />
-                            <button>Gửi</button>
+                            <input
+                                type="text"
+                                placeholder="Nhập tin nhắn..."
+                                value={inputMessage}
+                                onChange={(e) => setInputMessage(e.target.value)}
+                                onKeyPress={handleKeyPress}
+                            />
+                            <button
+                                onClick={handleSendMessage}
+                                disabled={isLoading}
+                            >
+                                Gửi
+                            </button>
                         </div>
                     </div>
                 </motion.div>
