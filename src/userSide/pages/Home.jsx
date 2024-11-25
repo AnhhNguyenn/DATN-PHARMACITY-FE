@@ -172,7 +172,7 @@ const ChatButton = () => {
             // Get response from ChatGPT
             const response = await getChatResponse(inputMessage);
 
-            console.log('Raw bot response:', response);
+            console.log('Bot response:', response);
 
             // Add bot response
             const botMessage = {
