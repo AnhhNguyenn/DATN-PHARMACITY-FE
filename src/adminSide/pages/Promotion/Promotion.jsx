@@ -3,7 +3,9 @@ import { Table } from "antd";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import { getAllPromotionApi } from "../../../redux/slices/promotionSlice";
+import { deletePromotionServices } from "../../../services/promotionServices";
 
 export default function Promotion() {
   const navigate = useNavigate();
@@ -12,6 +14,17 @@ export default function Promotion() {
   // Lấy dữ liệu từ Redux store
   const promotions = useSelector((state) => state.promotion.promotions);
 
+  const onDelete = async (id) => {
+    const result = await deletePromotionServices(id);
+    if (result.status === 200) {
+      toast.success("Xóa thành công!");
+      await dispatch(getAllPromotionApi());
+      navigate("/admin/promotions");
+    } else {
+      toast.error("Xóa thất bại!");
+    }
+  };
+
   // Gọi API khi component được render
   useEffect(() => {
     dispatch(getAllPromotionApi());
@@ -19,11 +32,6 @@ export default function Promotion() {
 
   // Cấu hình cột cho bảng
   const columns = [
-    {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-    },
     {
       title: "Tên khuyến mãi",
       dataIndex: "name",
@@ -62,6 +70,14 @@ export default function Promotion() {
             }}
           >
             Chỉnh sửa
+          </Button>
+          <Button
+            variant="contained"
+            color="error"
+            sx={{ marginLeft: "4px" }}
+            onClick={() => onDelete(record.id)}
+          >
+            Xóa
           </Button>
         </>
       ),

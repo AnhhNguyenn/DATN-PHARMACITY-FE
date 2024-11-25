@@ -25,6 +25,7 @@ export default function InputPromotion() {
     try {
       await dispatch(addPromotionApi(formData, navigate));
       toast.success("Thêm khuyến mãi thành công!");
+      navigate(-1); // Quay về trang trước
     } catch (error) {
       console.error("Lỗi khi thêm khuyến mãi:", error);
       toast.error("Thêm khuyến mãi thất bại!");

@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import FormSupplier from "./FromSupplier";
+import FormSupplier from "./FormSupplier";
 import { toast } from "react-toastify";
 import { editSupplierApi } from "../../../redux/slices/supplierSlice";
 
@@ -11,6 +11,7 @@ export default function EditProduct() {
   const { state } = useLocation();
   const editProduct = async (data) => {
     await toast.success("Chỉnh sửa nhà cung cấp thành công!");
+    navigate(-1); // Quay về trang trước
     await dispatch(editSupplierApi(data, navigate));
   };
   return (

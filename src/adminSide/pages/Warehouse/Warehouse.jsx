@@ -3,7 +3,9 @@ import { Table } from "antd";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import { getAllWarehouseApi } from "../../../redux/slices/warehouseSlice";
+import { deleteWarehouseServices } from "../../../services/warehouseService";
 
 export default function Warehouse() {
   const navigate = useNavigate();
@@ -12,6 +14,17 @@ export default function Warehouse() {
   // Lấy dữ liệu từ Redux store
   const warehouses = useSelector((state) => state.warehouse.warehouses);
 
+  const onDelete = async (id) => {
+    const result = await deleteWarehouseServices(id);
+    if (result.status === 200) {
+      toast.success("Xóa thành công!");
+      await dispatch(getAllWarehouseApi());
+      navigate("/admin/suplliers");
+    } else {
+      toast.error("Xóa thất bại!");
+    }
+  };
+
   // Gọi API khi component được render
   useEffect(() => {
     dispatch(getAllWarehouseApi());
@@ -19,11 +32,6 @@ export default function Warehouse() {
 
   // Cấu hình cột cho bảng
   const columns = [
-    {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-    },
     {
       title: "Tên kho",
       dataIndex: "name",
@@ -50,6 +58,14 @@ export default function Warehouse() {
             }}
           >
             Chỉnh sửa
+          </Button>
+          <Button
+            variant="contained"
+            color="error"
+            sx={{ marginLeft: "4px" }}
+            onClick={() => onDelete(record.id)}
+          >
+            Xóa
           </Button>
         </>
       ),

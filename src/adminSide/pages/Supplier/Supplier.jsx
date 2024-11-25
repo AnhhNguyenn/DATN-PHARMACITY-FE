@@ -3,7 +3,9 @@ import { Table } from "antd";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import { getAllSupplierApi } from "../../../redux/slices/supplierSlice";
+import { deleteSupplierServices } from "../../../services/supplierService";
 
 export default function Supplier() {
   const navigate = useNavigate();
@@ -12,6 +14,17 @@ export default function Supplier() {
   // Lấy dữ liệu từ Redux store
   const suppliers = useSelector((state) => state.supplier.suppliers);
 
+  const onDelete = async (id) => {
+    const result = await deleteSupplierServices(id);
+    if (result.status === 200) {
+      toast.success("Xóa thành công!");
+      await dispatch(getAllSupplierApi());
+      navigate("/admin/categories");
+    } else {
+      toast.error("Xóa thất bại!");
+    }
+  };
+
   // Gọi API khi component được render
   useEffect(() => {
     dispatch(getAllSupplierApi());
@@ -19,11 +32,6 @@ export default function Supplier() {
 
   // Cấu hình cột cho bảng
   const columns = [
-    {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-    },
     {
       title: "Tên nhà cung cấp",
       dataIndex: "name",
@@ -45,12 +53,6 @@ export default function Supplier() {
       key: "email",
     },
     {
-      title: "Ngày tạo",
-      dataIndex: "createAt",
-      key: "createAt",
-      render: (text) => new Date(text).toLocaleDateString("vi-VN"),
-    },
-    {
       title: "Hành động",
       key: "action",
       render: (_, record) => (
@@ -66,6 +68,14 @@ export default function Supplier() {
             }}
           >
             Chỉnh sửa
+          </Button>
+          <Button
+            variant="contained"
+            color="error"
+            sx={{ marginLeft: "4px" }}
+            onClick={() => onDelete(record.id)}
+          >
+            Xóa
           </Button>
         </>
       ),
@@ -93,7 +103,7 @@ export default function Supplier() {
             navigate("/admin/Supplier/add");
           }}
         >
-          Thêm khuyến mãi
+          Thêm Nhà cung cấp
         </Button>
       </div>
       <div style={{ height: "auto", width: "100%", padding: "20px" }}>

@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import FormSupplier from "./FromSupplier";
+import FormSupplier from "./FormSupplier";
 import { toast } from "react-toastify";
 import { addSupplierApi } from "../../../redux/slices/supplierSlice";
 
@@ -11,20 +11,20 @@ export default function InputSupplier() {
 
   // Cấu trúc dữ liệu ban đầu cho form
   const initialValues = {
-    name: "",
-    description: "",
-    discountPercentage: 0,
-    quantity: 0,
-    startDate: "",
-    endDate: "",
-    isActive: true,
+    id: "", // UUID của nhà cung cấp (sẽ được tự động tạo ở backend nếu không yêu cầu nhập)
+    name: "", // Tên nhà cung cấp
+    address: "", // Địa chỉ
+    phone: "", // Số điện thoại
+    email: "", // Email
+    createAt: "", // Ngày tạo (sẽ được backend tự động thêm nếu không yêu cầu nhập)
   };
 
-  // Hàm xử lý khi thêm khuyến mãi
+  // Hàm xử lý khi thêm nhà cung cấp
   const addSupplier = async (formData) => {
     try {
       await dispatch(addSupplierApi(formData, navigate));
       toast.success("Thêm nhà cung cấp thành công!");
+      navigate(-1); // Quay về trang trước
     } catch (error) {
       console.error("Lỗi khi thêm nhà cung cấp:", error);
       toast.error("Thêm nhà cung cấp thất bại!");
@@ -45,6 +45,7 @@ export default function InputSupplier() {
       >
         Thêm nhà cung cấp
       </h1>
+      {/* Gọi form với dữ liệu ban đầu và hàm submit */}
       <FormSupplier initialData={initialValues} submitForm={addSupplier} />
     </div>
   );

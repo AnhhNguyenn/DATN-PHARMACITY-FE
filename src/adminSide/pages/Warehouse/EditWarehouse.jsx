@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import FromWarehouse from "./FromWarehouse";
+import FormWarehouse from "./FormWarehouse";
 import { toast } from "react-toastify";
 import { editWarehouseApi } from "../../../redux/slices/warehouseSlice";
 
@@ -11,6 +11,7 @@ export default function EditProduct() {
   const { state } = useLocation();
   const editProduct = async (data) => {
     await toast.success("Chỉnh sửa kho thành công!");
+    navigate(-1); // Quay về trang trước
     await dispatch(editWarehouseApi(data, navigate));
   };
   return (
@@ -26,7 +27,7 @@ export default function EditProduct() {
       >
         Chỉnh sửa kho
       </h1>
-      <FromWarehouse initialData={state} submitForm={editProduct} />
+      <FormWarehouse initialData={state} submitForm={editProduct} />
     </div>
   );
 }

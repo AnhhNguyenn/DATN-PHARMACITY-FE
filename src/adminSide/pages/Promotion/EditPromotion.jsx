@@ -11,6 +11,7 @@ export default function EditProduct() {
   const { state } = useLocation();
   const editProduct = async (data) => {
     await toast.success("Chỉnh sửa khuyến mãi thành công!");
+    navigate(-1); // Quay về trang trước
     await dispatch(editPromotionApi(data, navigate));
   };
   return (
