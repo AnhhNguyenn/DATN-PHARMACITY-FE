@@ -19,7 +19,7 @@ export default function Warehouse() {
     if (result.status === 200) {
       toast.success("Xóa thành công!");
       await dispatch(getAllWarehouseApi());
-      navigate("/admin/suplliers");
+      navigate("/admin/warehouses");
     } else {
       toast.error("Xóa thất bại!");
     }

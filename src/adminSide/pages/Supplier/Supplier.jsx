@@ -19,7 +19,7 @@ export default function Supplier() {
     if (result.status === 200) {
       toast.success("Xóa thành công!");
       await dispatch(getAllSupplierApi());
-      navigate("/admin/categories");
+      navigate("/admin/suppliers");
     } else {
       toast.error("Xóa thất bại!");
     }
