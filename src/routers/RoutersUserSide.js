@@ -10,6 +10,7 @@ import Signup from "../userSide/pages/Signup";
 import Order from "../userSide/pages/Order";
 import { OrderDetail } from "../userSide/components/UI/OrderDetail";
 import Profile from "../userSide/pages/Profile/Profile";
+import Promotion from "../userSide/pages/Promotion";
 
 const Routers = () => {
     return (
@@ -25,6 +26,7 @@ const Routers = () => {
             <Route path="order" element={<Order />} />
             <Route path="order/:id" element={<OrderDetail />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="promotion" element={<Promotion />} />
         </Routes>
     );
 };
