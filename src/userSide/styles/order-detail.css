@@ -1,7 +1,157 @@
-.table__order {
-    margin-top: 30px;
+.order-detail {
+    padding: 2rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 2rem auto;
 }
 
-.title__order--item {
-    margin-bottom: 20px;
+.order-detail__header {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1rem;
+}
+
+.order-detail__header h2 {
+    color: #2c3e50;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.order-info {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.order-info__item {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.order-info__item span {
+    color: #666;
+}
+
+.order-info__item strong {
+    color: #2c3e50;
+}
+
+.status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.status--delivered {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.order-table th {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    text-align: left;
+    color: #495057;
+    font-weight: 600;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.order-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #dee2e6;
+    color: #2c3e50;
+}
+
+.product-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.product-info img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #eee;
+}
+
+.product-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.product-name {
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.product-code {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.order-table tfoot tr td {
+    font-weight: 600;
+    background-color: #f8f9fa;
+}
+
+.order-table tfoot tr td:last-child {
+    color: #e53935;
+}
+
+@media (max-width: 768px) {
+    .order-detail {
+        padding: 1rem;
+    }
+
+    .order-info {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .order-table {
+        font-size: 0.9rem;
+    }
+
+    .product-info img {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+.status--warning {
+    background-color: #fff3e0;
+    color: #f57c00;
+}
+
+.status--info {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.status--success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.status--secondary {
+    background-color: #eeeeee;
+    color: #616161;
+}
+
+.status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
 }

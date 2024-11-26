@@ -1,17 +1,15 @@
 import React from "react";
-import Helmet from "../components/Helmet/Helmet";
-import { Container, Row, Col, Form, FormGroup } from "reactstrap";
+import { Form, FormGroup } from "reactstrap";
 import { Link } from "react-router-dom";
-import "../styles/signup.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import { signupServices } from "../../services/signupService";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { userLoginApi, userSignupApi } from "../../redux/slices/userSlice";
+import "../styles/signup.css";
 
-const Signup = () => {
+const Signup = ({ onClose, setShowSignup, setShowLogin }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -53,149 +51,155 @@ const Signup = () => {
                     "Phải là một số điện thoại hợp lệ"
                 ),
         }),
-        onSubmit: (values) => {
+        onSubmit: async (values) => {
             const dataSignup = { ...values };
             delete dataSignup.confirmedPassword;
 
-            const fectApiSignup = async () => {
+            try {
                 const response = await dispatch(userSignupApi(dataSignup));
-                if (response.payload.status == 200) {
+                if (response.payload.status === 200) {
                     const dataLogin = {
-                        email: formik.values.email,
-                        password: formik.values.password,
+                        email: values.email,
+                        password: values.password,
                     };
                     await dispatch(userLoginApi(dataLogin));
                     toast.success("Đăng ký thành công!");
+                    onClose();
                     navigate("/home");
                 } else {
                     toast.error("Đăng ký thất bại!");
                 }
-            };
-
-            fectApiSignup();
+            } catch (error) {
+                toast.error("Đã có lỗi xảy ra!");
+            }
         },
     });
 
+    const handleShowLogin = () => {
+        setShowSignup(false);
+        setShowLogin(true);
+    };
+
+
     return (
-        <Helmet title="Signup">
-            <section>
-                <Container>
-                    <Row>
-                        <Col lg="6" className="m-auto text-center">
-                            <h3 className="fw-food fs-4">Đăng Ký</h3>
-                            <Form
-                                style={{ marginTop: "20px" }}
-                                className="auth__form"
-                                onSubmit={formik.handleSubmit}
-                            >
-                                <FormGroup className="form__group">
-                                    <input
-                                        type="text"
-                                        id="name"
-                                        placeholder="Nhập tên của bạn"
-                                        value={formik.values.name}
-                                        onChange={formik.handleChange}
-                                    />
-                                    {formik.errors.name && (
-                                        <p className="errorMsg">
-                                            {" "}
-                                            {formik.errors.name}{" "}
-                                        </p>
-                                    )}
-                                </FormGroup>
-                                <FormGroup className="form__group">
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        placeholder="Nhập email của bạn"
-                                        value={formik.values.email}
-                                        onChange={formik.handleChange}
-                                    />
-                                    {formik.errors.email && (
-                                        <p className="errorMsg">
-                                            {" "}
-                                            {formik.errors.email}{" "}
-                                        </p>
-                                    )}
-                                </FormGroup>
-                                <FormGroup className="form__group">
-                                    <input
-                                        type="password"
-                                        id="password"
-                                        placeholder="Nhập mật khẩu của bạn"
-                                        value={formik.password}
-                                        onChange={formik.handleChange}
-                                    />
-                                    {formik.errors.password && (
-                                        <p className="errorMsg">
-                                            {" "}
-                                            {formik.errors.password}{" "}
-                                        </p>
-                                    )}
-                                </FormGroup>
-                                <FormGroup className="form__group">
-                                    <input
-                                        type="password"
-                                        id="confirmedPassword"
-                                        placeholder="Xác nhận mật khẩu của bạn"
-                                        value={formik.values.confirmedPassword}
-                                        onChange={formik.handleChange}
-                                    />
-                                    {formik.errors.confirmedPassword && (
-                                        <p className="errorMsg">
-                                            {" "}
-                                            {
-                                                formik.errors.confirmedPassword
-                                            }{" "}
-                                        </p>
-                                    )}
-                                </FormGroup>
-                                <FormGroup className="form__group">
-                                    <input
-                                        type="text"
-                                        id="phone"
-                                        placeholder="Nhập số điện thoại của bạn"
-                                        value={formik.values.phone}
-                                        onChange={formik.handleChange}
-                                    />
-                                    {formik.errors.phone && (
-                                        <p className="errorMsg">
-                                            {" "}
-                                            {formik.errors.phone}{" "}
-                                        </p>
-                                    )}
-                                </FormGroup>
-                                <FormGroup className="form__group">
-                                    <input
-                                        type="text"
-                                        id="address"
-                                        placeholder="Nhập địa chỉ của bạn"
-                                        value={formik.values.address}
-                                        onChange={formik.handleChange}
-                                    />
-                                    {formik.errors.address && (
-                                        <p className="errorMsg">
-                                            {" "}
-                                            {formik.errors.address}{" "}
-                                        </p>
-                                    )}
-                                </FormGroup>
-                                <button
-                                    className="buy__btn auth__btn"
-                                    type="submit"
-                                >
-                                    Đăng ký
-                                </button>
-                                <p>
-                                    Bạn đã có tài khoản ?
-                                    <Link to="/login"> Đăng nhập</Link>
-                                </p>
-                            </Form>
-                        </Col>
-                    </Row>
-                </Container>
-            </section>
-        </Helmet>
+        <div className="signup">
+            <div className="signup__overlay" onClick={onClose}></div>
+            <div className="signup__content">
+                <button className="signup__close" onClick={onClose}>×</button>
+                <h3 className="signup__title">ĐĂNG KÝ TÀI KHOẢN</h3>
+                <p className="signup__subtitle">Vui lòng nhập thông tin bên dưới để tạo tài khoản</p>
+
+                <Form className="signup__form" onSubmit={formik.handleSubmit}>
+                    <FormGroup className="form__group">
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Nhập tên của bạn"
+                            value={formik.values.name}
+                            onChange={formik.handleChange}
+                        />
+                        {formik.errors.name && formik.touched.name && (
+                            <p className="errorMsg">{formik.errors.name}</p>
+                        )}
+                    </FormGroup>
+
+                    <FormGroup className="form__group">
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Nhập email của bạn"
+                            value={formik.values.email}
+                            onChange={formik.handleChange}
+                        />
+                        {formik.errors.email && formik.touched.email && (
+                            <p className="errorMsg">{formik.errors.email}</p>
+                        )}
+                    </FormGroup>
+
+                    <FormGroup className="form__group">
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Nhập mật khẩu của bạn"
+                            value={formik.values.password}
+                            onChange={formik.handleChange}
+                        />
+                        {formik.errors.password && formik.touched.password && (
+                            <p className="errorMsg">{formik.errors.password}</p>
+                        )}
+                    </FormGroup>
+
+                    <FormGroup className="form__group">
+                        <input
+                            type="password"
+                            name="confirmedPassword"
+                            placeholder="Xác nhận mật khẩu của bạn"
+                            value={formik.values.confirmedPassword}
+                            onChange={formik.handleChange}
+                        />
+                        {formik.errors.confirmedPassword && formik.touched.confirmedPassword && (
+                            <p className="errorMsg">{formik.errors.confirmedPassword}</p>
+                        )}
+                    </FormGroup>
+
+                    <FormGroup className="form__group">
+                        <input
+                            type="text"
+                            name="phone"
+                            placeholder="Nhập số điện thoại của bạn"
+                            value={formik.values.phone}
+                            onChange={formik.handleChange}
+                        />
+                        {formik.errors.phone && formik.touched.phone && (
+                            <p className="errorMsg">{formik.errors.phone}</p>
+                        )}
+                    </FormGroup>
+
+                    <FormGroup className="form__group">
+                        <input
+                            type="text"
+                            name="address"
+                            placeholder="Nhập địa chỉ của bạn"
+                            value={formik.values.address}
+                            onChange={formik.handleChange}
+                        />
+                        {formik.errors.address && formik.touched.address && (
+                            <p className="errorMsg">{formik.errors.address}</p>
+                        )}
+                    </FormGroup>
+
+                    <button
+                        type="submit"
+                        className={`signup__submit ${Object.keys(formik.errors).length === 0 &&
+                            Object.keys(formik.touched).length > 0
+                            ? 'active'
+                            : ''
+                            }`}
+                    >
+                        Đăng ký
+                    </button>
+
+                    <div className="signup__login">
+                        <span>Đã có tài khoản? </span>
+                        <button
+                            onClick={handleShowLogin}
+                            className="login-link"
+                            style={{
+                                background: 'none',
+                                border: 'none',
+                                color: '#0d6efd',
+                                textDecoration: 'none',
+                                cursor: 'pointer',
+                                padding: 0,
+                                fontWeight: 'bold'
+                            }}
+                        >
+                            Đăng nhập
+                        </button>
+                    </div>
+                </Form>
+            </div>
+        </div>
     );
 };
 

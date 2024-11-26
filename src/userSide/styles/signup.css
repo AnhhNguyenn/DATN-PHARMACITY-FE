@@ -1,29 +1,104 @@
-.auth__form {
-    background: var(--primary-color);
-    padding: 40px;
-    border-radius: 5px;
+.signup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.auth__btn {
-    background: #fff !important;
-    color: var(--primary-color);
+.signup__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.signup__content {
+    position: relative;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    z-index: 1;
+}
+
+.signup__close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+.signup__title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.signup__subtitle {
+    color: #666;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.signup__form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form__group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.signup__submit {
+    background: #ccc;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 4px;
+    cursor: pointer;
     font-weight: 600;
+    transition: background 0.3s;
 }
 
-.auth__form p {
-    margin-top: 30px;
+.signup__submit.active {
+    background: #0d6efd;
 }
 
-.auth__form p a {
-    color: rgba(255, 255, 255, 0.735);
+.signup__login {
+    text-align: center;
+    margin-top: 15px;
 }
 
-.auth__form .errorMsg {
-    margin-top: 0;
-    text-align: start !important;
-    font-size: 13px;
-    color: rgb(178, 6, 6);
+.signup__login a {
+    color: #0d6efd;
+    text-decoration: none;
+    font-weight: 500;
 }
-h3 {
-    font-weight: 700;
+
+.signup__login a:hover {
+    text-decoration: none;
+}
+
+.errorMsg {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 4px;
 }

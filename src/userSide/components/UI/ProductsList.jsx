@@ -1,14 +1,15 @@
 import React from "react";
 import ProductCard from "./ProductCard";
+import { Row } from "reactstrap";
 
 const ProductsList = (props) => {
   const { data } = props;
   return (
-    <>
-      {data.map((item, index) => {
-        return <ProductCard item={item} key={index}/>;
-      })}
-    </>
+    <Row>
+      {data.map((item, index) => (
+        <ProductCard item={item} key={index} />
+      ))}
+    </Row>
   );
 };
 

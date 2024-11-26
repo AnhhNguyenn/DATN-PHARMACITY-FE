@@ -1,0 +1,147 @@
+.promotion-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: flex-end;
+    z-index: 1000;
+}
+
+.promotion-modal {
+    width: 400px;
+    background-color: white;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.promotion-modal-header {
+    padding: 16px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.promotion-modal-header h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0 8px;
+}
+
+.promotion-modal-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+}
+
+.promotion-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.promotion-card.selected {
+    border: 2px solid #0066cc;
+}
+
+.promotion-modal-footer {
+    padding: 16px;
+    border-top: 1px solid #eee;
+}
+
+.apply-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.apply-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.promotion-header button {
+    background: none;
+    border: none;
+    color: #0066cc;
+    cursor: pointer;
+    padding: 4px 8px;
+}
+
+.applied-promotions {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.applied-promotion {
+    background-color: #e8f4ff;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 14px;
+    color: #0066cc;
+}
+
+.promotion-card {
+    display: flex;
+    padding: 16px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    position: relative;
+}
+
+.promotion-checkbox {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+}
+
+.promotion-checkbox input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #0066cc;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    position: relative;
+}
+
+.promotion-checkbox input[type="checkbox"]:checked {
+    background-color: #0066cc;
+}
+
+.promotion-checkbox input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.promotion-card.selected {
+    border: 2px solid #0066cc;
+    background-color: #f5f9ff;
+}

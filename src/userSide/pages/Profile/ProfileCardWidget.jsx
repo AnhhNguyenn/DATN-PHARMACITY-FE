@@ -47,55 +47,58 @@ export const ProfileCardWidget = () => {
     };
 
     return (
-        <Card border="light" className="card__avatar text-center p-0 mb-4">
-            <div
-                className="profile-cover rounded-top"
-            />
-            <Card.Body className="pb-5 card_profile">
-                <Card.Img
-                    src={userLogin.data.pathImg ? userLogin.data.pathImg : icon}
-                    alt="Avatar"
-                    ref={imgReview}
-                    className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-2"
-                />
+        <Card border="light" className="bg-white shadow-sm mb-4">
+            <Card.Body>
+                <h5 className="mb-4">Ảnh đại diện</h5>
+                <div className="profile-image-section">
+                    <Card.Img
+                        src={userLogin.data.pathImg ? userLogin.data.pathImg : icon}
+                        alt="Avatar"
+                        ref={imgReview}
+                        className="user-avatar rounded-circle"
+                    />
+                    <form className="form__upload" onSubmit={handleSubmit}>
+                        <input
+                            type="file"
+                            id="upload"
+                            accept=".jpg, .png"
+                            hidden
+                            name="avatar"
+                            onChange={(event) => {
+                                const fileLoad = event.currentTarget.files[0];
+                                showImgProduct(fileLoad);
+                                setAvatar(fileLoad);
+                            }}
+                        />
+                        <div className="upload-info">
+                            <label
+                                className="update-avatar-btn"
+                                htmlFor="upload"
+                                style={styleRef.label}
+                            >
+                                Cập nhật ảnh mới
+                            </label>
+                            <div className="file-requirements">
+                                Dung lượng file tối đa 5 MB.
+                                <br />
+                                Định dạng: .JPEG, .PNG
+                            </div>
+                        </div>
 
-                <Card.Title>{userLogin.data.name}</Card.Title>
-            </Card.Body>
-
-            <form className="form__upload" onSubmit={handleSubmit}>
-                <input
-                    type="file"
-                    id="upload"
-                    accept=".jpg, .png"
-                    hidden
-                    name="avatar"
-                    // value={avatar}
-                    onChange={(event) => {
-                        const fileLoad = event.currentTarget.files[0];
-                        showImgProduct(fileLoad);
-                        setAvatar(fileLoad);
-                    }}
-                />
-                <label
-                    id="label__avatar"
-                    htmlFor="upload"
-                    style={styleRef.label}
-                >
-                    Chỉnh sửa Avatar
-                </label>
-
-                <div className="container__button" style={styleRef.button}>
-                    <button
-                        className="btn btn-secondary"
-                        onClick={cancelAvatar}
-                    >
-                        Hủy
-                    </button>
-                    <button type="submit" className="btn btn-success ml-2">
-                        Lưu
-                    </button>
+                        <div className="container__button" style={styleRef.button}>
+                            <button
+                                className="btn btn-secondary"
+                                onClick={cancelAvatar}
+                            >
+                                Hủy
+                            </button>
+                            <button type="submit" className="btn btn-success ml-2">
+                                Lưu
+                            </button>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </Card.Body>
         </Card>
     );
 };
