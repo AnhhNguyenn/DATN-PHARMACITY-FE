@@ -9,9 +9,12 @@ export default function EditProduct() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { state } = useLocation();
+
+  console.log("Dữ liệu truyền vào từ state:", state);
   const editProduct = async (data) => {
+    console.log("Dữ liệu nhận từ form:", data);
     await toast.success("Chỉnh sửa nhà cung cấp thành công!");
-    navigate(-1); // Quay về trang trước
+    navigate(-1);
     await dispatch(editSupplierApi(data, navigate));
   };
   return (

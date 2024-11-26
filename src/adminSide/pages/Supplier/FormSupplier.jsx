@@ -8,13 +8,7 @@ export default function FormSupplier(props) {
 
   const formik = useFormik({
     initialValues: {
-      name: initialData.name || "",
-      address: initialData.address || "",
-      phone: initialData.phone || "",
-      email: initialData.email || "",
-      createAt: initialData.createAt
-        ? new Date(initialData.createAt).toISOString().split("T")[0]
-        : "",
+      ...initialData,
     },
 
     validationSchema: Yup.object().shape({

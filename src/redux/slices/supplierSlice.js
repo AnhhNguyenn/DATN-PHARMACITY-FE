@@ -42,7 +42,6 @@ export const editSupplierApi = (formData, navigate) => {
   return async (dispatch) => {
     try {
       const result = await editSupplierService(formData);
-
       dispatch(getAllSupplierApi());
       navigate("/admin/suppliers");
     } catch (error) {

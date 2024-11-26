@@ -8,6 +8,7 @@ import orderSlice from "./slices/orderSlice";
 import { promotionSlice } from "./slices/promotionSlice";
 import { supplierSlice } from "./slices/supplierSlice";
 import { warehouseSlice } from "./slices/warehouseSlice";
+import { receiptexportSlice } from "./slices/receiptexportSlice";
 
 const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ const store = configureStore({
     promotion: promotionSlice.reducer,
     supplier: supplierSlice.reducer,
     warehouse: warehouseSlice.reducer,
+    receiptexport: receiptexportSlice.reducer,
   },
 });
 

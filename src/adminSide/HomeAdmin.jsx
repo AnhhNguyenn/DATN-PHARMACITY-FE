@@ -7,6 +7,7 @@ import User from "./pages/User/User";
 import Promotion from "./pages/Promotion/Promotion";
 import Supplier from "./pages/Supplier/Supplier";
 import Warehouse from "./pages/Warehouse/Warehouse";
+import Receiptexport from "./pages//Receiptexport/Receiptexport";
 
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
@@ -73,6 +74,7 @@ const HomeAdmin = () => {
               path="warehouse/edit/:idWarehouse"
               element={<EditWarehouse />}
             />
+            <Route path="receiptexports" element={<Receiptexport />} />
 
             <Route path="product/add" element={<InputProduct />} />
             <Route path="product/edit/:idProduct" element={<EditProduct />} />

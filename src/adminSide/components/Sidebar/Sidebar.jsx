@@ -26,6 +26,7 @@ import {
 import WarehouseIcon from "@mui/icons-material/Warehouse";
 import DiscountIcon from "@mui/icons-material/Discount";
 import AirportShuttleIcon from "@mui/icons-material/AirportShuttle";
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import PendingOutlinedIcon from "@mui/icons-material/PendingOutlined"; // Import icon dành cho trạng thái "Chờ phê duyệt".
 import DeliveryDiningOutlinedIcon from "@mui/icons-material/DeliveryDiningOutlined"; // Import icon dành cho trạng thái "Đã giao hàng".
 import { NavLink } from "react-router-dom"; // Import NavLink từ React Router để tạo các đường dẫn điều hướng.
@@ -41,6 +42,11 @@ const navItems = [
   { text: "Khuyến mãi", icon: <DiscountIcon />, url: "promotions" },
   { text: "Kho", icon: <WarehouseIcon />, url: "warehouses" },
   { text: "Nhà cung cấp", icon: <AirportShuttleIcon />, url: "suppliers" },
+  {
+    text: "Nhập Xuất Hàng",
+    icon: <ReceiptLongIcon />,
+    url: "receiptexports",
+  },
   { text: "Tài khoản", icon: <Groups2Outlined />, url: "users" },
 ]; // Danh sách các mục chính trong Sidebar, mỗi mục có tiêu đề, biểu tượng và đường dẫn.
 

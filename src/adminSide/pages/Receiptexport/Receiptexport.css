@@ -1,0 +1,13 @@
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+
+  .flex-container {
+    flex-direction: column;
+  }
+
+  .table-container {
+    width: 100%;
+  }
+}
