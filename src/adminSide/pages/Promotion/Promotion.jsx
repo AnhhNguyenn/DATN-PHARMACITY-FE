@@ -31,7 +31,7 @@ export default function Promotion() {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log(promotions);  // Log ra toàn bộ dữ liệu promotions
+    console.log(promotions); // Log ra toàn bộ dữ liệu promotions
   }, [promotions]);
 
   // Cấu hình cột cho bảng
@@ -73,24 +73,32 @@ export default function Promotion() {
       key: "action",
       render: (_, record) => (
         <>
-          <Button
-            variant="contained"
-            color="warning"
-            sx={{ marginLeft: "4px" }}
-            onClick={() => {
-              navigate(`/admin/Promotion/edit/${record.id}`, { state: record });
-            }}
+          <div
+            style={{ display: "flex", justifyContent: "center", gap: "8px" }}
           >
-            Chỉnh sửa
-          </Button>
-          <Button
-            variant="contained"
-            color="error"
-            sx={{ marginLeft: "4px" }}
-            onClick={() => onDelete(record.id)}
-          >
-            Xóa
-          </Button>
+            <Button
+              variant="contained"
+              color="warning"
+              sx={{ marginLeft: "4px" }}
+              style={{ minWidth: "100px" }}
+              onClick={() => {
+                navigate(`/admin/Promotion/edit/${record.id}`, {
+                  state: record,
+                });
+              }}
+            >
+              Chỉnh sửa
+            </Button>
+            <Button
+              variant="contained"
+              color="error"
+              sx={{ marginLeft: "4px" }}
+              style={{ minWidth: "60px" }}
+              onClick={() => onDelete(record.id)}
+            >
+              Xóa
+            </Button>
+          </div>
         </>
       ),
     },

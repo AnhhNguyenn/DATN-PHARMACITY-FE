@@ -47,26 +47,32 @@ export default function Warehouse() {
       key: "action",
       render: (_, record) => (
         <>
-          <Button
-            variant="contained"
-            color="warning"
-            sx={{ marginLeft: "4px" }}
-            onClick={() => {
-              navigate(`/admin/Warehouse/edit/${record.id}`, {
-                state: record,
-              });
-            }}
+          <div
+            style={{ display: "flex", justifyContent: "center", gap: "8px" }}
           >
-            Chỉnh sửa
-          </Button>
-          <Button
-            variant="contained"
-            color="error"
-            sx={{ marginLeft: "4px" }}
-            onClick={() => onDelete(record.id)}
-          >
-            Xóa
-          </Button>
+            <Button
+              variant="contained"
+              color="warning"
+              sx={{ marginLeft: "4px" }}
+              style={{ minWidth: "100px" }}
+              onClick={() => {
+                navigate(`/admin/Warehouse/edit/${record.id}`, {
+                  state: record,
+                });
+              }}
+            >
+              Chỉnh sửa
+            </Button>
+            <Button
+              variant="contained"
+              color="error"
+              sx={{ marginLeft: "4px" }}
+              style={{ minWidth: "60px" }}
+              onClick={() => onDelete(record.id)}
+            >
+              Xóa
+            </Button>
+          </div>
         </>
       ),
     },
@@ -84,7 +90,7 @@ export default function Warehouse() {
         <h1 className="admin-h1">Danh sách Kho</h1>
         <Button
           style={{
-            marginRight: "100px", 
+            marginRight: "100px",
             padding: "10px",
           }}
           color="success"
