@@ -23,6 +23,7 @@ export default function Layout() {
         fetchGetAllProductsApi();
     }, []);
     return (
+        <>
             <Box
                 display={isNonMobile ? "flex" : "block"}
                 width="100%"
@@ -44,5 +45,7 @@ export default function Layout() {
                     <Outlet />
                 </Box>
             </Box>
+
+        </>
     );
 }

@@ -1,9 +1,9 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import FromWarehouse from "./FromWarehouse";
+import FormWarehouse from "./FormWarehouse";
 import { toast } from "react-toastify";
-import { addPromotionApi } from "../../../redux/slices/promotionSlice";
+import { addWarehouseApi } from "../../../redux/slices/warehouseSlice";
 
 export default function InputPromotion() {
   const navigate = useNavigate();
@@ -21,13 +21,14 @@ export default function InputPromotion() {
   };
 
   // Hàm xử lý khi thêm khuyến mãi
-  const addPromotion = async (formData) => {
+  const addWarehouse = async (formData) => {
     try {
-      await dispatch(addPromotionApi(formData, navigate));
-      toast.success("Thêm khuyến mãi thành công!");
+      await dispatch(addWarehouseApi(formData)); // Gọi API thêm kho
+      toast.success("Thêm kho thành công!");
+      navigate(-1); // Quay về trang trước
     } catch (error) {
-      console.error("Lỗi khi thêm khuyến mãi:", error);
-      toast.error("Thêm khuyến mãi thất bại!");
+      console.error("Lỗi khi thêm kho:", error);
+      toast.error("Thêm kho thất bại!");
     }
   };
 
@@ -43,9 +44,9 @@ export default function InputPromotion() {
           color: "#0072bc", // Màu xanh giống Pharmacity
         }}
       >
-        Thêm khuyến mãi
+        Thêm Kho
       </h1>
-      <FromWarehouse initialData={initialValues} submitForm={addPromotion} />
+      <FormWarehouse initialData={initialValues} submitForm={addWarehouse} />
     </div>
   );
 }

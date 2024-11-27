@@ -24,7 +24,7 @@ const ProductCard = (props) => {
             dispatch(addProductToCartApi(data));
             toast.success(`Thêm ${item.name} vào giỏ hàng thành công!`);
         };
-        if (user && user.id) {
+        if (user !== undefined) {
             fetchAddProductToCartApi();
         } else {
             toast.error("Bạn cần đăng nhập để thêm vào giỏ hàng!");

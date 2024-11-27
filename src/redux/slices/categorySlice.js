@@ -40,7 +40,7 @@ export const editCategorytApi = (formData, navigate) => {
             const result = await editCategoryService(formData);
             dispatch(getAllCategoryApi());
             navigate("/admin/categories");
-        } catch (error) {
+        } catch (error) { 
             console.log(error);
         }
     };

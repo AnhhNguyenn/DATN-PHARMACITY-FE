@@ -32,7 +32,7 @@ export const deleteCategoryServices = async (id) => {
             },
         });
         return respone.data;
-    } catch (error) {
+    } catch (error) { 
         return error;
     }
 };

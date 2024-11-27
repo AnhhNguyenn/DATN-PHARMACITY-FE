@@ -36,7 +36,7 @@ export const deleteWarehouseServices = async (id) => {
     return error;
   }
 };
-export const editWarehouseService = (formData) => {
+export const editWarehouseService = (formData) => { 
   return requestApi({
     url: `warehouse/edit`,
     method: "put",

@@ -3,7 +3,9 @@ import { Table } from "antd";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import { getAllPromotionApi } from "../../../redux/slices/promotionSlice";
+import { deletePromotionServices } from "../../../services/promotionServices";
 
 export default function Promotion() {
   const navigate = useNavigate();
@@ -12,10 +14,25 @@ export default function Promotion() {
   // Lấy dữ liệu từ Redux store
   const promotions = useSelector((state) => state.promotion.promotions);
 
+  const onDelete = async (id) => {
+    const result = await deletePromotionServices(id);
+    if (result.status === 200) {
+      toast.success("Xóa thành công!");
+      dispatch(getAllPromotionApi());
+      navigate("/admin/promotions");
+    } else {
+      toast.error("Xóa thất bại!");
+    }
+  };
+
   // Gọi API khi component được render
   useEffect(() => {
     dispatch(getAllPromotionApi());
   }, [dispatch]);
+
+  useEffect(() => {
+    console.log(promotions);  // Log ra toàn bộ dữ liệu promotions
+  }, [promotions]);
 
   // Cấu hình cột cho bảng
   const columns = [
@@ -38,13 +55,18 @@ export default function Promotion() {
       title: "Ngày bắt đầu",
       dataIndex: "startDate",
       key: "startDate",
-      render: (text) => new Date(text).toLocaleDateString("vi-VN"),
+      render: (text) => {
+        console.log("Ngày bắt đầu:", text);
+        return text ? new Date(text).toLocaleDateString("vi-VN") : "";
+      },
     },
     {
       title: "Ngày kết thúc",
       dataIndex: "endDate",
       key: "endDate",
-      render: (text) => new Date(text).toLocaleDateString("vi-VN"),
+      render: (text) => {
+        return text ? new Date(text).toLocaleDateString("vi-VN") : "";
+      },
     },
     {
       title: "Hành động",
@@ -56,12 +78,18 @@ export default function Promotion() {
             color="warning"
             sx={{ marginLeft: "4px" }}
             onClick={() => {
-              navigate(`/admin/Promotion/edit/${record.id}`, {
-                state: record,
-              });
+              navigate(`/admin/Promotion/edit/${record.id}`, { state: record });
             }}
           >
             Chỉnh sửa
+          </Button>
+          <Button
+            variant="contained"
+            color="error"
+            sx={{ marginLeft: "4px" }}
+            onClick={() => onDelete(record.id)}
+          >
+            Xóa
           </Button>
         </>
       ),

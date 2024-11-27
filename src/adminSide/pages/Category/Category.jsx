@@ -10,6 +10,7 @@ export default function Category() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const listProduct = useSelector((state) => state.category.categories);
+
   const onDelete = async (id) => {
     const result = await deleteCategoryServices(id);
     if (result.status === 200) {

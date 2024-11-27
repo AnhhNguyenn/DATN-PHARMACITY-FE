@@ -38,14 +38,16 @@ export const deletePromotionServices = async (id) => {
     return error;
   }
 };
-
+ 
 export const editPromotionService = (formData) => {
   return requestApi({
-    url: `Promotion/edit`,
-    method: "put",
-    data: JSON.stringify(formData),
-    headers: {
-      "Content-Type": "application/json",
-    },
+      url: `Promotion/edit`,
+      method: "put",
+      data: JSON.stringify(formData),
+      headers: {
+          "Content-Type": "application/json" 
+        },
   });
 };
+
+

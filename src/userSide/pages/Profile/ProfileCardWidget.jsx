@@ -32,9 +32,26 @@ export const ProfileCardWidget = () => {
 
         const formData = new FormData();
         formData.append("avatar", avatar);
-        toast.success("Avatar saved successfully!");
-        await dispatch(uploadAvatarApi(userLogin.id, formData));
-        setAvatar("");
+
+        try {
+            const response = await dispatch(uploadAvatarApi(userLogin.id, formData));
+            if (response.payload.data.status === 200) {
+                // Cập nhật localStorage với avatar mới
+                const updatedUser = {
+                    ...userLogin,
+                    data: {
+                        ...userLogin.data,
+                        pathImg: response.payload.data.pathImg,
+                    }
+                };
+                localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+
+                toast.success("Avatar saved successfully!");
+                setAvatar("");
+            }
+        } catch (error) {
+            toast.error("Upload avatar failed!");
+        }
     };
 
     const styleRef = {

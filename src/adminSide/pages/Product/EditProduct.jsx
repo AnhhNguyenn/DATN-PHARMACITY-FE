@@ -11,8 +11,8 @@ import {
 export default function EditProduct() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { state } = useLocation();
-  const editProduct = async (data) => {
+  const { state } = useLocation(); 
+  const editProduct = async (data) => { 
     const result = await editProductApi(data);
     if (result.status === 200) {
       toast.success("Chỉnh sửa sản phẩm thành công!");
@@ -41,7 +41,7 @@ export default function EditProduct() {
           fontWeight: "bold",
           color: "#333", // Màu chữ
           marginBottom: "20px", // Tạo khoảng cách dưới
-        }}
+        }} 
       >
         Chỉnh sửa sản phẩm
       </h2>

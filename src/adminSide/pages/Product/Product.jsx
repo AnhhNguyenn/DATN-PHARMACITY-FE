@@ -12,7 +12,7 @@ import "./product.css";
 const { Search } = Input;
 
 export default function Product() {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
   const dispatch = useDispatch();
   const listProduct = useSelector((state) => state.product.products);
   const [data, setData] = useState(listProduct);

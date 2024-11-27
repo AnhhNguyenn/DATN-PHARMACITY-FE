@@ -1,3 +1,4 @@
+
 import ReactApexChart from "react-apexcharts";
 import { Typography } from "antd";
 import lineChart from "./configs/lineChart";

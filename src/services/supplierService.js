@@ -43,6 +43,6 @@ export const editSupplierService = (formData) => {
     data: JSON.stringify(formData),
     headers: {
       "Content-Type": "application/json",
-    },
+    }, 
   });
 };

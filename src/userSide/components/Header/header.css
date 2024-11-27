@@ -186,10 +186,17 @@
 }
 
 .login__button img.user-avatar {
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
     object-fit: cover;
+    display: block;
+}
+
+.login__button svg {
+    color: #333;
+    width: 20px;
+    height: 20px;
 }
 
 .login__button:hover {

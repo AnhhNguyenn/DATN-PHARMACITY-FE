@@ -37,7 +37,7 @@ export const addSupplierApi = (formData, navigate) => {
     }
   };
 };
-//Chỉnh sửa loại sản phẩm
+//Chỉnh sửa nhà cung cấp
 export const editSupplierApi = (formData, navigate) => {
   return async (dispatch) => {
     try {

@@ -37,7 +37,7 @@ export const addWarehouseApi = (formData, navigate) => {
     }
   };
 };
-//Chỉnh sửa loại sản phẩm
+//Chỉnh sửa kho
 export const editWarehouseApi = (formData, navigate) => {
   return async (dispatch) => {
     try {

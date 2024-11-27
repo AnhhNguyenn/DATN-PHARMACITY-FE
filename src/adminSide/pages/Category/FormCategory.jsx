@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Button } from "antd";
 export default function FormCategory(props) {
-    const { initialData, submitForm } = props;
+    const { initialData, submitForm } = props; 
     const formik = useFormik({
         initialValues: {
             ...initialData,

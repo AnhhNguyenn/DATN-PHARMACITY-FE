@@ -31,21 +31,22 @@ export const addPromotionApi = (formData, navigate) => {
       const result = await addPromotionService(formData);
 
       await dispatch(getAllPromotionApi());
-      navigate("/admin/promotions");
+      navigate("/admin/promotions"); 
     } catch (error) {
       console.log(error);
     }
   };
 };
 
+//Chỉnh sửa loại sản phẩm
 export const editPromotionApi = (formData, navigate) => {
   return async (dispatch) => {
-    try {
-      const result = await editPromotionService(formData);
-      dispatch(getAllPromotionApi());
-      navigate("/admin/promotions");
-    } catch (error) {
-      console.log(error);
-    }
+      try {
+          const result = await editPromotionService(formData);
+          dispatch(getAllPromotionApi());
+          navigate("/admin/promotions");
+      } catch (error) { 
+          console.log(error);
+      }
   };
 };

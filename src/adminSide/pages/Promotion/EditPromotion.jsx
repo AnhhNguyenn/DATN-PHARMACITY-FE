@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import FormPromotion from "./FormPromotion";
 import { toast } from "react-toastify";
 import { editPromotionApi } from "../../../redux/slices/promotionSlice";
@@ -13,6 +13,7 @@ export default function EditProduct() {
     await toast.success("Chỉnh sửa khuyến mãi thành công!");
     await dispatch(editPromotionApi(data, navigate));
   };
+
   return (
     <div className="container" style={{ padding: "30px 0px" }}>
       <h1

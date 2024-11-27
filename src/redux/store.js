@@ -9,20 +9,18 @@ import { promotionSlice } from "./slices/promotionSlice";
 import { supplierSlice } from "./slices/supplierSlice";
 import { warehouseSlice } from "./slices/warehouseSlice";
 
-
-
 const store = configureStore({
-    reducer: {
-        user: userSlice.reducer,
-        cart: cartSlice,
-        product: productSlice.reducer,
-        globalSlice,
-        category: categorySlice.reducer,
-        orderSlice,
-        promotion: promotionSlice.reducer,
-        supplier: supplierSlice.reducer,
-        warehouse: warehouseSlice.reducer,
-    }
-})
+  reducer: {
+    user: userSlice.reducer,
+    cart: cartSlice,
+    product: productSlice.reducer,
+    globalSlice,
+    category: categorySlice.reducer,
+    orderSlice,
+    promotion: promotionSlice.reducer,
+    supplier: supplierSlice.reducer,
+    warehouse: warehouseSlice.reducer,
+  },
+});
 
 export default store;

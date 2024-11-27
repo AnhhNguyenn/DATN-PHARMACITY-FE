@@ -33,6 +33,7 @@ const UploadFile = ({ open, onSetOpen }) => {
         navigate("/shop");
     };
     return (
+        <>
             <Modal
                 title="UPLOAD FILE TÊN THUỐC CẦN TÌM"
                 open={open}
@@ -57,6 +58,7 @@ const UploadFile = ({ open, onSetOpen }) => {
                     </Row>
                 </Form>
             </Modal>
+        </>
     );
 };
 export default UploadFile;
