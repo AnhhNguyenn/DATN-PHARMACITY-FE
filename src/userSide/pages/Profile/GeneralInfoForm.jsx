@@ -81,6 +81,16 @@ export const GeneralInfoForm = () => {
             try {
                 const response = await dispatch(editProfileApi(data));
                 if (response.payload.data.status === 200) {
+                    // Cập nhật localStorage với thông tin mới
+                    const updatedUser = {
+                        ...user,
+                        name: values.name,
+                        email: values.email,
+                        address: values.address,
+                        pathImg: _image
+                    };
+                    localStorage.setItem('user', JSON.stringify(updatedUser));
+
                     toast.success("Sửa thông tin thành công!");
                     navigate("/profile");
                 } else {
@@ -91,6 +101,7 @@ export const GeneralInfoForm = () => {
             }
         },
     });
+
 
     const { values, handleChange, handleSubmit } = formik;
 
