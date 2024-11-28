@@ -24,7 +24,6 @@ const Cart = () => {
 
     const [loadingDelete, setLoadingDelete] = useState(false);
     const cartItems = useSelector((state) => state.cart.cartItems);
-    const [selectedItems, setSelectedItems] = useState([]);
     const [isPromotionModalOpen, setIsPromotionModalOpen] = useState(false);
     const [appliedPromotions, setAppliedPromotions] = useState([]);
     const [isCheckingOut, setIsCheckingOut] = useState(false);
@@ -60,37 +59,13 @@ const Cart = () => {
         setAppliedPromotions(promotions);
     };
 
-    const handleSelectItem = (itemId) => {
-        if (selectedItems.includes(itemId)) {
-            setSelectedItems(selectedItems.filter(id => id !== itemId));
-        } else {
-            setSelectedItems([...selectedItems, itemId]);
-        }
-    };
-
-    const handleSelectAll = (e) => {
-        if (e.target.checked) {
-            setSelectedItems(cartItems.map(item => item.id));
-        } else {
-            setSelectedItems([]);
-        }
-    };
-
     const calculateSelectedTotal = () => {
         return cartItems
-            .filter(item => selectedItems.includes(item.id))
             .reduce((total, item) => total + item.price * item.quantity, 0);
     };
 
     const CartHeader = () => (
         <div className="cart-header-row">
-            <div className="cart-col checkbox">
-                <input
-                    type="checkbox"
-                    checked={selectedItems.length === cartItems.length}
-                    onChange={handleSelectAll}
-                />
-            </div>
             <div className="cart-col product">Sản phẩm</div>
             <div className="cart-col price">Đơn giá</div>
             <div className="cart-col quantity">Số lượng</div>
@@ -164,13 +139,6 @@ const Cart = () => {
 
     const CartItem = ({ item }) => (
         <div className="cart-item-row">
-            <div className="cart-col checkbox">
-                <input
-                    type="checkbox"
-                    checked={selectedItems.includes(item.id)}
-                    onChange={() => handleSelectItem(item.id)}
-                />
-            </div>
             <div className="cart-col product">
                 <div className="product-info">
                     <img src={item.pathImg} alt={item.name} />
@@ -345,7 +313,6 @@ const Cart = () => {
                                 <button
                                     className="checkout-button"
                                     onClick={handleSubmit}
-                                    disabled={selectedItems.length === 0}
                                 >
                                     {isCheckingOut ? 'Đặt hàng' : 'Tiến hành đặt hàng'}
                                 </button>

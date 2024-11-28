@@ -244,7 +244,7 @@
 .cart-header-row,
 .cart-item-row {
     display: grid;
-    grid-template-columns: 40px 3fr 1fr 1fr 1fr 40px;
+    grid-template-columns: 3fr 1fr 1fr 1fr 40px;
     align-items: center;
     padding: 12px 16px;
     gap: 16px;
@@ -260,11 +260,6 @@
 
 .cart-item-row {
     border-bottom: 1px solid #eee;
-}
-
-.cart-col.checkbox {
-    display: flex;
-    align-items: center;
 }
 
 .cart-col.checkbox input[type="checkbox"] {
