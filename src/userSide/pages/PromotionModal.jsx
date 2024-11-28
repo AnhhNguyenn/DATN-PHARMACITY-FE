@@ -30,7 +30,9 @@ const PromotionModal = ({ isOpen, onClose, onApply }) => {
 
     const handleApply = () => {
         if (selectedPromotions.size > 0) {
-            onApply(Array.from(selectedPromotions));
+            const promotionsArray = Array.from(selectedPromotions);
+            localStorage.setItem("promotion", JSON.stringify(promotionsArray[0])); // Lưu promotion đầu tiên
+            onApply(promotionsArray);
             onClose();
         }
     };

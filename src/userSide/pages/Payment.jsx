@@ -29,10 +29,23 @@ const Payment = ({ open, onSetOpen }) => {
     };
 
     const onSuccess = async (type) => {
-        const result = await createOrderService(
-            type === 0 ? 1 : 2,
-            isTransport ? 1 : 0
-        );
+        const promotion = JSON.parse(localStorage.getItem("promotion")); // Lấy promotion đã chọn
+        console.log("Promotion:", promotion);
+
+        const user = JSON.parse(localStorage.getItem("user")); // Lấy thông tin user
+        console.log("User:", user);
+
+        const orderData = {
+            idUser: user?.id,
+            status: 1, // Trạng thái đơn hàng mới
+            type: type === 0 ? 1 : 2, // Loại thanh toán
+            idPromotion: promotion?.id || null // Nếu không có promotion thì gửi null
+        };
+        console.log("Order Data:", orderData);
+
+        const result = await createOrderService(orderData);
+        console.log("Result:", result);
+
         if (result.status === 200) {
             toast.success("Đặt hàng thành công!");
             dispatch(getAllCartItemApi());
