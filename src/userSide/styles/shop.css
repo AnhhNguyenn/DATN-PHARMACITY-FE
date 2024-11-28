@@ -307,3 +307,13 @@
     color: white;
     border-color: var(--primary-color);
 }
+
+.product__name a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.product__name a:hover {
+    text-decoration: none;
+    color: var(--primary-color);
+}

@@ -2,14 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllOrderAnUserService } from "../../services/orderServices";
 import OrderCard from "../components/UI/OrderCard";
-import { Input, Container } from "reactstrap";
-import { Search } from 'lucide-react';
+import { Container } from "reactstrap";
 
 const Order = () => {
     const navigate = useNavigate();
     const [orders, setOrders] = useState([]);
     const [activeTab, setActiveTab] = useState('hoanthanh');
-    const [searchTerm, setSearchTerm] = useState('');
     const user = JSON.parse(localStorage.getItem("user"));
 
     const ORDER_TABS = [
@@ -44,12 +42,6 @@ const Order = () => {
             filtered = orders.filter(order => order.status === selectedTab?.status);
         }
 
-        if (searchTerm) {
-            filtered = filtered.filter(order =>
-                order.id.toString().includes(searchTerm.toLowerCase())
-            );
-        }
-
         return filtered;
     };
 
@@ -57,16 +49,6 @@ const Order = () => {
         <div className="oh">
             <div className="oh__header">
                 <h2 className="oh__title">Lịch sử đơn hàng</h2>
-                <div className="oh__search-wrapper">
-                    <Search className="oh__search-icon" size={16} strokeWidth={2} />
-                    <Input
-                        type="search"
-                        placeholder="Tìm kiếm theo mã đơn hàng hoặc tên sản phẩm"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="oh__search"
-                    />
-                </div>
             </div>
 
             <Container>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Spinner, Progress } from "reactstrap";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addProductToCartApi, getAllCartItemApi } from "../../redux/slices/cartSlice";
 import { getAllProductsApi } from "../../redux/slices/productSlice";
@@ -15,6 +15,7 @@ import { VND } from "../../utils/convertVND";
 const ProductDetails = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [productDetail, setProductDetail] = useState({});
     const [countAddCart, setCountAddCart] = useState(1);
     const [loading, setLoading] = useState(false);
@@ -59,7 +60,7 @@ const ProductDetails = () => {
         ? products.filter(item => item.idCategory === productDetail.idCategory)
         : [];
 
-    const addToCart = async () => {
+    const addToCart = async (shouldNavigateToCart = false) => {
         if (!user) {
             toast.error("Bạn cần đăng nhập để thêm vào giỏ hàng!");
             return;
@@ -81,11 +82,19 @@ const ProductDetails = () => {
             await dispatch(addProductToCartApi(data)).unwrap();
             await dispatch(getAllCartItemApi()).unwrap();
             toast.success(`Thêm ${productDetail.name} vào giỏ hàng thành công!`);
+
+            if (shouldNavigateToCart) {
+                navigate('/cart');
+            }
         } catch (error) {
             toast.error("Không thể thêm vào giỏ hàng!");
         } finally {
             setLoadingCart(false);
         }
+    };
+
+    const handleBuyNow = () => {
+        addToCart(true);
     };
 
     const handleDecrementCount = () => {
@@ -143,7 +152,10 @@ const ProductDetails = () => {
 
                                     {/* Action Buttons - Di chuyển lên trên */}
                                     <div className="action__buttons">
-                                        <button className="buy__now">
+                                        <button
+                                            className="buy__now"
+                                            onClick={handleBuyNow}
+                                            disabled={loadingCart}>
                                             Mua ngay
                                         </button>
                                         <button
