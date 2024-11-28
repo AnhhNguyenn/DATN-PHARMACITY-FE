@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Progress } from "reactstrap";
+import { Progress, Form, FormGroup } from "reactstrap";
 import { useSelector, useDispatch } from "react-redux";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import Helmet from "../components/Helmet/Helmet";
 import { Link, useNavigate } from "react-router-dom";
 import { deleteCartItemApi, getAllCartItemApi } from "../../redux/slices/cartSlice";
@@ -8,6 +10,8 @@ import { toast } from "react-toastify";
 import { VND } from "../../utils/convertVND";
 import { decreaseItemService, increaseItemService } from "../../services/cartServices";
 import PromotionModal from "./PromotionModal";
+import Payment from "./Payment";
+import { FormLabel } from "@themesberg/react-bootstrap";
 
 import "../styles/cart.css";
 
@@ -17,18 +21,44 @@ const Cart = () => {
     if (user === undefined) {
         navigate("/login");
     }
+
     const [loadingDelete, setLoadingDelete] = useState(false);
     const cartItems = useSelector((state) => state.cart.cartItems);
     const [selectedItems, setSelectedItems] = useState([]);
     const [isPromotionModalOpen, setIsPromotionModalOpen] = useState(false);
     const [appliedPromotions, setAppliedPromotions] = useState([]);
+    const [isCheckingOut, setIsCheckingOut] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+
+    const dispatch = useDispatch();
+
+    const formik = useFormik({
+        initialValues: {
+            name: user?.name || '',
+            email: user?.email || '',
+            phone: user?.phone || '',
+            address: user?.address || '',
+        },
+        validationSchema: Yup.object({
+            phone: Yup.string().required("Số điện thoại là bắt buộc"),
+            address: Yup.string().required("Địa chỉ là bắt buộc"),
+        }),
+    });
+
+    const onSetOpen = () => {
+        setOpen(!open);
+    };
+
+    const handleSubmit = () => {
+        if (formik.isValid) {
+            onSetOpen();
+        }
+    };
 
     const handleApplyPromotions = (promotions) => {
         setAppliedPromotions(promotions);
     };
-
-    const dispatch = useDispatch();
-
 
     const handleSelectItem = (itemId) => {
         if (selectedItems.includes(itemId)) {
@@ -169,6 +199,72 @@ const Cart = () => {
         </div>
     );
 
+    const CheckoutForm = () => (
+        <div className="checkout-section">
+            <div className="user-info-container">
+                <div className="header-container">
+                    <h2 className="mb-0 fw-bold">Thông tin cá nhân</h2>
+                    <button
+                        className="btn btn-sm btn-primary edit-button"
+                        onClick={() => setIsEditing(!isEditing)}
+                    >
+                        {isEditing ? 'Lưu' : 'Chỉnh sửa'}
+                    </button>
+                </div>
+                <Form className="billing__form">
+                    <FormGroup>
+                        <FormLabel>Họ và tên</FormLabel>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="name"
+                            readOnly
+                            value={formik.values.name}
+                        />
+                    </FormGroup>
+                    <FormGroup>
+                        <FormLabel>Email</FormLabel>
+                        <input
+                            type="email"
+                            className="form-control"
+                            id="email"
+                            readOnly
+                            value={formik.values.email}
+                        />
+                    </FormGroup>
+                    <FormGroup>
+                        <FormLabel>Số điện thoại</FormLabel>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="phone"
+                            value={formik.values.phone}
+                            onChange={formik.handleChange}
+                            readOnly={!isEditing}
+                        />
+                        {formik.errors.phone && formik.touched.phone && (
+                            <div className="text-danger">{formik.errors.phone}</div>
+                        )}
+                    </FormGroup>
+                    <FormGroup>
+                        <FormLabel>Địa chỉ</FormLabel>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="address"
+                            value={formik.values.address}
+                            onChange={formik.handleChange}
+                            readOnly={!isEditing}
+                        />
+                        {formik.errors.address && formik.touched.address && (
+                            <div className="text-danger">{formik.errors.address}</div>
+                        )}
+                    </FormGroup>
+                </Form>
+            </div>
+        </div>
+    );
+
     return (
         <Helmet title="Cart">
             {loadingDelete && <Progress animated value="100" className="progress" />}
@@ -191,9 +287,15 @@ const Cart = () => {
                         </div>
 
                         <div className="cart-content">
-                            <div className="cart-items">
-                                <CartHeader />
-                                {cartItems.map(item => <CartItem key={item.id} item={item} />)}
+                            <div className="cart-main">
+                                <div className="cart-items">
+                                    <CartHeader />
+                                    {cartItems.map(item => <CartItem key={item.id} item={item} />)}
+                                </div>
+
+                                <div className="mt-4">
+                                    <CheckoutForm />
+                                </div>
                             </div>
 
                             <div className="cart-summary">
@@ -216,6 +318,7 @@ const Cart = () => {
                                         </div>
                                     )}
                                 </div>
+
                                 <PromotionModal
                                     isOpen={isPromotionModalOpen}
                                     onClose={() => setIsPromotionModalOpen(false)}
@@ -233,18 +336,25 @@ const Cart = () => {
                                     </div>
                                     <div className="summary-row total">
                                         <span>Tổng tiền</span>
-                                        <span className="total-amount">{VND.format(calculateFinalTotal())}</span>
+                                        <span className="total-amount">
+                                            {VND.format(calculateFinalTotal())}
+                                        </span>
                                     </div>
                                 </div>
 
-                                <button className="checkout-button">
-                                    <Link to="/checkout">Mua hàng ({selectedItems.length})</Link>
+                                <button
+                                    className="checkout-button"
+                                    onClick={handleSubmit}
+                                    disabled={selectedItems.length === 0}
+                                >
+                                    {isCheckingOut ? 'Đặt hàng' : 'Tiến hành đặt hàng'}
                                 </button>
                             </div>
                         </div>
                     </>
                 )}
             </div>
+            {open && <Payment open={open} onSetOpen={onSetOpen} />}
         </Helmet>
     );
 };
