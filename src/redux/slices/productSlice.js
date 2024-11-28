@@ -35,7 +35,7 @@ export const getAllProductsApi = createAsyncThunk(
     }
   }
 );
- 
+
 export const getAllProductsToShopApi = createAsyncThunk(
   "product/getAllProductsToShop",
   async ({ pageNumber, pageSize }) => {
@@ -61,7 +61,7 @@ export const addProductApi = async (formData) => {
 export const editProductApi = async (formData) => {
   try {
     const result = await editProductService(formData);
-    return result; 
+    return result;
   } catch (error) {
     console.log(error);
   }

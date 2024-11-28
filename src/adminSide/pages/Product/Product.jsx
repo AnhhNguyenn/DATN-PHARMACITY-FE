@@ -12,7 +12,7 @@ import "./product.css";
 const { Search } = Input;
 
 export default function Product() {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const listProduct = useSelector((state) => state.product.products);
   const [data, setData] = useState(listProduct);
@@ -22,9 +22,7 @@ export default function Product() {
     const result = await deleteProduct(id);
     if (result.status === 200) {
       toast.success("Xóa thành công!");
-      dispatch(
-        getAllProductsApi()
-      );
+      dispatch(getAllProductsApi());
       navigate("/admin/products");
     } else {
       toast.error("Xóa thất bại!");
@@ -32,9 +30,7 @@ export default function Product() {
   };
 
   useEffect(() => {
-    dispatch(
-      getAllProductsApi()
-    );
+    dispatch(getAllProductsApi());
   }, [dispatch]);
 
   useEffect(() => {
@@ -76,24 +72,28 @@ export default function Product() {
       key: "action",
       render: (_, record) => (
         <>
-          <Button
-            variant="contained"
-            color="warning"
-            sx={{ marginLeft: "4px" }}
-            onClick={() => {
-              navigate(`/admin/product/edit/${record.id}`, { state: record });
-            }}
+          <div
+            style={{ display: "flex", justifyContent: "center", gap: "8px" }}
           >
-            Chỉnh sửa
-          </Button>
-          <Button
-            variant="contained"
-            color="error"
-            sx={{ marginLeft: "4px" }}
-            onClick={() => onDelete(record.id)}
-          >
-            Xóa
-          </Button>
+            <Button
+              variant="contained"
+              color="warning"
+              style={{ minWidth: "100px" }} // Tăng chiều ngang
+              onClick={() => {
+                navigate(`/admin/product/edit/${record.id}`, { state: record });
+              }}
+            >
+              Chỉnh sửa
+            </Button>
+            <Button
+              variant="contained"
+              color="error"
+              style={{ minWidth: "60px" }} // Tăng chiều ngang
+              onClick={() => onDelete(record.id)}
+            >
+              Xóa
+            </Button>
+          </div>
         </>
       ),
     },
@@ -110,7 +110,7 @@ export default function Product() {
   return (
     <>
       <Row gutter={24} style={{ margin: "20px" }}>
-        <Col span={8}>
+        <Col span={5}>
           <h1 className="admin-h1">Danh sách sản phẩm</h1>
         </Col>
         <Col span={8} style={{ display: "flex", justifyContent: "center" }}>
@@ -119,9 +119,20 @@ export default function Product() {
             value={searchValue}
             enterButton
             onChange={(e) => onFilter(e.target.value)}
-            style={{ width: "100%", marginTop: "10px" }}
+            style={{
+              width: "90%",
+              marginTop: "10px",
+              height: "40px",
+            }}
+            inputStyle={{
+              height: "100%",
+            }}
+            enterButtonStyle={{
+              height: "100%",
+            }}
           />
         </Col>
+
         <Col span={8} style={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
             color="success"
