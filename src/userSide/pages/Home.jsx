@@ -21,7 +21,7 @@ import banner3 from "../../assets/images/pharmacity/banners/banner3.avif";
 import banner4 from "../../assets/images/pharmacity/banners/banner4.avif";
 import banner5 from "../../assets/images/pharmacity/banners/banner5.avif";
 
-import { getChatResponse } from "./../../utils/chatService";
+import { getChatResponse, getSuggestedQuestions } from "./../../utils/chatService";
 
 const BannerCarousel = ({ images, sideBanners }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -137,12 +137,13 @@ const ChatButton = () => {
     const [messages, setMessages] = useState([
         {
             type: 'bot',
-            content: 'Xin chào! Tôi có thể giúp gì cho bạn?'
+            content: 'Xin chào! Tôi là bot của Pharmacity. Có gì tôi có thể giúp bạn không?'
         }
     ]);
     const [inputMessage, setInputMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const messagesEndRef = useRef(null);
+    const [suggestedQuestions] = useState(getSuggestedQuestions());
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -156,25 +157,24 @@ const ChatButton = () => {
         setIsOpen(!isOpen);
     };
 
-    const handleSendMessage = async () => {
-        if (!inputMessage.trim()) return;
+    const handleSuggestedQuestion = (question) => {
+        setInputMessage(question);
+        handleSendMessage(question);
+    };
 
-        // Add user message
+    const handleSendMessage = async (messageText = inputMessage) => {
+        if (!messageText.trim()) return;
+
         const userMessage = {
             type: 'user',
-            content: inputMessage
+            content: messageText
         };
         setMessages(prev => [...prev, userMessage]);
         setInputMessage('');
         setIsLoading(true);
 
         try {
-            // Get response from ChatGPT
-            const response = await getChatResponse(inputMessage);
-
-            console.log('Bot response:', response);
-
-            // Add bot response
+            const response = await getChatResponse(messageText);
             const botMessage = {
                 type: 'bot',
                 content: response
@@ -254,6 +254,17 @@ const ChatButton = () => {
                             )}
                             <div ref={messagesEndRef} />
                         </div>
+                        <div className="chat-popup__suggestions">
+                            {suggestedQuestions.map((question, index) => (
+                                <button
+                                    key={index}
+                                    className="suggestion-button"
+                                    onClick={() => handleSuggestedQuestion(question)}
+                                >
+                                    {question}
+                                </button>
+                            ))}
+                        </div>
                         <div className="chat-popup__input">
                             <input
                                 type="text"
@@ -263,7 +274,7 @@ const ChatButton = () => {
                                 onKeyPress={handleKeyPress}
                             />
                             <button
-                                onClick={handleSendMessage}
+                                onClick={() => handleSendMessage()}
                                 disabled={isLoading}
                             >
                                 Gửi
