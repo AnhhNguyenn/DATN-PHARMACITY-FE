@@ -184,31 +184,36 @@ const Cart = () => {
                         <FormLabel>Họ và tên</FormLabel>
                         <input
                             type="text"
-                            className="form-control"
+                            className={`form-control ${!isEditing ? 'disabled-input' : ''}`}
                             id="name"
-                            readOnly
+                            readOnly={!isEditing}
                             value={formik.values.name}
+                            onChange={formik.handleChange}
+                            style={{ cursor: !isEditing ? 'not-allowed' : 'text' }}
                         />
                     </FormGroup>
                     <FormGroup>
                         <FormLabel>Email</FormLabel>
                         <input
                             type="email"
-                            className="form-control"
+                            className={`form-control ${!isEditing ? 'disabled-input' : ''}`}
                             id="email"
-                            readOnly
+                            readOnly={!isEditing}
                             value={formik.values.email}
+                            onChange={formik.handleChange}
+                            style={{ cursor: !isEditing ? 'not-allowed' : 'text' }}
                         />
                     </FormGroup>
                     <FormGroup>
                         <FormLabel>Số điện thoại</FormLabel>
                         <input
                             type="text"
-                            className="form-control"
+                            className={`form-control ${!isEditing ? 'disabled-input' : ''}`}
                             id="phone"
                             value={formik.values.phone}
                             onChange={formik.handleChange}
                             readOnly={!isEditing}
+                            style={{ cursor: !isEditing ? 'not-allowed' : 'text' }}
                         />
                         {formik.errors.phone && formik.touched.phone && (
                             <div className="text-danger">{formik.errors.phone}</div>
@@ -218,11 +223,12 @@ const Cart = () => {
                         <FormLabel>Địa chỉ</FormLabel>
                         <input
                             type="text"
-                            className="form-control"
+                            className={`form-control ${!isEditing ? 'disabled-input' : ''}`}
                             id="address"
                             value={formik.values.address}
                             onChange={formik.handleChange}
                             readOnly={!isEditing}
+                            style={{ cursor: !isEditing ? 'not-allowed' : 'text' }}
                         />
                         {formik.errors.address && formik.touched.address && (
                             <div className="text-danger">{formik.errors.address}</div>

@@ -55,46 +55,67 @@ export const OrderDetail = () => {
             <div className="order-detail__header">
                 <h2>Chi tiết đơn hàng</h2>
                 <div className="order-info">
-                    <div className="order-info__item">
-                        <span>Mã đơn hàng:</span>
-                        <strong>{id}</strong>
-                    </div>
-                    <div className="order-info__item">
-                        <span>Ngày đặt hàng:</span>
-                        <strong>{new Date(orderInfo.createAt).toLocaleString()}</strong>
-                    </div>
-                    <div className="order-info__item">
-                        <span>Trạng thái:</span>
-                        <strong className={`status status--${getStatusColor(orderInfo.status)}`}>
-                            {getStatusText(orderInfo.status)}
-                        </strong>
+                    <div className="info-card">
+                        <div className="info-card__item">
+                            <i className="ri-file-list-3-line"></i>
+                            <div>
+                                <label>Mã đơn hàng</label>
+                                <strong>{id}</strong>
+                            </div>
+                        </div>
+                        <div className="info-card__item">
+                            <i className="ri-calendar-2-line"></i>
+                            <div>
+                                <label>Ngày đặt hàng</label>
+                                <strong>{new Date(orderInfo.createAt).toLocaleString()}</strong>
+                            </div>
+                        </div>
+                        <div className="info-card__item">
+                            <i className="ri-flag-line"></i>
+                            <div>
+                                <label>Trạng thái</label>
+                                <strong className={`status status--${getStatusColor(orderInfo.status)}`}>
+                                    {getStatusText(orderInfo.status)}
+                                </strong>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div className="order-detail__content">
                 <div className="order-items">
-                    <table className="order-table">
-                        <thead>
-                            <tr>
-                                <th>Sản phẩm</th>
-                                <th>Đơn giá</th>
-                                <th>Số lượng</th>
-                                <th>Thành tiền</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {cartItems.map((item, index) => (
-                                <Tr item={item} key={index} />
-                            ))}
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colSpan="3">Tổng tiền:</td>
-                                <td>{VND.format(calculateTotal())}</td>
-                            </tr>
-                        </tfoot>
-                    </table>
+                    <div className="table-responsive">
+                        <table className="order-table">
+                            <thead>
+                                <tr>
+                                    <th>Sản phẩm</th>
+                                    <th>Đơn giá</th>
+                                    <th>Số lượng</th>
+                                    <th>Thành tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {cartItems.map((item, index) => (
+                                    <Tr item={item} key={index} />
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="order-summary">
+                        <div className="summary-row">
+                            <span>Tổng tiền hàng:</span>
+                            <strong>{VND.format(calculateTotal())}</strong>
+                        </div>
+                        <div className="summary-row">
+                            <span>Phí vận chuyển:</span>
+                            <strong>0 ₫</strong>
+                        </div>
+                        <div className="summary-row total">
+                            <span>Tổng thanh toán:</span>
+                            <strong>{VND.format(calculateTotal())}</strong>
+                        </div>
+                    </div>
                 </div>
             </div>
         </Container>
