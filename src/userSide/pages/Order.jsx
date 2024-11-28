@@ -3,20 +3,20 @@ import { useNavigate } from "react-router-dom";
 import { getAllOrderAnUserService } from "../../services/orderServices";
 import OrderCard from "../components/UI/OrderCard";
 import { Container } from "reactstrap";
+import { Clock, Package2, Truck, CheckCircle2 } from "lucide-react";
 
 const Order = () => {
     const navigate = useNavigate();
     const [orders, setOrders] = useState([]);
-    const [activeTab, setActiveTab] = useState('hoanthanh');
+    const [activeTab, setActiveTab] = useState('chothanhtoan');
     const user = JSON.parse(localStorage.getItem("user"));
 
-    const ORDER_TABS = [
-        { id: 'hoanthanh', label: 'Hoàn thành', status: 5 },
-        { id: 'dangxuly', label: 'Đang xử lý', status: 2 },
-        { id: 'dadonggoi', label: 'Đã đóng gói', status: 3 },
-        { id: 'danggiao', label: 'Đang giao', status: 4 },
-        { id: 'dahuy', label: 'Đã hủy', status: 6 },
-        { id: 'chothanhtoan', label: 'Chờ thanh toán', status: 1 },
+    const ORDER_STATES = [
+        { id: 'chothanhtoan', label: 'Chờ thanh toán', status: 1, icon: Clock },
+        { id: 'dangxuly', label: 'Đang xử lý', status: 2, icon: Package2 },
+        { id: 'danggiaohang', label: 'Đang giao hàng', status: 3, icon: Truck },
+        { id: 'dadonggoi', label: 'Đã đóng gói', status: 4, icon: Package2 },
+        { id: 'hoanthanh', label: 'Đã giao hàng', status: 5, icon: CheckCircle2 },
     ];
 
     useEffect(() => {
@@ -38,11 +38,16 @@ const Order = () => {
         let filtered = [...orders];
 
         if (activeTab !== 'all') {
-            const selectedTab = ORDER_TABS.find(tab => tab.id === activeTab);
+            const selectedTab = ORDER_STATES.find(tab => tab.id === activeTab);
             filtered = orders.filter(order => order.status === selectedTab?.status);
         }
 
         return filtered;
+    };
+
+    const getProgressStatus = (order) => {
+        const currentStateIndex = ORDER_STATES.findIndex(state => state.status === order.status);
+        return currentStateIndex;
     };
 
     return (
@@ -52,22 +57,34 @@ const Order = () => {
             </div>
 
             <Container>
-                <div className="oh__tabs">
-                    {ORDER_TABS.map(tab => (
-                        <button
-                            key={tab.id}
-                            className={`oh__tab-btn ${activeTab === tab.id ? 'active' : ''}`}
-                            onClick={() => setActiveTab(tab.id)}
-                        >
-                            {tab.label}
-                        </button>
-                    ))}
-                </div>
-
                 {getFilteredOrders().length > 0 ? (
                     <div className="oh__list">
                         {getFilteredOrders().map((item, index) => (
-                            <OrderCard item={item} key={index} />
+                            <div key={index}>
+                                <div className="order-progress">
+                                    {ORDER_STATES.map((state, idx) => {
+                                        const currentProgress = getProgressStatus(item);
+                                        const StateIcon = state.icon;
+                                        return (
+                                            <div
+                                                key={state.id}
+                                                className={`progress-step ${idx <= currentProgress ? 'active' : ''
+                                                    }`}
+                                            >
+                                                <div className="progress-icon">
+                                                    <StateIcon size={20} />
+                                                </div>
+                                                <span className="progress-label">{state.label}</span>
+                                                {idx < ORDER_STATES.length - 1 && (
+                                                    <div className={`progress-line ${idx < currentProgress ? 'active' : ''
+                                                        }`} />
+                                                )}
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                                <OrderCard item={item} />
+                            </div>
                         ))}
                     </div>
                 ) : (

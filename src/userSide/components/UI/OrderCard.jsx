@@ -26,7 +26,7 @@ const OrderCard = (props) => {
 
     const getStatusText = (status) => {
         switch (status) {
-            case 1: return "Chưa thanh toán";
+            case 1: return "Chờ thanh toán";
             case 2: return "Đang chờ phê duyệt";
             case 3: return "Đã phê duyệt - Chưa thanh toán";
             case 4: return "Đã thanh toán";
