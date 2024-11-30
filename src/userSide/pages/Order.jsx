@@ -3,19 +3,19 @@ import { useNavigate } from "react-router-dom";
 import { getAllOrderAnUserService } from "../../services/orderServices";
 import OrderCard from "../components/UI/OrderCard";
 import { Container } from "reactstrap";
-import { Clock, Package2, Truck, CheckCircle2 } from "lucide-react";
+import { Clock, Package2, Truck, CheckCircle2, DollarSign } from "lucide-react";
 
 const Order = () => {
     const navigate = useNavigate();
     const [orders, setOrders] = useState([]);
-    const [activeTab, setActiveTab] = useState('chothanhtoan');
+    const [activeTab, setActiveTab] = useState('all');
     const user = JSON.parse(localStorage.getItem("user"));
 
     const ORDER_STATES = [
         { id: 'chothanhtoan', label: 'Chờ thanh toán', status: 1, icon: Clock },
-        { id: 'dangxuly', label: 'Đang xử lý', status: 2, icon: Package2 },
+        { id: 'dangxuly', label: 'Chờ phê duyệt', status: 2, icon: Package2 },
+        { id: 'dadonggoi', label: 'Đã thanh toán', status: 4, icon: DollarSign },
         { id: 'danggiaohang', label: 'Đang giao hàng', status: 3, icon: Truck },
-        { id: 'dadonggoi', label: 'Đã đóng gói', status: 4, icon: Package2 },
         { id: 'hoanthanh', label: 'Đã giao hàng', status: 5, icon: CheckCircle2 },
     ];
 

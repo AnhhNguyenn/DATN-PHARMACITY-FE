@@ -15,7 +15,7 @@ const OrderCard = (props) => {
     const navigate = useNavigate();
 
     const getStatusColor = (status) => {
-        switch (status) {
+        switch (Number(status)) {
             case "Đang chờ phê duyệt": return "info";
             case "Chờ thanh toán": return "warning";
             case "Đã thanh toán": return "success";
@@ -28,7 +28,7 @@ const OrderCard = (props) => {
         switch (status) {
             case 1: return "Chờ thanh toán";
             case 2: return "Đang chờ phê duyệt";
-            case 3: return "Đã phê duyệt - Chưa thanh toán";
+            case 3: return "Đang giao hàng";
             case 4: return "Đã thanh toán";
             case 5: return "Đã giao hàng";
             default: return "Khởi tạo";
@@ -70,7 +70,7 @@ const OrderCard = (props) => {
                 </div>
                 <button
                     className="order-card__button"
-                    onClick={() => navigate(`/order/${item.id}`)}
+                    onClick={() => navigate(`/order/${item.id}?total=${item.total}&status=${item.status}`)}
                 >
                     Chi tiết
                     <i className="fas fa-arrow-right"></i>

@@ -1,7 +1,7 @@
 // OrderDetail.jsx
 import React from "react";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { Container } from "reactstrap";
 import { getDetailsOrderService } from "../../../services/orderServices";
 import "../../styles/order-detail.css";
@@ -9,8 +9,12 @@ import { VND } from "../../../utils/convertVND";
 
 export const OrderDetail = () => {
     const { id } = useParams();
+    const [searchParams] = useSearchParams();
+    const total = searchParams.get('total');
+    const urlStatus = searchParams.get('status');
     const [cartItems, setCartItems] = useState([]);
     const [orderInfo, setOrderInfo] = useState(null);
+    const currentStatus = orderInfo?.status || Number(urlStatus) || 0;
 
     useEffect(() => {
         const fetchGetDetailOrderApi = async () => {
@@ -36,8 +40,8 @@ export const OrderDetail = () => {
     const getStatusText = (status) => {
         switch (status) {
             case 1: return "Chờ thanh toán";
-            case 2: return "Đang chờ phê duyệt";
-            case 3: return "Đã phê duyệt - Chưa thanh toán";
+            case 2: return "Chờ phê duyệt";
+            case 3: return "Đang giao hàng";
             case 4: return "Đã thanh toán";
             case 5: return "Đã giao hàng";
             default: return "Khởi tạo";
@@ -74,8 +78,8 @@ export const OrderDetail = () => {
                             <i className="ri-flag-line"></i>
                             <div>
                                 <label>Trạng thái</label>
-                                <strong className={`status status--${getStatusColor(orderInfo.status)}`}>
-                                    {getStatusText(orderInfo.status)}
+                                <strong className={`status status--${getStatusColor(currentStatus)}`}>
+                                    {getStatusText(currentStatus)}
                                 </strong>
                             </div>
                         </div>
@@ -105,7 +109,7 @@ export const OrderDetail = () => {
                     <div className="order-summary">
                         <div className="summary-row">
                             <span>Tổng tiền hàng:</span>
-                            <strong>{VND.format(calculateTotal())}</strong>
+                            <strong>{VND.format(total || calculateTotal())}</strong>
                         </div>
                         <div className="summary-row">
                             <span>Phí vận chuyển:</span>
@@ -113,7 +117,7 @@ export const OrderDetail = () => {
                         </div>
                         <div className="summary-row total">
                             <span>Tổng thanh toán:</span>
-                            <strong>{VND.format(calculateTotal())}</strong>
+                            <strong>{VND.format(total || calculateTotal())}</strong>
                         </div>
                     </div>
                 </div>
