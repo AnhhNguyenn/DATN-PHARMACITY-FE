@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getAllReceiptServices, getAllExportServices, addReceiptService, addExportService } from "../../services/categoryServices";
+import { getAllReceiptServices, getAllExportServices, addReceiptService, addExportService } from "../../services/receiptexportServices";
 
 export const receiptexportSlice = createSlice({
     name: "receiptexport",
@@ -8,12 +8,12 @@ export const receiptexportSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-        .addCase(getAllReceiptApi.fulfilled, (state, action) => {
-            state.receiptexports = action.payload;
-        })
-        .addCase(getAllExportApi.fulfilled, (state, action) => {
-            state.receiptexports = action.payload;
-        });
+            .addCase(getAllReceiptApi.fulfilled, (state, action) => {
+                state.receiptexports = action.payload;
+            })
+            .addCase(getAllExportApi.fulfilled, (state, action) => {
+                state.receiptexports = action.payload;
+            });
     },
 });
 
@@ -24,7 +24,7 @@ export const getAllReceiptApi = createAsyncThunk(
         const respone = await getAllReceiptServices();
         return respone.data;
     }
-); 
+);
 
 // Lấy danh sách loại sản phẩm
 export const getAllExportApi = createAsyncThunk(
@@ -42,7 +42,7 @@ export const addReceiptApi = (formData, navigate) => {
             const result = await addReceiptService(formData);
 
             await dispatch(getAllReceiptApi());
-            navigate("/admin/receipts");
+            navigate("admin/warehouse-receipt");
         } catch (error) {
             console.log(error);
         }
@@ -56,7 +56,7 @@ export const addExportApi = (formData, navigate) => {
             const result = await addExportService(formData);
 
             await dispatch(getAllExportApi());
-            navigate("/admin/exports");
+            navigate("/admin/warehouse-export");
         } catch (error) {
             console.log(error);
         }

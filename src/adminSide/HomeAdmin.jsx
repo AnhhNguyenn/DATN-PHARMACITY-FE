@@ -32,57 +32,61 @@ import EditWarehouse from "./pages/Warehouse/EditWarehouse";
 import InputSupplier from "./pages/Supplier/InputSupplier";
 import EditSupplier from "./pages/Supplier/EditSupplier";
 
+import WarehouseReceipt from "./pages/ReceiptExport/WarehouseReceipt";
+
 const HomeAdmin = () => {
   const mode = useSelector((state) => state.globalSlice.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
   return (
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Routes>
-          <Route path="/*" element={<Navigate to="/admin/products" />} />
-          <Route path="/admin/*" element={<Layout />}>
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="users" element={<User />} />
-            <Route path="users/add" element={<InputUser />} />
-            <Route path="products" element={<Product />} />
-            <Route path="categories" element={<Category />} />
-            <Route path="category/add" element={<InputCategory />} />
-            <Route
-              path="category/edit/:idCategory"
-              element={<EditCategory />}
-            />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Routes>
+        <Route path="/*" element={<Navigate to="/admin/products" />} />
+        <Route path="/admin/*" element={<Layout />}>
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="users" element={<User />} />
+          <Route path="users/add" element={<InputUser />} />
+          <Route path="products" element={<Product />} />
+          <Route path="categories" element={<Category />} />
+          <Route path="category/add" element={<InputCategory />} />
+          <Route
+            path="category/edit/:idCategory"
+            element={<EditCategory />}
+          />
 
-            <Route path="promotions" element={<Promotion />} />
-            <Route path="promotion/add" element={<InputPromotion />} />
-            <Route
-              path="promotion/edit/:idPromotion"
-              element={<EditPromotion />}
-            />
+          <Route path="promotions" element={<Promotion />} />
+          <Route path="promotion/add" element={<InputPromotion />} />
+          <Route
+            path="promotion/edit/:idPromotion"
+            element={<EditPromotion />}
+          />
 
-            <Route path="suppliers" element={<Supplier />} />
-            <Route path="supplier/add" element={<InputSupplier />} />
-            <Route
-              path="supplier/edit/:idSupplier"
-              element={<EditSupplier />}
-            />
+          <Route path="suppliers" element={<Supplier />} />
+          <Route path="supplier/add" element={<InputSupplier />} />
+          <Route
+            path="supplier/edit/:idSupplier"
+            element={<EditSupplier />}
+          />
 
-            <Route path="warehouses" element={<Warehouse />} />
-            <Route path="warehouse/add" element={<InputWarehouse />} />
-            <Route
-              path="warehouse/edit/:idWarehouse"
-              element={<EditWarehouse />}
-            />
+          <Route path="warehouses" element={<Warehouse />} />
+          <Route path="warehouse/add" element={<InputWarehouse />} />
+          <Route
+            path="warehouse/edit/:idWarehouse"
+            element={<EditWarehouse />}
+          />
 
-            <Route path="product/add" element={<InputProduct />} />
-            <Route path="product/edit/:idProduct" element={<EditProduct />} />
-            <Route path="orders/*">
-              <Route path="pending" element={<PendingOrder />} />
-              <Route path="deliveried" element={<DeliveriedOrder />} />
-              <Route path="detail/:idOrder" element={<OrderDetail />} />
-            </Route>
+          <Route path="product/add" element={<InputProduct />} />
+          <Route path="product/edit/:idProduct" element={<EditProduct />} />
+          <Route path="orders/*">
+            <Route path="pending" element={<PendingOrder />} />
+            <Route path="deliveried" element={<DeliveriedOrder />} />
+            <Route path="detail/:idOrder" element={<OrderDetail />} />
           </Route>
-        </Routes>
-      </ThemeProvider>
+
+          <Route path="exports/warehouse-receipt" element={<WarehouseReceipt />} />
+        </Route>
+      </Routes>
+    </ThemeProvider>
   );
 };
 
