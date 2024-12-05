@@ -33,6 +33,10 @@ import InputSupplier from "./pages/Supplier/InputSupplier";
 import EditSupplier from "./pages/Supplier/EditSupplier";
 
 import WarehouseReceipt from "./pages/ReceiptExport/WarehouseReceipt";
+import InputWarehouseReceipt from "./pages/ReceiptExport/InputWarehouseReceipt";
+
+import ExportList from "./pages/ReceiptExport/ExportList";
+import FormExport from "./pages/ReceiptExport/FormExport";
 
 const HomeAdmin = () => {
   const mode = useSelector((state) => state.globalSlice.mode);
@@ -84,6 +88,10 @@ const HomeAdmin = () => {
           </Route>
 
           <Route path="exports/warehouse-receipt" element={<WarehouseReceipt />} />
+          <Route path="exports/warehouse-receipt/add" element={<InputWarehouseReceipt />} />
+
+          <Route path="exports/warehouse-export" element={<ExportList />} />
+          <Route path="exports/warehouse-export/add" element={<FormExport />} />
         </Route>
       </Routes>
     </ThemeProvider>

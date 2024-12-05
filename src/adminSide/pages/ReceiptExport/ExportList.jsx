@@ -2,18 +2,25 @@ import React, { useEffect, useState } from "react";
 import { Table } from "antd";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllReceiptApi } from "../../../redux/slices/receiptexportSlice";
+import { useDispatch } from "react-redux";
+import { getAllExportApi } from "../../../redux/slices/receiptexportSlice";
 
-export default function WarehouseReceipt() {
+export default function ExportList() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [receipts, setReceipts] = useState([]);
+    const [exports, setExports] = useState([]);
 
     useEffect(() => {
-        dispatch(getAllReceiptApi());
-    }, []);
+        // Gọi API để lấy danh sách phiếu xuất kho
+        dispatch(getAllExportApi())
+            .unwrap()
+            .then((data) => {
+                setExports(data || []);
+            })
+            .catch((error) => {
+                console.error("Error fetching exports:", error);
+            });
+    }, [dispatch]);
 
     const columns = [
         {
@@ -27,14 +34,9 @@ export default function WarehouseReceipt() {
             key: "warehouseName",
         },
         {
-            title: "Nhà cung cấp",
-            dataIndex: "supplierName",
-            key: "supplierName",
-        },
-        {
-            title: "Ngày nhập",
-            key: "receiptDate",
-            dataIndex: "receiptDate",
+            title: "Ngày xuất",
+            key: "exportDate",
+            dataIndex: "exportDate",
             render: (value) => {
                 var date = new Date(value);
                 return <>{date.toLocaleDateString()}</>;
@@ -44,17 +46,19 @@ export default function WarehouseReceipt() {
             title: "Ghi chú",
             dataIndex: "note",
             key: "note",
-        }
+        },
     ];
 
     return (
         <>
-            <div style={{
-                display: "flex",
-                justifyContent: "space-between",
-                margin: "50px",
-            }}>
-                <h1 className="admin-h1">Danh sách phiếu nhập kho</h1>
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    margin: "50px",
+                }}
+            >
+                <h1 className="admin-h1">Danh sách phiếu xuất kho</h1>
                 <Button
                     style={{
                         marginRight: "100px",
@@ -63,14 +67,14 @@ export default function WarehouseReceipt() {
                     color="success"
                     variant="contained"
                     onClick={() => {
-                        navigate("/admin/exports/warehouse-receipt/add");
+                        navigate("/admin/exports/warehouse-export/add");
                     }}
                 >
-                    Tạo phiếu nhập
+                    Tạo phiếu xuất
                 </Button>
             </div>
             <div style={{ height: "78vh", width: "100%", padding: "0px 20px" }}>
-                <Table columns={columns} dataSource={receipts} />
+                <Table columns={columns} dataSource={exports} />
             </div>
         </>
     );
