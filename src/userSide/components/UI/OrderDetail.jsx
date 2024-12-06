@@ -6,6 +6,16 @@ import { Container } from "reactstrap";
 import { getDetailsOrderService } from "../../../services/orderServices";
 import "../../styles/order-detail.css";
 import { VND } from "../../../utils/convertVND";
+import JsBarcode from 'jsbarcode';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+
+if (pdfFonts?.pdfMake?.vfs) {
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
+} else {
+    console.error("Không tìm thấy vfs trong pdfFonts. Kiểm tra lại cấu hình pdfmake.");
+}
+
 
 export const OrderDetail = () => {
     const { id } = useParams();
@@ -15,16 +25,20 @@ export const OrderDetail = () => {
     const [cartItems, setCartItems] = useState([]);
     const [orderInfo, setOrderInfo] = useState(null);
     const currentStatus = orderInfo?.status || Number(urlStatus) || 0;
+    const createAt = searchParams.get('createAt');
 
     useEffect(() => {
         const fetchGetDetailOrderApi = async () => {
             const response = await getDetailsOrderService(id);
             setCartItems(response.data);
-            setOrderInfo(response.data[0]); // Giả sử thông tin đơn hàng nằm trong item đầu tiên
+            setOrderInfo({
+                ...response.data[0],
+                createAt: createAt || response.data[0]?.createAt
+            });
         };
 
         fetchGetDetailOrderApi();
-    }, [id]);
+    }, [id, createAt]);
 
     const getStatusColor = (status) => {
         switch (status) {
@@ -50,6 +64,91 @@ export const OrderDetail = () => {
 
     const calculateTotal = () => {
         return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+    };
+
+    const generatePDF = () => {
+        try {
+            const canvas = document.createElement("canvas");
+            JsBarcode(canvas, id, {
+                format: "CODE128",
+                width: 2,
+                height: 30,
+            });
+            const barcodeData = canvas.toDataURL("image/png");
+
+            const docDefinition = {
+                content: [
+                    { text: "Pharmacity", style: "header", alignment: "center", fontSize: 18, bold: true },
+                    { text: "Tiết kiệm hơn - Sống khỏe hơn", style: "subheader", alignment: "center", fontSize: 12, margin: [0, 0, 0, 10] },
+                    { text: "Kính chào quý khách!", fontSize: 11, margin: [0, 0, 0, 10] },
+                    {
+                        columns: [
+                            { text: `Ngày: ${new Date(orderInfo.createAt).toLocaleDateString()}`, fontSize: 11 },
+                            { text: `Giờ: ${new Date(orderInfo.createAt).toLocaleTimeString()}`, fontSize: 11 },
+                        ],
+                        margin: [0, 0, 0, 10],
+                    },
+                    {
+                        table: {
+                            headerRows: 1,
+                            widths: ['*', 'auto', 'auto', 'auto'],
+                            body: [
+                                [
+                                    { text: 'Sản phẩm', bold: true, fontSize: 11 },
+                                    { text: 'Đơn giá', bold: true, fontSize: 11 },
+                                    { text: 'SL', bold: true, fontSize: 11 },
+                                    { text: 'Thành tiền', bold: true, fontSize: 11 }
+                                ],
+                                ...cartItems.map((item) => [
+                                    { text: item.name, fontSize: 10 },
+                                    { text: VND.format(item.price), fontSize: 10 },
+                                    { text: item.quantity.toString(), fontSize: 10 },
+                                    { text: VND.format(item.price * item.quantity), fontSize: 10 }
+                                ]),
+                            ],
+                        },
+                        margin: [0, 0, 0, 10],
+                    },
+                    {
+                        stack: [
+                            {
+                                columns: [
+                                    { text: 'Tổng tiền hàng:', alignment: 'left', fontSize: 11 },
+                                    { text: VND.format(calculateTotal()), alignment: 'right', fontSize: 11 }
+                                ],
+                                margin: [0, 5, 0, 0]
+                            },
+                            {
+                                columns: [
+                                    { text: 'Phí vận chuyển:', alignment: 'left', fontSize: 11 },
+                                    { text: '0 ₫', alignment: 'right', fontSize: 11 }
+                                ],
+                                margin: [0, 5, 0, 0]
+                            },
+                            {
+                                columns: [
+                                    { text: 'Tổng thanh toán:', alignment: 'left', bold: true, fontSize: 11 },
+                                    { text: VND.format(calculateTotal()), alignment: 'right', bold: true, fontSize: 11 }
+                                ],
+                                margin: [0, 5, 0, 15]
+                            }
+                        ]
+                    },
+                    { image: barcodeData, width: 200, alignment: "center" },
+                    { text: id, alignment: "center", fontSize: 10, margin: [0, 5, 0, 10] },
+                    { text: "Nếu có sự chênh lệch giữa giá thực tế và giá trên hóa đơn xin vui lòng liên hệ 1800 6821", fontSize: 9, alignment: "center", margin: [0, 0, 0, 5] },
+                    { text: "Quý khách vui lòng không đổi trả hàng khi ra khỏi cửa hàng", fontSize: 9, alignment: "center", margin: [0, 0, 0, 5] },
+                    { text: "Có giá trị xuất hóa đơn VAT trong vòng 24 tiếng", fontSize: 9, alignment: "center" },
+                ],
+                defaultStyle: {
+                    font: 'Roboto'
+                },
+            };
+
+            pdfMake.createPdf(docDefinition).download(`hoa-don-${id}.pdf`);
+        } catch (error) {
+            console.error("Lỗi khi tạo PDF:", error);
+        }
     };
 
     if (!orderInfo) return null;
@@ -85,6 +184,10 @@ export const OrderDetail = () => {
                         </div>
                     </div>
                 </div>
+                <button className="print-button" onClick={generatePDF}>
+                    <i className="ri-printer-line"></i>
+                    In hóa đơn
+                </button>
             </div>
 
             <div className="order-detail__content">
