@@ -11,7 +11,6 @@ import { getOrderNotPayment } from "../../services/cartServices";
 import './../styles/payment.css';
 
 const Payment = ({ open, onSetOpen, finalTotal }) => {
-    const [isTransport, setIsTransport] = useState(true);
     const [isPayment, setIsPayment] = useState("bank");
     const [price, setPrice] = useState();
     const [vietQRUrl, setVietQRUrl] = useState("");
@@ -56,10 +55,6 @@ const Payment = ({ open, onSetOpen, finalTotal }) => {
         }
     };
 
-    const onChange = (e) => {
-        setIsTransport(e.target.value);
-    };
-
     const onChangePayment = (e) => {
         setIsPayment(e.target.value);
     };
@@ -67,16 +62,14 @@ const Payment = ({ open, onSetOpen, finalTotal }) => {
     const handleGetData = async () => {
         const result = await getOrderNotPayment();
         if (result.status === 200) {
-            const shippingFee = isTransport ? 30000 : 0;
-            const totalWithShipping = finalTotal + shippingFee;
-            setPrice((totalWithShipping / 23507).toFixed());
-            setVietQRUrl(generateVietQRUrl(totalWithShipping));
+            setPrice((finalTotal / 23507).toFixed());
+            setVietQRUrl(generateVietQRUrl(finalTotal));
         }
     };
 
     useEffect(() => {
         handleGetData();
-    }, [isTransport]);
+    }, []);
 
     return (
         <Modal
@@ -86,19 +79,6 @@ const Payment = ({ open, onSetOpen, finalTotal }) => {
             footer={null}
             className="payment-modal"
         >
-            <Card title="HÌNH THỨC VẬN CHUYỂN" className="payment-card">
-                <Radio.Group onChange={onChange} value={isTransport}>
-                    <div className="radio-option">
-                        <Radio value={true}>Chuyển phát nhanh +30.000đ</Radio>
-                        <p className="description-text">
-                            Chúng tôi sẽ liên hệ bạn sớm nhất trong thời gian có
-                            thể. Đơn hàng của bạn sẽ được vận chuyển trong thời
-                            gian 2-3 ngày làm việc.
-                        </p>
-                    </div>
-                    <Radio value={false}>Giao hàng miễn phí</Radio>
-                </Radio.Group>
-            </Card>
 
             <Card title="HÌNH THỨC THANH TOÁN" className="payment-card">
                 <Radio.Group onChange={onChangePayment} value={isPayment}>
