@@ -13,8 +13,8 @@ const Order = () => {
 
     const ORDER_STATES = [
         { id: 'chothanhtoan', label: 'Chờ thanh toán', status: 1, icon: Clock },
-        { id: 'dangxuly', label: 'Chờ phê duyệt', status: 2, icon: Package2 },
         { id: 'dadonggoi', label: 'Đã thanh toán', status: 4, icon: DollarSign },
+        { id: 'dangxuly', label: 'Chờ phê duyệt', status: 2, icon: Package2 },
         { id: 'danggiaohang', label: 'Đang giao hàng', status: 3, icon: Truck },
         { id: 'hoanthanh', label: 'Đã giao hàng', status: 5, icon: CheckCircle2 },
     ];

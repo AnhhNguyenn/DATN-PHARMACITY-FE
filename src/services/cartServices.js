@@ -41,7 +41,8 @@ export const createNewDetailOrrder = async (_data) => {
 //Tạo mới 1 order
 export const createNewOrrder = async () => {
     const _data = {
-        idUser: user.id
+        idUser: user.id,
+        status: 0
     }
     try {
         const respone = await requestApi({
@@ -57,19 +58,23 @@ export const createNewOrrder = async () => {
         return error.response.data
     }
 }
-//lấy order chưa thanh toán
 export const getOrderNotPayment = async () => {
-
     try {
         const respone = await requestApi({
             method: "get",
             url: `order/getOrderNotPay?idUser=${user.id}`,
         });
+
+        // In ra response trả về từ API
+        console.log("Response from getOrderNotPay:", respone.data);
+
         return respone.data;
     } catch (error) {
-        return error.response.data
+        // In ra lỗi nếu có
+        console.log("Error from getOrderNotPay:", error.response?.data || error);
+        return error.response?.data || error;
     }
-}
+};
 //Lấy danh sách detail order
 export const getAllCartItemService = async () => {
     try {

@@ -10,7 +10,7 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { getOrderNotPayment } from "../../services/cartServices";
 import './../styles/payment.css';
 
-const Payment = ({ open, onSetOpen }) => {
+const Payment = ({ open, onSetOpen, finalTotal }) => {
     const [isTransport, setIsTransport] = useState(true);
     const [isPayment, setIsPayment] = useState("bank");
     const [price, setPrice] = useState();
@@ -68,7 +68,7 @@ const Payment = ({ open, onSetOpen }) => {
         const result = await getOrderNotPayment();
         if (result.status === 200) {
             const shippingFee = isTransport ? 30000 : 0;
-            const totalWithShipping = result.total + shippingFee;
+            const totalWithShipping = finalTotal + shippingFee;
             setPrice((totalWithShipping / 23507).toFixed());
             setVietQRUrl(generateVietQRUrl(totalWithShipping));
         }

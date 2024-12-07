@@ -327,7 +327,7 @@ const Cart = () => {
                     </>
                 )}
             </div>
-            {open && <Payment open={open} onSetOpen={onSetOpen} />}
+            {open && <Payment open={open} onSetOpen={onSetOpen} finalTotal={calculateFinalTotal()} />}
         </Helmet>
     );
 };
