@@ -40,10 +40,14 @@ export const userSlice = createSlice({
 });
 
 export const userLoginApi = createAsyncThunk(
-    "user/userLogin",
-    async (dataLogin) => {
-        const responeToken = await loginServices(dataLogin);
-        return responeToken.data;
+    "user/login",
+    async (payload) => { // payload chứa email và password PLAIN TEXT
+        try {
+            const respone = await loginServices(payload); // Gọi loginServices
+            return respone;
+        } catch (error) {
+            throw error;
+        }
     }
 );
 
