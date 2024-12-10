@@ -15,18 +15,17 @@ const backupRestoreService = {
         }
     },
 
-    // Restore database
     restoreDatabase: async (fileName) => {
         try {
             const response = await requestApi({
                 url: "BackUp/restore",
                 method: "post",
-                data: JSON.stringify({ fileName }),
+                data: JSON.stringify(fileName),
                 headers: {
                     "Content-Type": "application/json"
                 },
             });
-            return response.data;
+            return response;
         } catch (error) {
             throw error;
         }
