@@ -15,3 +15,19 @@ export const signupServices = async (dataSignup) => {
         return error;
     }
 };
+
+export const signupGoogleService = async (dataSignup) => {
+    try {
+        const respone = await requestApi({
+            method: "post",
+            url: "user/registergoogle",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            data: JSON.stringify(dataSignup),
+        });
+        return respone.data;
+    } catch (error) {
+        return error;
+    }
+};

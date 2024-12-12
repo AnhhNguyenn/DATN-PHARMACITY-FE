@@ -1,6 +1,6 @@
 import requestApi from "../utils/requestApi";
 
-export const loginServices = async (dataLogin) => { // dataLogin chứa email và password PLAIN TEXT
+export const loginServices = async (dataLogin) => {
     try {
         const respone = await requestApi({
             method: "post",
@@ -8,7 +8,21 @@ export const loginServices = async (dataLogin) => { // dataLogin chứa email v�
             headers: {
                 "Content-Type": "application/json",
             },
-            // Gửi dataLogin (PLAIN TEXT) lên backend
+            data: JSON.stringify(dataLogin),
+        });
+        return respone;
+    } catch (error) {
+        return error;
+    }
+};
+export const loginGoogleService = async (dataLogin) => {
+    try {
+        const respone = await requestApi({
+            method: "post",
+            url: "user/logingoogle",
+            headers: {
+                "Content-Type": "application/json",
+            },
             data: JSON.stringify(dataLogin),
         });
         return respone;
@@ -27,4 +41,4 @@ export const getCurrentUser = async (accessToken) => {
     } catch (error) {
         return error
     }
-}
+};
