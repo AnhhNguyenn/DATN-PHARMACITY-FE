@@ -7,3 +7,16 @@
 .css-x4ghuj-MuiDataGrid-roo .MuiDataGrid-row {
   min-height: 80px;
 }
+
+.custom-enter-button .ant-btn {
+  height: 100% !important;
+}
+.btn-search-admin
+{
+  .ant-btn{
+    margin-top: 0px !important;
+  }
+}
+.custom-enter-button .ant-input {
+  height: 100% !important;
+}

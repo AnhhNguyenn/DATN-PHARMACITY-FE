@@ -62,7 +62,7 @@ const Payment = ({ open, onSetOpen, finalTotal }) => {
     const handleGetData = async () => {
         const result = await getOrderNotPayment();
         if (result.status === 200) {
-            setPrice((finalTotal / 23507).toFixed());
+            setPrice((finalTotal / 25387,5).toFixed());
             setVietQRUrl(generateVietQRUrl(finalTotal));
         }
     };

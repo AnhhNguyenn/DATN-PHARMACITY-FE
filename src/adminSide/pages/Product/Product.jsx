@@ -71,7 +71,6 @@ export default function Product() {
       title: "Hành động",
       key: "action",
       render: (_, record) => (
-        <>
           <div
             style={{ display: "flex", justifyContent: "center", gap: "8px" }}
           >
@@ -94,7 +93,6 @@ export default function Product() {
               Xóa
             </Button>
           </div>
-        </>
       ),
     },
   ];
@@ -115,6 +113,7 @@ export default function Product() {
         </Col>
         <Col span={8} style={{ display: "flex", justifyContent: "center" }}>
           <Search
+            className="btn-search-admin"
             placeholder="Nhập sản phẩm bạn muốn tìm..."
             value={searchValue}
             enterButton
