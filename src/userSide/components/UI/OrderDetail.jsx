@@ -210,14 +210,6 @@ export const OrderDetail = () => {
                         </table>
                     </div>
                     <div className="order-summary">
-                        <div className="summary-row">
-                            <span>Tổng tiền hàng:</span>
-                            <strong>{VND.format(total || calculateTotal())}</strong>
-                        </div>
-                        <div className="summary-row">
-                            <span>Phí vận chuyển:</span>
-                            <strong>0 ₫</strong>
-                        </div>
                         <div className="summary-row total">
                             <span>Tổng thanh toán:</span>
                             <strong>{VND.format(total || calculateTotal())}</strong>
