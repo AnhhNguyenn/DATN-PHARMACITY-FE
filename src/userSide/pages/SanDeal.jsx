@@ -82,7 +82,7 @@ const SanDeal = () => {
                             <div className="san-deal__timer-box">{String(timeLeft.seconds).padStart(2, '0')}</div>
                         </div>
                     </div>
-                    <a href="#" className="san-deal__view-more">Xem thêm</a>
+                    <a href="/shop" className="san-deal__view-more">Xem thêm</a>
                 </div>
 
                 <div className="san-deal__container">
