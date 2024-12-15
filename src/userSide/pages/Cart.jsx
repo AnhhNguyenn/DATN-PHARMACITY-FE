@@ -29,6 +29,7 @@ const Cart = () => {
     const [isCheckingOut, setIsCheckingOut] = useState(false);
     const [open, setOpen] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
+    const [selectedItems, setSelectedItems] = useState([]);
 
     const dispatch = useDispatch();
 
@@ -61,11 +62,19 @@ const Cart = () => {
 
     const calculateSelectedTotal = () => {
         return cartItems
+            .filter(item => selectedItems.includes(item.id))
             .reduce((total, item) => total + item.price * item.quantity, 0);
     };
 
     const CartHeader = () => (
         <div className="cart-header-row">
+            <div className="cart-col checkbox">
+                <input
+                    type="checkbox"
+                    checked={selectedItems.length === cartItems.length}
+                    onChange={handleSelectAll}
+                />
+            </div>
             <div className="cart-col product">Sản phẩm</div>
             <div className="cart-col price">Đơn giá</div>
             <div className="cart-col quantity">Số lượng</div>
@@ -137,8 +146,31 @@ const Cart = () => {
         );
     };
 
+    const handleSelectItem = (itemId) => {
+        setSelectedItems(prev =>
+            prev.includes(itemId)
+                ? prev.filter(id => id !== itemId)
+                : [...prev, itemId]
+        );
+    };
+
+    const handleSelectAll = (e) => {
+        setSelectedItems(
+            e.target.checked
+                ? cartItems.map(item => item.id)
+                : []
+        );
+    };
+
     const CartItem = ({ item }) => (
         <div className="cart-item-row">
+            <div className="cart-col checkbox">
+                <input
+                    type="checkbox"
+                    checked={selectedItems.includes(item.id)}
+                    onChange={() => handleSelectItem(item.id)}
+                />
+            </div>
             <div className="cart-col product">
                 <div className="product-info">
                     <img src={item.pathImg} alt={item.name} />
@@ -319,6 +351,7 @@ const Cart = () => {
                                 <button
                                     className="checkout-button"
                                     onClick={handleSubmit}
+                                    disabled={selectedItems.length === 0}
                                 >
                                     {isCheckingOut ? 'Đặt hàng' : 'Tiến hành đặt hàng'}
                                 </button>
@@ -327,7 +360,12 @@ const Cart = () => {
                     </>
                 )}
             </div>
-            {open && <Payment open={open} onSetOpen={onSetOpen} finalTotal={calculateFinalTotal()} />}
+            {open && <Payment
+                open={open}
+                onSetOpen={onSetOpen}
+                finalTotal={calculateFinalTotal()}
+                selectedItems={selectedItems}
+            />}
         </Helmet>
     );
 };
