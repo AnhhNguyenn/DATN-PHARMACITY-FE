@@ -21,16 +21,14 @@ export const userSlice = createSlice({
                 state.status = "loading";
             })
             .addCase(userLoginApi.fulfilled, (state, action) => {
-                action.payload.status !== 200
-                    ? (state.message = "Đăng nhập thất bại!")
-                    : (state.message = "Đăng nhập thành công!");
-                if (state.message === "Đăng nhập thành công!") {
-                    state.currentUser = action.payload.data.data;
-                    localStorage.setItem(
-                        "user",
-                        JSON.stringify(action.payload.data.data)
-                    );
+                if (action.payload.status === 200) {
+                    state.message = "Đăng nhập thành công!";
+                    state.currentUser = action.payload.data;
+                    localStorage.setItem("user", JSON.stringify(action.payload.data));
                     state.status = 200;
+                } else {
+                    state.message = "Đăng nhập thất bại!";
+                    state.status = action.payload.status;
                 }
             })
             .addCase(userSignupApi.pending, (state) => {
@@ -57,6 +55,14 @@ export const userSlice = createSlice({
             })
             .addCase(userSignupGoogleApi.pending, (state) => {
                 state.status = "loading";
+            })
+            .addCase(userSignupApi.fulfilled, (state, action) => {
+                if (action.payload.status === 200) {
+                    state.message = "Đăng ký thành công!";
+                } else {
+                    state.message = `Đăng ký thất bại: ${action.payload.message}`;
+                    state.status = action.payload.status;
+                }
             });
     },
 });

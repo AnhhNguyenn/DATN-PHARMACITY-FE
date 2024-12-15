@@ -130,29 +130,20 @@ const Login = ({ onClose, setShowSignup, setShowLogin }) => {
             if (respon?.payload?.status !== 200) {
                 toast.error(respon.payload.message || "Đăng nhập thất bại! Vui lòng kiểm tra email hoặc mật khẩu.");
             } else {
-                const userData = respon.payload.data;
-
-                console.log(userData);
-
-                if (userData.role) {
-                    localStorage.setItem("user", JSON.stringify(userData));
-                    toast.success("Đăng nhập thành công!");
-                    onClose();
-                    if (userData.role === 'Guest') {
-                        navigate('/home');
-                    } else {
-                        navigate('/admin');
-                    }
+                toast.success("Đăng nhập thành công!");
+                onClose();
+                if (respon.payload.data.role === 'Guest') {
+                    navigate('/home');
                 } else {
-                    toast.error("Không thể xác định quyền người dùng.");
+                    navigate('/admin');
                 }
-                window.location.reload();
             }
         } catch (error) {
             console.error("Error:", error);
             toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau.");
         }
     };
+
 
     return (
         <div className="login">
