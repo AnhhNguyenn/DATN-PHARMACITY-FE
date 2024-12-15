@@ -70,7 +70,7 @@ const OrderCard = (props) => {
                 </div>
                 <button
                     className="order-card__button"
-                    onClick={() => navigate(`/order/${item.id}?total=${item.total}&status=${item.status}&createAt=${item.createAt}`)}
+                    onClick={() => navigate(`/order/${item.id}?total=${item.total}&status=${item.status}&createAt=${item.createAt}&user=${JSON.stringify(user)}`)}
                 >
                     Chi tiết
                     <i className="fas fa-arrow-right"></i>

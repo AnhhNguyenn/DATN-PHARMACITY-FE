@@ -26,6 +26,8 @@ export const OrderDetail = () => {
     const [orderInfo, setOrderInfo] = useState(null);
     const currentStatus = orderInfo?.status || Number(urlStatus) || 0;
     const createAt = searchParams.get('createAt');
+    const userString = searchParams.get('user');
+    const user = userString ? JSON.parse(userString) : null;
 
     useEffect(() => {
         const fetchGetDetailOrderApi = async () => {
@@ -33,7 +35,10 @@ export const OrderDetail = () => {
             setCartItems(response.data);
             setOrderInfo({
                 ...response.data[0],
-                createAt: createAt || response.data[0]?.createAt
+                createAt: createAt || response.data[0]?.createAt,
+                userName: user?.name,
+                userPhone: user?.phone,
+                userAddress: user?.address
             });
         };
 
@@ -67,6 +72,7 @@ export const OrderDetail = () => {
     };
 
     const generatePDF = () => {
+        const totalAmount = total || calculateTotal();
         try {
             const canvas = document.createElement("canvas");
             JsBarcode(canvas, id, {
@@ -81,6 +87,9 @@ export const OrderDetail = () => {
                     { text: "Pharmacity", style: "header", alignment: "center", fontSize: 18, bold: true },
                     { text: "Tiết kiệm hơn - Sống khỏe hơn", style: "subheader", alignment: "center", fontSize: 12, margin: [0, 0, 0, 10] },
                     { text: "Kính chào quý khách!", fontSize: 11, margin: [0, 0, 0, 10] },
+                    { text: `Khách hàng: ${orderInfo.userName}`, fontSize: 11, margin: [0, 0, 0, 5] },
+                    { text: `Số điện thoại: ${orderInfo.userPhone}`, fontSize: 11, margin: [0, 0, 0, 5] },
+                    { text: `Địa chỉ: ${orderInfo.userAddress}`, fontSize: 11, margin: [0, 0, 0, 10] },
                     {
                         columns: [
                             { text: `Ngày: ${new Date(orderInfo.createAt).toLocaleDateString()}`, fontSize: 11 },
@@ -120,15 +129,8 @@ export const OrderDetail = () => {
                             },
                             {
                                 columns: [
-                                    { text: 'Phí vận chuyển:', alignment: 'left', fontSize: 11 },
-                                    { text: '0 ₫', alignment: 'right', fontSize: 11 }
-                                ],
-                                margin: [0, 5, 0, 0]
-                            },
-                            {
-                                columns: [
                                     { text: 'Tổng thanh toán:', alignment: 'left', bold: true, fontSize: 11 },
-                                    { text: VND.format(calculateTotal()), alignment: 'right', bold: true, fontSize: 11 }
+                                    { text: VND.format(totalAmount), alignment: 'right', bold: true, fontSize: 11 }
                                 ],
                                 margin: [0, 5, 0, 15]
                             }
