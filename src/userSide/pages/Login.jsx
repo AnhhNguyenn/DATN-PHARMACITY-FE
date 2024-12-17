@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -9,11 +9,17 @@ import { userLoginApi, userLoginGoogleApi, editProfileApi } from "../../redux/sl
 import "../styles/login.css";
 import { useGoogleLogin } from '@react-oauth/google';
 import { signupGoogleService, signupServices } from "../../services/signupService";
+import { Eye, EyeOff } from 'lucide-react';
+
 
 const Login = ({ onClose, setShowSignup, setShowLogin }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
 
+    const handleTogglePassword = () => {
+        setShowPassword(!showPassword);
+    };
     const handleGoogleLogin = useGoogleLogin({
         onSuccess: async (response) => {
             try {
@@ -162,14 +168,17 @@ const Login = ({ onClose, setShowSignup, setShowLogin }) => {
                             placeholder="Nhập số điện thoại"
                         />
                     </FormGroup>
-                    <FormGroup className="form__group">
+                    <FormGroup className="form__group password-input-group">
                         <input
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             name="password"
                             value={formik.values.password}
                             onChange={formik.handleChange}
                             placeholder="Nhập mật khẩu của bạn"
                         />
+                        <span className="password-toggle-icon" onClick={handleTogglePassword}>
+                            {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                        </span>
                     </FormGroup>
                     <button
                         type="submit"
