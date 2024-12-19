@@ -7,11 +7,10 @@ import { toast } from "react-toastify";
 
 export default function InputWarehouseReceipt() {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-
+    const navigate = useNavigate(); // Sửa từ useNaviga thành useNavigate
     const initialData = {
-        warehouseId: "",
-        supplierId: "",
+        idWarehouse: "",
+        idSupplier: "",
         receiptDate: "",
         note: "",
         receiptDetails: []
@@ -20,30 +19,18 @@ export default function InputWarehouseReceipt() {
     const handleSubmit = (formData) => {
         // Format lại data trước khi gửi đi
         const formattedData = {
-            warehouseId: formData.warehouseId,
-            supplierId: formData.supplierId,
+            idWarehouse: formData.idWarehouse,
+            idSupplier: formData.idSupplier,  // Sửa từ Idsupplier thành idSupplier
             receiptDate: formData.receiptDate,
             note: formData.note,
             receiptDetails: formData.receiptDetails.map(detail => ({
-                productId: detail.productId,
+                idProduct: detail.idProduct, // Sửa từ Idproduct thành idProduct
                 quantity: detail.quantity,
-                product: {
-                    id: detail.productId,
-                    name: detail.productName
-                }
-
             })),
-            // Thêm các trường required theo schema
-            warehouse: {
-                id: formData.warehouseId
-            },
-            supplier: {
-                id: formData.supplierId
-            }
         };
 
         // Validate dữ liệu trước khi gửi
-        if (!formattedData.warehouseId || !formattedData.supplierId || !formattedData.receiptDate) {
+        if (!formattedData.idWarehouse || !formattedData.idSupplier || !formattedData.receiptDate) {
             toast.error("Vui lòng điền đầy đủ thông tin bắt buộc");
             return;
         }

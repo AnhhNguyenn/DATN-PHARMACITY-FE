@@ -11,7 +11,7 @@ export default function FormWarehouseReceipt(props) {
     const [warehouses, setWarehouses] = useState([]);
     const [suppliers, setSuppliers] = useState([]);
     const [products, setProducts] = useState([]);
-    const [receiptDetails, setReceiptDetails] = useState([]);
+    const [receiptDetails, setReceiptDetails] = useState(initialData.receiptDetails || []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -25,10 +25,6 @@ export default function FormWarehouseReceipt(props) {
                 setWarehouses(warehouseRes.data || []);
                 setSuppliers(supplierRes.data || []);
                 setProducts(productRes.data || []);
-
-                console.log("warehouse response:", warehouseRes);
-                console.log("supplier response:", supplierRes);
-                console.log("product response:", productRes);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -38,7 +34,11 @@ export default function FormWarehouseReceipt(props) {
 
     const formik = useFormik({
         initialValues: {
-            ...initialData
+            warehouseId: initialData.warehouseId || "",
+            supplierId: initialData.supplierId || "",
+            receiptDate: initialData.receiptDate || "",
+            note: initialData.note || "",
+            receiptDetails: receiptDetails
         },
         validationSchema: Yup.object({
             warehouseId: Yup.string().required("Required"),
@@ -68,6 +68,7 @@ export default function FormWarehouseReceipt(props) {
             render: (text, record, index) => (
                 <Select
                     style={{ width: "100%" }}
+                    value={record.productId}
                     onChange={(value) => handleProductChange(value, index)}
                     options={products.map(product => ({
                         value: product.id,
@@ -84,6 +85,7 @@ export default function FormWarehouseReceipt(props) {
                 <Input
                     type="number"
                     min={1}
+                    value={record.quantity}
                     onChange={(e) => handleQuantityChange(e.target.value, index)}
                 />
             )
@@ -98,7 +100,7 @@ export default function FormWarehouseReceipt(props) {
     ];
 
     const handleAddDetail = () => {
-        setReceiptDetails([...receiptDetails, { productId: "", quantity: 0 }]);
+        setReceiptDetails([...receiptDetails, { productId: "", quantity: 1 }]);
     };
 
     const handleRemoveDetail = (index) => {
@@ -108,10 +110,8 @@ export default function FormWarehouseReceipt(props) {
     };
 
     const handleProductChange = (value, index) => {
-        const selectedProduct = products.find(product => product.id === value);
         const newDetails = [...receiptDetails];
         newDetails[index].productId = value;
-        newDetails[index].productName = selectedProduct?.name || "";
         setReceiptDetails(newDetails);
     };
 
@@ -133,6 +133,7 @@ export default function FormWarehouseReceipt(props) {
                     <h5 style={{ marginBottom: "10px" }}>Kho</h5>
                     <Select
                         name="warehouseId"
+                        value={formik.values.warehouseId}
                         onChange={(value) => formik.setFieldValue("warehouseId", value)}
                         options={warehouses.map(warehouse => ({
                             value: warehouse.id,
@@ -148,6 +149,7 @@ export default function FormWarehouseReceipt(props) {
                     <h5 style={{ marginBottom: "10px" }}>Nhà cung cấp</h5>
                     <Select
                         name="supplierId"
+                        value={formik.values.supplierId}
                         onChange={(value) => formik.setFieldValue("supplierId", value)}
                         options={suppliers.map(supplier => ({
                             value: supplier.id,
@@ -163,7 +165,7 @@ export default function FormWarehouseReceipt(props) {
                     <h5 style={{ marginBottom: "10px" }}>Ngày nhập</h5>
                     <DatePicker
                         className="form-control"
-                        name="receiptDate"
+                        value={formik.values.receiptDate}
                         onChange={(date) => formik.setFieldValue("receiptDate", date)}
                         style={{ width: "300px" }}
                     />
@@ -176,6 +178,7 @@ export default function FormWarehouseReceipt(props) {
                     <Input.TextArea
                         className="form-control"
                         name="note"
+                        value={formik.values.note}
                         onChange={formik.handleChange}
                         style={{ width: "100%" }}
                     />

@@ -9,6 +9,7 @@ import { promotionSlice } from "./slices/promotionSlice";
 import { supplierSlice } from "./slices/supplierSlice";
 import { warehouseSlice } from "./slices/warehouseSlice";
 import backupRestoreReducer from './slices/backupRestoreSlice';
+import { receiptexportSlice } from "./slices/receiptexportSlice";
 
 const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
     supplier: supplierSlice.reducer,
     warehouse: warehouseSlice.reducer,
     backupRestore: backupRestoreReducer,
+    receiptexport: receiptexportSlice.reducer, 
   },
 });
 
