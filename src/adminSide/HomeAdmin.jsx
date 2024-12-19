@@ -35,8 +35,8 @@ import EditSupplier from "./pages/Supplier/EditSupplier";
 import WarehouseReceipt from "./pages/ReceiptExport/WarehouseReceipt";
 import InputWarehouseReceipt from "./pages/ReceiptExport/InputWarehouseReceipt";
 
-import ExportList from "./pages/ReceiptExport/ExportList";
-import FormExport from "./pages/ReceiptExport/FormExport";
+import WarehouseExport from "./pages/ReceiptExport/WarehouseExport";
+import InputWarehouseExport from "./pages/ReceiptExport/InputWarehouseExport";
 
 import Backup from "./pages/BackupRestore/Backup";
 import Restore from "./pages/BackupRestore/Restore";
@@ -93,8 +93,8 @@ const HomeAdmin = () => {
           <Route path="exports/warehouse-receipt" element={<WarehouseReceipt />} />
           <Route path="exports/warehouse-receipt/add" element={<InputWarehouseReceipt />} />
 
-          <Route path="exports/warehouse-export" element={<ExportList />} />
-          <Route path="exports/warehouse-export/add" element={<FormExport />} />
+          <Route path="exports/warehouse-export" element={<WarehouseExport />} />
+          <Route path="exports/warehouse-export/add" element={<InputWarehouseExport />} />
 
           <Route path="backup-restore/*">
             <Route path="backup" element={<Backup />} />
