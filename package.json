@@ -23,7 +23,7 @@
     "axios": "^1.2.0",
     "bootstrap": "^5.2.1",
     "cors": "^2.8.5",
-    "firebase": "^11.0.2",
+    "firebase": "^11.1.0",
     "formik": "^2.2.9",
     "framer-motion": "^7.3.2",
     "jsbarcode": "^3.11.6",
