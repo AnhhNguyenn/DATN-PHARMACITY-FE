@@ -96,11 +96,31 @@ export default function FormWarehouseReceipt(props) {
             render: (_, record, index) => (
                 <Button onClick={() => handleRemoveDetail(index)}>Xóa</Button>
             )
-        }
+        },
+        {
+            title: "Hạn sử dụng",
+            dataIndex: "expirationDate",
+            key: "expirationDate",
+            render: (text, record, index) => (
+                <DatePicker
+                    value={record.expirationDate}
+                    onChange={(date) => handleExpirationDateChange(date, index)}
+                />
+            )
+        },
     ];
 
+    const handleExpirationDateChange = (date, index) => {
+        const newDetails = [...receiptDetails];
+        newDetails[index].expirationDate = date;
+        setReceiptDetails(newDetails);
+    };
+
     const handleAddDetail = () => {
-        setReceiptDetails([...receiptDetails, { productId: "", quantity: 1 }]);
+        setReceiptDetails([
+            ...receiptDetails,
+            { productId: "", quantity: 1, expirationDate: null },
+        ]);
     };
 
     const handleRemoveDetail = (index) => {

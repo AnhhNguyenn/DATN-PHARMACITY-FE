@@ -7,35 +7,35 @@ import { toast } from "react-toastify";
 
 export default function InputWarehouseReceipt() {
     const dispatch = useDispatch();
-    const navigate = useNavigate(); // Sửa từ useNaviga thành useNavigate
+    const navigate = useNavigate();
     const initialData = {
-        idWarehouse: "",
-        idSupplier: "",
+        warehouseId: "",
+        supplierId: "",
         receiptDate: "",
         note: "",
         receiptDetails: []
     };
 
     const handleSubmit = (formData) => {
-        // Format lại data trước khi gửi đi
         const formattedData = {
-            idWarehouse: formData.idWarehouse,
-            idSupplier: formData.idSupplier,  // Sửa từ Idsupplier thành idSupplier
-            receiptDate: formData.receiptDate,
-            note: formData.note,
-            receiptDetails: formData.receiptDetails.map(detail => ({
-                idProduct: detail.idProduct, // Sửa từ Idproduct thành idProduct
-                quantity: detail.quantity,
+            IdWarehouse: formData.warehouseId,
+            IdSupplier: formData.supplierId,
+            ReceiptDate: formData.receiptDate,
+            Note: formData.note,
+            ReceiptDetails: formData.receiptDetails.map(detail => ({
+                IdProduct: detail.productId,
+                Quantity: detail.quantity,
+                ExpirationDate: detail.expirationDate || null
             })),
         };
 
         // Validate dữ liệu trước khi gửi
-        if (!formattedData.idWarehouse || !formattedData.idSupplier || !formattedData.receiptDate) {
+        if (!formattedData.IdWarehouse || !formattedData.IdSupplier || !formattedData.ReceiptDate) {
             toast.error("Vui lòng điền đầy đủ thông tin bắt buộc");
             return;
         }
 
-        if (!formattedData.receiptDetails || formattedData.receiptDetails.length === 0) {
+        if (!formattedData.ReceiptDetails || formattedData.ReceiptDetails.length === 0) {
             toast.error("Vui lòng thêm ít nhất một sản phẩm");
             return;
         }
