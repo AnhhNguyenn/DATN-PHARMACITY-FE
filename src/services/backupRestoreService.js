@@ -25,7 +25,7 @@ const backupRestoreService = {
                     "Content-Type": "application/json"
                 },
             });
-            return response;
+            return response.data;
         } catch (error) {
             throw error;
         }
