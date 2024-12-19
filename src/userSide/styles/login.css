@@ -163,6 +163,19 @@
     font-weight: 500;
 }
 
+.password-input-group {
+    position: relative;
+}
+
+.password-toggle-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    user-select: none;
+}
+
 .login__signup a:hover {
     text-decoration: underline;
 }

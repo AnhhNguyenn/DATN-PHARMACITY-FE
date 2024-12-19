@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, FormGroup } from "reactstrap";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
@@ -8,11 +8,21 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { userLoginApi, userSignupApi } from "../../redux/slices/userSlice";
 import "../styles/signup.css";
+import { Eye, EyeOff } from 'lucide-react';
 
 const Signup = ({ onClose, setShowSignup, setShowLogin }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+    const handleTogglePassword = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const handleToggleConfirmPassword = () => {
+        setShowConfirmPassword(!showConfirmPassword)
+    };
     const formik = useFormik({
         initialValues: {
             email: "",
@@ -116,27 +126,32 @@ const Signup = ({ onClose, setShowSignup, setShowLogin }) => {
                         )}
                     </FormGroup>
 
-                    <FormGroup className="form__group">
+                    <FormGroup className="form__group password-input-group">
                         <input
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             name="password"
                             placeholder="Nhập mật khẩu của bạn"
                             value={formik.values.password}
                             onChange={formik.handleChange}
                         />
+                        <span className="password-toggle-icon" onClick={handleTogglePassword}>
+                            {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                        </span>
                         {formik.errors.password && formik.touched.password && (
                             <p className="errorMsg">{formik.errors.password}</p>
                         )}
                     </FormGroup>
-
-                    <FormGroup className="form__group">
+                    <FormGroup className="form__group password-input-group">
                         <input
-                            type="password"
+                            type={showConfirmPassword ? "text" : "password"}
                             name="confirmedPassword"
                             placeholder="Xác nhận mật khẩu của bạn"
                             value={formik.values.confirmedPassword}
                             onChange={formik.handleChange}
                         />
+                        <span className="password-toggle-icon" onClick={handleToggleConfirmPassword}>
+                            {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                        </span>
                         {formik.errors.confirmedPassword && formik.touched.confirmedPassword && (
                             <p className="errorMsg">{formik.errors.confirmedPassword}</p>
                         )}

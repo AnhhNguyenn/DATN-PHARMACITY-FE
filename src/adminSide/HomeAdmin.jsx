@@ -38,6 +38,9 @@ import InputWarehouseReceipt from "./pages/ReceiptExport/InputWarehouseReceipt";
 import ExportList from "./pages/ReceiptExport/ExportList";
 import FormExport from "./pages/ReceiptExport/FormExport";
 
+import Backup from "./pages/BackupRestore/Backup";
+import Restore from "./pages/BackupRestore/Restore";
+
 const HomeAdmin = () => {
   const mode = useSelector((state) => state.globalSlice.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
@@ -92,6 +95,12 @@ const HomeAdmin = () => {
 
           <Route path="exports/warehouse-export" element={<ExportList />} />
           <Route path="exports/warehouse-export/add" element={<FormExport />} />
+
+          <Route path="backup-restore/*">
+            <Route path="backup" element={<Backup />} />
+            <Route path="restore" element={<Restore />} />
+          </Route>
+
         </Route>
       </Routes>
     </ThemeProvider>

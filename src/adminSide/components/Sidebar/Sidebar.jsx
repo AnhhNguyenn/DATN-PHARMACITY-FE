@@ -36,6 +36,9 @@ import "./Sidebar.css";
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import InventoryIcon from '@mui/icons-material/Inventory';
+import SaveAltIcon from '@mui/icons-material/SaveAlt';
+import RestoreIcon from '@mui/icons-material/Restore';
+import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore';
 
 const navItems = [
   { text: "Trang chủ", icon: <HomeOutlined />, url: "dashboard" },
@@ -61,6 +64,11 @@ const subNavItemExport = [
   { text: "Xuất kho", icon: <LocalShippingIcon />, url: "warehouse-export" },
 ];
 
+const subNavItemBackupRestore = [
+  { text: "Sao lưu dữ liệu", icon: <SaveAltIcon />, url: "backup" },
+  { text: "Phục hồi dữ liệu", icon: <RestoreIcon />, url: "restore" },
+];
+
 const Sidebar = ({
   drawerWidth,
   isSidebarOpen,
@@ -73,9 +81,11 @@ const Sidebar = ({
   const theme = useTheme();
   const mode = useSelector((state) => state.globalSlice.mode);
   const dispatch = useDispatch();
+  const [backupRestoreMenuOpen, setBackupRestoreMenuOpen] = useState(false);
 
   const handleOrderClick = () => setOrderMenuOpen(!orderMenuOpen);
   const handleExportClick = () => setExportMenuOpen(!exportMenuOpen);
+  const handleBackupRestoreClick = () => setBackupRestoreMenuOpen(!backupRestoreMenuOpen);
 
   return (
     <Box component="nav">
@@ -279,6 +289,80 @@ const Sidebar = ({
                     >
                       <NavLink
                         to={`/admin/exports/${url}`}
+                        className="nav__link--sidebar"
+                        style={({ isActive }) => ({
+                          color: "white",
+                          backgroundColor: isActive
+                            ? "rgba(255, 255, 255, 0.2)"
+                            : "transparent",
+                          textDecoration: "none",
+                          paddingLeft: "20px",
+                        })}
+                      >
+                        <ListItemButton sx={{ pl: collapsed ? "1rem" : "2rem" }}>
+                          <ListItemIcon
+                            sx={{
+                              color: "white",
+                              "& svg": { fontSize: "30px !important" },
+                            }}
+                          >
+                            {icon}
+                          </ListItemIcon>
+                          {!collapsed && (
+                            <ListItemText
+                              primary={text}
+                              primaryTypographyProps={{
+                                fontSize: "20px",
+                                lineHeight: "1.5",
+                              }}
+                            />
+                          )}
+                        </ListItemButton>
+                      </NavLink>
+                    </ListItem>
+                  ))}
+                </List>
+              </Collapse>
+              {/* Backup/Restore */}
+              <ListItem
+                disablePadding
+                className="listItem__sidebar"
+                onClick={handleBackupRestoreClick}
+                sx={{ color: "white" }}
+              >
+                <ListItemButton sx={{ pl: collapsed ? "1rem" : "2rem" }}>
+                  <ListItemIcon
+                    sx={{
+                      color: "white",
+                      "& svg": { fontSize: "30px !important" },
+                    }}
+                  >
+                    <SettingsBackupRestoreIcon />
+                  </ListItemIcon>
+                  {!collapsed && (
+                    <ListItemText
+                      primary="Sao lưu/Phục hồi"
+                      primaryTypographyProps={{
+                        fontSize: "20px",
+                        lineHeight: "1.5",
+                      }}
+                    />
+                  )}
+                  {!collapsed && (backupRestoreMenuOpen ? <ExpandLess /> : <ExpandMore />)}
+                </ListItemButton>
+              </ListItem>
+
+              {/* Submenu Backup/Restore */}
+              <Collapse in={backupRestoreMenuOpen && !collapsed} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding sx={{ color: "white" }}>
+                  {subNavItemBackupRestore.map(({ text, icon, url }) => (
+                    <ListItem
+                      key={text}
+                      disablePadding
+                      className="listItem__sidebar"
+                    >
+                      <NavLink
+                        to={`/admin/backup-restore/${url}`}
                         className="nav__link--sidebar"
                         style={({ isActive }) => ({
                           color: "white",

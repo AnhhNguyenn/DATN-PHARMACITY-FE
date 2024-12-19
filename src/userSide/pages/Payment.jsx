@@ -10,7 +10,7 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { getOrderNotPayment } from "../../services/cartServices";
 import './../styles/payment.css';
 
-const Payment = ({ open, onSetOpen, finalTotal }) => {
+const Payment = ({ open, onSetOpen, finalTotal, selectedItems }) => {
     const [isPayment, setIsPayment] = useState("bank");
     const [price, setPrice] = useState();
     const [vietQRUrl, setVietQRUrl] = useState("");
@@ -29,16 +29,15 @@ const Payment = ({ open, onSetOpen, finalTotal }) => {
 
     const onSuccess = async (type) => {
         const promotion = JSON.parse(localStorage.getItem("promotion")); // Lấy promotion đã chọn
-        console.log("Promotion:", promotion);
 
         const user = JSON.parse(localStorage.getItem("user")); // Lấy thông tin user
-        console.log("User:", user);
 
         const orderData = {
             idUser: user?.id,
             status: 1, // Trạng thái đơn hàng mới
             type: type === 0 ? 1 : 2, // Loại thanh toán
-            idPromotion: promotion?.id || null // Nếu không có promotion thì gửi null
+            idPromotion: promotion?.id || null, // Nếu không có promotion thì gửi null
+            selectedItems: selectedItems
         };
         console.log("Order Data:", orderData);
 
