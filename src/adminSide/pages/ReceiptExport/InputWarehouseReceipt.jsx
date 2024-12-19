@@ -28,8 +28,8 @@ export default function InputWarehouseReceipt() {
                 ExpirationDate: detail.expirationDate || null
             })),
         };
+        console.log("formattedData before dispatch:", formattedData);
 
-        // Validate dữ liệu trước khi gửi
         if (!formattedData.IdWarehouse || !formattedData.IdSupplier || !formattedData.ReceiptDate) {
             toast.error("Vui lòng điền đầy đủ thông tin bắt buộc");
             return;
@@ -40,8 +40,11 @@ export default function InputWarehouseReceipt() {
             return;
         }
 
-        // Gọi action để thêm phiếu nhập
-        dispatch(addReceiptApi(formattedData, navigate));
+        // Chỉ navigate sau khi addReceiptApi thành công
+        dispatch(addReceiptApi(formattedData)).then((res) => { // Chú ý đổi (res)
+            console.log("Response from addReceiptApi:", res);
+            navigate("/admin/exports/warehouse-receipt");
+        });
     };
 
     return (

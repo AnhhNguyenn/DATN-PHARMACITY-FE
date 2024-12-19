@@ -113,36 +113,44 @@ export default function FormWarehouseReceipt(props) {
         },
     ];
 
-    const handleExpirationDateChange = (date, index) => {
-        const newDetails = [...receiptDetails];
-        newDetails[index].expirationDate = date;
-        setReceiptDetails(newDetails);
-    };
-
     const handleAddDetail = () => {
-        setReceiptDetails([
-            ...receiptDetails,
-            { productId: "", quantity: 1, expirationDate: null },
-        ]);
+        const newDetail = { productId: "", quantity: 1, expirationDate: null };
+        setReceiptDetails([...receiptDetails, newDetail]);
+        console.log("receiptDetails after add:", [...receiptDetails, newDetail]);
     };
 
     const handleRemoveDetail = (index) => {
         const newDetails = [...receiptDetails];
         newDetails.splice(index, 1);
         setReceiptDetails(newDetails);
+        console.log("receiptDetails after remove at index", index, ":", newDetails);
     };
 
     const handleProductChange = (value, index) => {
         const newDetails = [...receiptDetails];
         newDetails[index].productId = value;
         setReceiptDetails(newDetails);
+        console.log("receiptDetails after product change at index", index, ":", newDetails);
     };
 
     const handleQuantityChange = (value, index) => {
         const newDetails = [...receiptDetails];
         newDetails[index].quantity = parseInt(value);
         setReceiptDetails(newDetails);
+        console.log("receiptDetails after quantity change at index", index, ":", newDetails);
     };
+
+    const handleExpirationDateChange = (date, index) => {
+        const newDetails = [...receiptDetails];
+        newDetails[index].expirationDate = date;
+        setReceiptDetails(newDetails);
+        console.log("receiptDetails after expiration date change at index", index, ":", newDetails);
+    };
+
+    useEffect(() => {
+        console.log("receiptDetails in useEffect:", receiptDetails);
+    }, [receiptDetails]); // dependency array, will run when receiptDetails changes
+
 
     return (
         <div className="container mt-5" style={{ padding: "0px 60px" }}>

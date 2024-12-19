@@ -9,16 +9,17 @@ import { getAllReceiptApi } from "../../../redux/slices/receiptexportSlice";
 export default function WarehouseReceipt() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
-    // Lấy dữ liệu và trạng thái từ Redux store
     const receiptExport = useSelector((state) => state.receiptExport);
-    const receipts = receiptExport?.receipts || []; // Cung cấp giá trị mặc định là mảng rỗng
+    const receipts = receiptExport?.receipts || []; // Lấy từ state receipts
     const isLoading = receiptExport?.isLoading || false;
     const error = receiptExport?.error;
 
     useEffect(() => {
-        dispatch(getAllReceiptApi()); // Gọi API khi component mount
+        dispatch(getAllReceiptApi()).then(() => {
+            console.log("Receipts after getAllReceiptApi:", receipts);
+        });
     }, [dispatch]);
+
 
     const columns = [
         {
@@ -67,36 +68,36 @@ export default function WarehouseReceipt() {
 
     return (
         <>
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    margin: "50px",
-                }}
-            >
+            <div style={{ display: "flex", justifyContent: "space-between", margin: "50px" }}>
                 <h1 className="admin-h1">Danh sách phiếu nhập kho</h1>
                 <Button
-                    style={{
-                        marginRight: "100px",
-                        padding: "10px",
-                    }}
+                    style={{ marginRight: "100px", padding: "10px" }}
                     color="success"
                     variant="contained"
                     onClick={() => {
-                        navigate("/admin/exports/warehouse-receipt/add");
+                        navigate("/admin/exports/warehouse-receipt/add"); // Đường dẫn đúng
                     }}
                 >
                     Tạo phiếu nhập
                 </Button>
             </div>
             <div style={{ height: "78vh", width: "100%", padding: "0px 20px" }}>
-                {/* Kiểm tra trạng thái loading và lỗi */}
                 {isLoading ? (
-                    <div>Loading...</div> // Hiển thị loading nếu đang tải
+                    <div>Loading...</div>
                 ) : receipts.length === 0 ? (
-                    <div>Không có phiếu nhập kho nào</div> // Hiển thị nếu không có dữ liệu
+                    <div>Không có phiếu nhập kho nào</div>
                 ) : (
-                    <Table columns={columns} dataSource={receipts} rowKey="id" />
+                    <Table
+                        columns={columns}
+                        dataSource={receipts}
+                        rowKey="id"
+                        onRow={(record) => ({
+                            onClick: () => {
+                                console.log("Row clicked:", record); // Click vào dòng trong table
+                            }
+                        })}
+                    />
+
                 )}
             </div>
         </>
