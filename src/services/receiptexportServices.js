@@ -3,7 +3,7 @@ import requestApi from "../utils/requestApi";
 export const getAllReceiptServices = async () => {
     try {
         const respone = await requestApi({
-            url: "/receiptexport/allreceipt",
+            url: "receiptexport/receipts/all",
             method: "get",
         });
         return respone.data;
@@ -15,7 +15,7 @@ export const getAllReceiptServices = async () => {
 export const getAllExportServices = async () => {
     try {
         const respone = await requestApi({
-            url: "/receiptexport/allexport",
+            url: "receiptexport/exports/all",
             method: "get",
         });
         return respone.data;
@@ -26,7 +26,7 @@ export const getAllExportServices = async () => {
 
 export const addReceiptService = (formData) => {
     return requestApi({
-        url: "/receiptexport/receipt",
+        url: "receiptexport/receipt",
         method: "post",
         data: JSON.stringify(formData),
         headers: {
@@ -37,7 +37,7 @@ export const addReceiptService = (formData) => {
 
 export const addExportService = (formData) => {
     return requestApi({
-        url: "/receiptexport/export",
+        url: "receiptexport/export",
         method: "post",
         data: JSON.stringify(formData),
         headers: {
