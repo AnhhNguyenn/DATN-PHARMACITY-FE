@@ -38,7 +38,7 @@ const analytics = getAnalytics(app);
 // PostAllCategory(); // Consider moving this to useEffect in App.js as suggested earlier
 
 root.render(
-  <GoogleOAuthProvider clientId="1016601245951-au27qhl0fmngm6b0ke553rps0huclp1o.apps.googleusercontent.com">
+  <GoogleOAuthProvider clientId="1016601245951-tp8smdbrt66f30ek72ig643v08r008l8.apps.googleusercontent.com">
     <UserContextProvider>
       <BrowserRouter>
         <ToastContainer

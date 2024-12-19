@@ -65,6 +65,7 @@ export default function FormWarehouseReceipt(props) {
             title: "Sản phẩm",
             dataIndex: "productId",
             key: "productId",
+            width: "65%",
             render: (text, record, index) => (
                 <Select
                     style={{ width: "100%" }}
@@ -81,6 +82,7 @@ export default function FormWarehouseReceipt(props) {
             title: "Số lượng",
             dataIndex: "quantity",
             key: "quantity",
+            width: "20%",
             render: (text, record, index) => (
                 <Input
                     type="number"
@@ -91,21 +93,22 @@ export default function FormWarehouseReceipt(props) {
             )
         },
         {
-            title: "Thao tác",
-            key: "action",
-            render: (_, record, index) => (
-                <Button onClick={() => handleRemoveDetail(index)}>Xóa</Button>
-            )
-        },
-        {
             title: "Hạn sử dụng",
             dataIndex: "expirationDate",
             key: "expirationDate",
+            width: "25%",
             render: (text, record, index) => (
                 <DatePicker
                     value={record.expirationDate}
                     onChange={(date) => handleExpirationDateChange(date, index)}
                 />
+            )
+        },
+        {
+            title: "Thao tác",
+            key: "action",
+            render: (_, record, index) => (
+                <Button onClick={() => handleRemoveDetail(index)}>Xóa</Button>
             )
         },
     ];
