@@ -1,49 +1,37 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import FormExport from "./FormExport";
+import FormWarehouseExport from "./FormWarehouseExport";
 import { addExportApi } from "../../../redux/slices/receiptexportSlice";
 import { toast } from "react-toastify";
 
-export default function InputExport() {
+export default function InputWarehouseExport() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const initialData = {
         warehouseId: "",
-        exportDate: "",
-        note: "",
-        exportDetails: [],
+        exportDetails: []
     };
 
     const handleSubmit = (formData) => {
-        // Format lại data trước khi gửi đi
         const formattedData = {
-            warehouseId: formData.warehouseId,
-            exportDate: formData.exportDate,
-            note: formData.note,
-            exportDetails: formData.exportDetails.map((detail) => ({
-                productId: detail.productId,
-                quantity: detail.quantity,
-                product: {
-                    id: detail.productId,
-                    name: detail.productName,
-                },
+            IdWarehouse: formData.warehouseId,
+            ExportDetails: formData.exportDetails.map(detail => ({
+                IdProduct: detail.productId,
+                Quantity: detail.quantity,
             })),
         };
 
-        // Validate dữ liệu trước khi gửi
-        if (!formattedData.warehouseId || !formattedData.exportDate) {
+        if (!formattedData.IdWarehouse) {
             toast.error("Vui lòng điền đầy đủ thông tin bắt buộc");
             return;
         }
 
-        if (!formattedData.exportDetails || formattedData.exportDetails.length === 0) {
+        if (!formattedData.ExportDetails || formattedData.ExportDetails.length === 0) {
             toast.error("Vui lòng thêm ít nhất một sản phẩm");
             return;
         }
 
-        // Gọi action để thêm phiếu xuất
         dispatch(addExportApi(formattedData, navigate));
     };
 
@@ -60,7 +48,10 @@ export default function InputExport() {
             >
                 Tạo phiếu xuất kho
             </h1>
-            <FormExport initialData={initialData} submitForm={handleSubmit} />
+            <FormWarehouseExport
+                initialData={initialData}
+                submitForm={handleSubmit}
+            />
         </div>
     );
 }

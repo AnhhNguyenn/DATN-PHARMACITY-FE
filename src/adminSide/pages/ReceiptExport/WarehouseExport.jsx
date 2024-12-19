@@ -1,32 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Table } from "antd";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllExportApi } from "../../../redux/slices/receiptexportSlice";
 
-export default function ExportList() {
+export default function WarehouseExport() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [exports, setExports] = useState([]);
-
+    const { receiptexports, isLoading, error } = useSelector((state) => state.receiptexport);
     useEffect(() => {
-        // Gọi API để lấy danh sách phiếu xuất kho
-        dispatch(getAllExportApi())
-            .unwrap()
-            .then((data) => {
-                setExports(data || []);
-            })
-            .catch((error) => {
-                console.error("Error fetching exports:", error);
-            });
+        dispatch(getAllExportApi());
     }, [dispatch]);
 
     const columns = [
         {
             title: "Mã phiếu",
-            dataIndex: "id",
-            key: "id",
+            dataIndex: "exportId",
+            key: "exportId",
         },
         {
             title: "Kho",
@@ -34,20 +26,24 @@ export default function ExportList() {
             key: "warehouseName",
         },
         {
-            title: "Ngày xuất",
-            key: "exportDate",
-            dataIndex: "exportDate",
-            render: (value) => {
-                var date = new Date(value);
-                return <>{date.toLocaleDateString()}</>;
-            },
-        },
-        {
-            title: "Ghi chú",
-            dataIndex: "note",
-            key: "note",
+            title: "Chi tiết sản phẩm",
+            dataIndex: "exportDetails",
+            key: "exportDetails",
+            render: (exportDetails) => (
+                <ul>
+                    {exportDetails.map((detail) => (
+                        <li key={detail.productId}>
+                            {detail.productName} - Số lượng: {detail.quantity}
+                        </li>
+                    ))}
+                </ul>
+            ),
         },
     ];
+
+    if (error) {
+        toast.error("Có lỗi xảy ra khi tải dữ liệu phiếu xuất kho!");
+    }
 
     return (
         <>
@@ -74,7 +70,13 @@ export default function ExportList() {
                 </Button>
             </div>
             <div style={{ height: "78vh", width: "100%", padding: "0px 20px" }}>
-                <Table columns={columns} dataSource={exports} />
+                {isLoading ? (
+                    <div>Loading...</div>
+                ) : receiptexports?.length === 0 || !receiptexports ? (
+                    <div>Không có phiếu xuất kho nào</div>
+                ) : (
+                    <Table columns={columns} dataSource={receiptexports} rowKey="exportId" />
+                )}
             </div>
         </>
     );
