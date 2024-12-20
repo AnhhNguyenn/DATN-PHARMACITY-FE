@@ -10,19 +10,22 @@ export default function EditProduct() {
   const dispatch = useDispatch();
   const { state } = useLocation();
   const editProduct = async (data) => {
+    const promotionData = { ...data, id: state?.id };
+    console.log("Dữ liệu gửi lên để chỉnh sửa:", promotionData);
     await toast.success("Chỉnh sửa khuyến mãi thành công!");
-    await dispatch(editPromotionApi(data, navigate));
+    await dispatch(editPromotionApi(promotionData, navigate));
+    console.log("Chỉnh sửa khuyến mãi thành công!");
   };
 
   return (
     <div className="container" style={{ padding: "30px 0px" }}>
       <h1
         style={{
-          textAlign: "center", // Căn giữa chữ
-          fontSize: "66px", // Kích thước chữ to
-          fontWeight: "600", // Độ đậm của chữ
-          marginBottom: "30px", // Khoảng cách phía dưới
-          color: "#0072bc", // Màu xanh giống Pharmacity
+          textAlign: "center",
+          fontSize: "66px",
+          fontWeight: "600",
+          marginBottom: "30px",
+          color: "#0072bc",
         }}
       >
         Chỉnh sửa khuyến mãi

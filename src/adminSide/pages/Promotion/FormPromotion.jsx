@@ -8,13 +8,14 @@ export default function FormPromotion(props) {
 
   const formik = useFormik({
     initialValues: {
+      id: initialData.id || "", // Thêm ID vào initialValues
       name: initialData.name || "",
       description: initialData.description || "",
       discountPercentage: initialData.discountPercentage || 0,
       quantity: initialData.quantity || 0,
       startDate: initialData.startDate || "",
       endDate: initialData.endDate || "",
-      isActive: initialData.isActive || true, // Trạng thái kích hoạt mặc định
+      isActive: initialData.isActive || true,
     },
 
     validationSchema: Yup.object().shape({
