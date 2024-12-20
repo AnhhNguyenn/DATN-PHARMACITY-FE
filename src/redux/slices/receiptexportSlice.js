@@ -60,7 +60,11 @@ export const getAllReceiptApi = createAsyncThunk(
     async () => {
         const response = await getAllReceiptServices();
         console.log("Response from getAllReceiptServices (in slice):", response);
-        return response.data;
+        if (response.status === 200 && response.data) {
+            return response.data;
+        } else {
+            toast.error("Có lỗi khi lấy dữ liệu từ server!");
+        }
     }
 );
 
@@ -79,7 +83,6 @@ export const addReceiptApi = (formData) => async (dispatch) => {
         const result = await addReceiptService(formData);
         console.log("Response from addReceiptService (in slice):", result);
         toast.success(result.data.message);
-        dispatch(addReceiptSuccess(result.data));
         dispatch(getAllReceiptApi());
     } catch (error) {
         toast.error("Có lỗi khi thêm phiếu nhập!");

@@ -23,9 +23,9 @@ export default function InputWarehouseReceipt() {
             ReceiptDate: formData.receiptDate,
             Note: formData.note,
             ReceiptDetails: formData.receiptDetails.map(detail => ({
-                IdProduct: detail.productId,
-                Quantity: detail.quantity,
-                ExpirationDate: detail.expirationDate || null
+                idProduct: detail.productId,
+                quantity: detail.quantity,
+                expirationDate: detail.expirationDate || null,
             })),
         };
         console.log("formattedData before dispatch:", formattedData);

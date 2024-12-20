@@ -15,11 +15,10 @@ export default function WarehouseReceipt() {
     const error = receiptExport?.error;
 
     useEffect(() => {
-        dispatch(getAllReceiptApi()).then(() => {
-            console.log("Receipts after getAllReceiptApi:", receipts);
-        });
+        dispatch(getAllReceiptApi());
     }, [dispatch]);
 
+    console.log("Receipts in component body:", receipts);
 
     const columns = [
         {
